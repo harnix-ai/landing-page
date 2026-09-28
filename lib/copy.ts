@@ -69,7 +69,7 @@ const vi = {
   tagAvailable: "Có sẵn",
 
   // --- demo --------------------------------------------------------------
-  demoHead: "Xem cả quy trình trong {N} phút",
+  demoHead: "Xem cả hành trình trong 40 giây",
   demoSub: "Từ một tổ chức trống tới trợ lý AI đang trả lời khách trong app mẫu.",
   demoSoonPill: "Video demo sắp ra mắt",
   notifyCta: "Nhận thông báo khi có video",
@@ -212,7 +212,7 @@ const en: Record<CopyKey, string> = {
   s3b: "Your backend exchanges the API key for a short-lived token; your frontend mounts the chat widget.",
   tagAvailable: "Available",
 
-  demoHead: "See the whole flow in {N} minutes",
+  demoHead: "See the whole journey in 40 seconds",
   demoSub:
     "From an empty organisation to an AI assistant answering customers inside a sample app.",
   demoSoonPill: "Demo video coming soon",
@@ -375,31 +375,31 @@ const faqsByLang: Record<Lang, Faq[]> = {
 };
 
 /**
- * Demo chapters. `at` is the start offset in seconds — placeholder spacing
- * until the video is cut, and only surfaced once the demo is marked ready.
+ * Demo chapters. `at` is the start offset in seconds, matching the cut of the
+ * 40-second showreel (`harnix-film*-web.mp4`).
  */
 const chaptersByLang: Record<Lang, Chapter[]> = {
   vi: [
-    { label: "Đăng nhập, tổ chức trống", needs: "M0", at: 0 },
-    { label: "Nạp tài liệu", needs: "M1", at: 15 },
-    { label: "Tạo agent", needs: "M0", at: 30 },
-    { label: "Thử và xem trace", needs: "M1+M3", at: 45 },
-    { label: "Tạo API key", needs: "M0", at: 60 },
-    { label: "Tích hợp vào app", needs: "M2", at: 75 },
-    { label: "Người dùng cuối hỏi đáp", needs: "M2", at: 90 },
-    { label: "Quay lại console", needs: "M3", at: 105 },
-    { label: "Kết", needs: "—", at: 120 },
+    { label: "Vì sao vận hành AI khó", needs: "—", at: 0 },
+    { label: "Gặp Harnix", needs: "—", at: 8 },
+    { label: "Nạp tri thức", needs: "M1", at: 12 },
+    { label: "Tạo agent", needs: "M0", at: 14 },
+    { label: "Nhúng vào app", needs: "M2", at: 16 },
+    { label: "Khách hàng hỏi đáp", needs: "M2", at: 18 },
+    { label: "Mỗi câu trả lời là một Run", needs: "M1+M3", at: 22 },
+    { label: "Luôn trong tầm kiểm soát", needs: "M3", at: 26 },
+    { label: "Toàn cảnh và lời kết", needs: "—", at: 30 },
   ],
   en: [
-    { label: "Sign in, empty organisation", needs: "M0", at: 0 },
-    { label: "Load documents", needs: "M1", at: 15 },
-    { label: "Create an agent", needs: "M0", at: 30 },
-    { label: "Try it and read the trace", needs: "M1+M3", at: 45 },
-    { label: "Create an API key", needs: "M0", at: 60 },
-    { label: "Integrate it into an app", needs: "M2", at: 75 },
-    { label: "An end user asks a question", needs: "M2", at: 90 },
-    { label: "Back to the console", needs: "M3", at: 105 },
-    { label: "Wrap-up", needs: "—", at: 120 },
+    { label: "Why running AI is hard", needs: "—", at: 0 },
+    { label: "Meet Harnix", needs: "—", at: 8 },
+    { label: "Load your knowledge", needs: "M1", at: 12 },
+    { label: "Create an agent", needs: "M0", at: 14 },
+    { label: "Embed it in your app", needs: "M2", at: 16 },
+    { label: "Your customers ask", needs: "M2", at: 18 },
+    { label: "Every answer is a Run", needs: "M1+M3", at: 22 },
+    { label: "Stay in control", needs: "M3", at: 26 },
+    { label: "The whole journey", needs: "—", at: 30 },
   ],
 };
 
