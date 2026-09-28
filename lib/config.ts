@@ -85,4 +85,7 @@ export const siteConfig = {
 
   /** Integration docs are not written yet — the link stays inert until they are. */
   docsUrl: env(process.env.NEXT_PUBLIC_DOCS_URL) ?? "",
+
+  /** GA4 measurement ID ("G-XXXXXXXXXX"). Empty skips loading gtag entirely. */
+  gaMeasurementId: env(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) ?? "",
 } as const;
