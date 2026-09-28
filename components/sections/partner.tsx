@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
+import { sendGAEvent } from "@next/third-parties/google";
 import { AlertCircleIcon, CheckIcon, SpinnerIcon } from "@/components/icons";
 import { useSite } from "@/components/providers";
 import {
@@ -94,6 +95,7 @@ export function Partner() {
         body: JSON.stringify(values),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      sendGAEvent("event", "generate_lead", { lead_type: "design_partner" });
       setState("success");
     } catch {
       setState("server-error");

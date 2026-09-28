@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
+import { sendGAEvent } from "@next/third-parties/google";
 import { useCopy } from "@/components/providers";
 import { Section } from "@/components/ui";
 import type { CopyKey } from "@/lib/copy";
@@ -39,6 +40,7 @@ export function Waitlist() {
         body: JSON.stringify({ email: email.trim() }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      sendGAEvent("event", "generate_lead", { lead_type: "waitlist" });
       setState("ok");
       setEmail("");
     } catch {
