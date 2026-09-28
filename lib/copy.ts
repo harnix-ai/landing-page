@@ -75,7 +75,6 @@ const vi = {
   notifyCta: "Nhận thông báo khi có video",
   playLabel: "Phát video demo",
   transcriptLink: "Xem bản ghi nội dung →",
-  labChapters: "Nội dung video",
 
   // --- run anatomy -------------------------------------------------------
   anatomyHead: "Mổ xẻ một Run",
@@ -219,7 +218,6 @@ const en: Record<CopyKey, string> = {
   notifyCta: "Notify me when the video is up",
   playLabel: "Play the demo video",
   transcriptLink: "Read the transcript →",
-  labChapters: "Video chapters",
 
   anatomyHead: "Anatomy of a Run",
   anatomySub: "Every answer is a Run, recorded step by step.",
@@ -317,7 +315,6 @@ export function translate(lang: Lang, key: CopyKey): string {
 ------------------------------------------------------------------------- */
 
 export type Faq = { q: string; a: string };
-export type Chapter = { label: string; needs: string; at: number };
 export type TraceStep = {
   step: string;
   note: string;
@@ -371,35 +368,6 @@ const faqsByLang: Record<Lang, Faq[]> = {
       q: "What does it cost?",
       a: "Not announced yet. Design partners use it free for the length of the pilot.",
     },
-  ],
-};
-
-/**
- * Demo chapters. `at` is the start offset in seconds, matching the cut of the
- * 40-second showreel (`harnix-film*-web.mp4`).
- */
-const chaptersByLang: Record<Lang, Chapter[]> = {
-  vi: [
-    { label: "Vì sao vận hành AI khó", needs: "—", at: 0 },
-    { label: "Gặp Harnix", needs: "—", at: 8 },
-    { label: "Nạp tri thức", needs: "M1", at: 12 },
-    { label: "Tạo agent", needs: "M0", at: 14 },
-    { label: "Nhúng vào app", needs: "M2", at: 16 },
-    { label: "Khách hàng hỏi đáp", needs: "M2", at: 18 },
-    { label: "Mỗi câu trả lời là một Run", needs: "M1+M3", at: 22 },
-    { label: "Luôn trong tầm kiểm soát", needs: "M3", at: 26 },
-    { label: "Toàn cảnh và lời kết", needs: "—", at: 30 },
-  ],
-  en: [
-    { label: "Why running AI is hard", needs: "—", at: 0 },
-    { label: "Meet Harnix", needs: "—", at: 8 },
-    { label: "Load your knowledge", needs: "M1", at: 12 },
-    { label: "Create an agent", needs: "M0", at: 14 },
-    { label: "Embed it in your app", needs: "M2", at: 16 },
-    { label: "Your customers ask", needs: "M2", at: 18 },
-    { label: "Every answer is a Run", needs: "M1+M3", at: 22 },
-    { label: "Stay in control", needs: "M3", at: 26 },
-    { label: "The whole journey", needs: "—", at: 30 },
   ],
 };
 
@@ -547,7 +515,6 @@ const appOptionsByLang: Record<Lang, AppOption[]> = {
 };
 
 export const getFaqs = (lang: Lang): Faq[] => faqsByLang[lang];
-export const getChapters = (lang: Lang): Chapter[] => chaptersByLang[lang];
 export const getTraceSteps = (lang: Lang): TraceStep[] => traceByLang[lang];
 export const getOpItems = (lang: Lang): OpItem[] => opsByLang[lang];
 export const getAppOptions = (lang: Lang): AppOption[] => appOptionsByLang[lang];
