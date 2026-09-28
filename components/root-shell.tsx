@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { JetBrains_Mono, Public_Sans, Space_Grotesk } from "next/font/google";
 import { SiteProviders } from "@/components/providers";
+import { siteConfig } from "@/lib/config";
 import type { Lang } from "@/lib/copy";
 import { THEME_STORAGE_KEY } from "@/lib/storage";
 import "@/app/globals.css";
@@ -71,6 +73,7 @@ export function RootShell({
       <body>
         <script dangerouslySetInnerHTML={{ __html: bootstrap }} />
         <SiteProviders lang={lang}>{children}</SiteProviders>
+        {siteConfig.gaMeasurementId && <GoogleAnalytics gaId={siteConfig.gaMeasurementId} />}
       </body>
     </html>
   );
