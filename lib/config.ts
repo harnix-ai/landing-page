@@ -44,13 +44,8 @@ function resolveSiteUrl(): string {
   return "https://harnix.vn";
 }
 
-function positiveInt(value: string | undefined, fallback: number): number {
-  const parsed = Number(env(value));
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
-}
-
 const demoStatus: DemoStatus =
-  env(process.env.NEXT_PUBLIC_DEMO_STATUS) === "ready" ? "ready" : "coming-soon";
+  env(process.env.NEXT_PUBLIC_DEMO_STATUS) === "coming-soon" ? "coming-soon" : "ready";
 
 export const siteConfig = {
   name: "Harnix",
@@ -70,10 +65,15 @@ export const siteConfig = {
 
   demo: {
     status: demoStatus,
-    /** Runtime claim in the demo heading — "Xem cả quy trình trong {N} phút". */
-    minutes: positiveInt(process.env.NEXT_PUBLIC_DEMO_MINUTES, 3),
-    /** Only used once `status` is "ready". */
-    videoUrl: env(process.env.NEXT_PUBLIC_DEMO_VIDEO_URL) ?? "",
+    /** Only used once `status` is "ready". One film per locale — same cut, different voiceover copy. */
+    videoUrl: {
+      vi:
+        env(process.env.NEXT_PUBLIC_DEMO_VIDEO_URL_VI) ??
+        "https://s3.lequoctrung.id.vn/harnix/harnix-film-vi-web.mp4",
+      en:
+        env(process.env.NEXT_PUBLIC_DEMO_VIDEO_URL_EN) ??
+        "https://s3.lequoctrung.id.vn/harnix/harnix-film-web.mp4",
+    },
     transcriptUrl: env(process.env.NEXT_PUBLIC_DEMO_TRANSCRIPT_URL) ?? "",
   },
 

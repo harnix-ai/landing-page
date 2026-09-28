@@ -48,13 +48,12 @@ export function Demo() {
   const { t, lang } = useSite();
   const chapters = getChapters(lang);
   const [playing, setPlaying] = useState(false);
-  const { videoUrl, transcriptUrl, minutes } = siteConfig.demo;
+  const { transcriptUrl } = siteConfig.demo;
+  const videoUrl = siteConfig.demo.videoUrl[lang];
 
   return (
     <Section id="demo">
-      <SectionHeading>
-        {t("demoHead").replace("{N}", String(minutes))}
-      </SectionHeading>
+      <SectionHeading>{t("demoHead")}</SectionHeading>
       <p className="mt-3 mb-0 max-w-[60ch] text-base text-text2">
         {t("demoSub")}
       </p>
@@ -62,12 +61,14 @@ export function Demo() {
       <div className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] items-start gap-4">
         <div className="relative grid aspect-video place-items-center overflow-hidden rounded-xl border border-line bg-surface2">
           {playing && videoUrl ? (
-            <iframe
+            <video
               src={videoUrl}
-              title={t("demoHead").replace("{N}", String(minutes))}
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              className="absolute inset-0 h-full w-full border-0"
+              title={t("demoHead")}
+              autoPlay
+              controls
+              playsInline
+              preload="metadata"
+              className="absolute inset-0 h-full w-full"
             />
           ) : (
             <>
