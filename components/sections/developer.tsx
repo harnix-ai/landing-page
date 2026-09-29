@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import { useCopy } from "@/components/providers";
+import { useSite } from "@/components/providers";
 import { Card, Section, SectionHeading, Tag, segClass } from "@/components/ui";
 import { siteConfig } from "@/lib/config";
 import { CODE_BACKEND, CODE_FRONTEND, type CopyKey } from "@/lib/copy";
@@ -14,9 +14,10 @@ const TABS: { label: CopyKey; code: string }[] = [
 const POINTS: CopyKey[] = ["d1", "d2", "d3"];
 
 export function Developer() {
-  const t = useCopy();
+  const { t, lang } = useSite();
   const [active, setActive] = useState(0);
   const baseId = useId();
+  const docsHref = siteConfig.docsUrl[lang];
 
   return (
     <Section id="dev">
@@ -70,8 +71,8 @@ export function Developer() {
             </Card>
           ))}
 
-          {siteConfig.docsUrl ? (
-            <a href={siteConfig.docsUrl} className="link py-1 text-sm">
+          {docsHref ? (
+            <a href={docsHref} className="link py-1 text-sm">
               {t("docsLink")}
             </a>
           ) : (

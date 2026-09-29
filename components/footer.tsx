@@ -31,6 +31,7 @@ function SocialLink({ label, href }: { label: string; href: string }) {
 
 export function Footer() {
   const { t, lang } = useSite();
+  const docsHref = siteConfig.docsUrl[lang];
 
   return (
     <footer className="mt-[72px] grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] items-start gap-6 border-t border-line pt-8 pb-12">
@@ -48,8 +49,8 @@ export function Footer() {
         <a href={localizeHref(lang, "/blog")} className="link">
           {t("navBlog")}
         </a>
-        {siteConfig.docsUrl ? (
-          <a href={siteConfig.docsUrl} className="link">
+        {docsHref ? (
+          <a href={docsHref} className="link">
             {t("docsLabel")}
           </a>
         ) : (

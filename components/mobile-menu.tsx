@@ -15,8 +15,11 @@ const NAV_BREAKPOINT = "(min-width: 940px)";
 
 export function MobileMenu({
   items,
+  docsHref,
 }: {
   items: { href: string; key: CopyKey }[];
+  /** The docs site link — a different zone, so it's rendered separately from `items`. */
+  docsHref?: string;
 }) {
   const { t, lang } = useSite();
   const [open, setOpen] = useState(false);
@@ -145,6 +148,15 @@ export function MobileMenu({
               {t(key)}
             </a>
           ))}
+          {docsHref && (
+            <a
+              href={docsHref}
+              onClick={follow}
+              className="flex min-h-12 items-center border-b border-line text-[17px] text-text no-underline last:border-b-0"
+            >
+              {t("docsLabel")}
+            </a>
+          )}
         </nav>
 
         <div className="flex shrink-0 flex-col gap-3 border-t border-line px-5 py-4">
