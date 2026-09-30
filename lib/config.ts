@@ -92,8 +92,15 @@ export const siteConfig = {
     github: env(process.env.NEXT_PUBLIC_GITHUB_URL) ?? "",
   },
 
-  /** Integration docs are not written yet — the link stays inert until they are. */
-  docsUrl: env(process.env.NEXT_PUBLIC_DOCS_URL) ?? "",
+  /**
+   * The docs site (a separate Vercel project, proxied in through the
+   * `/docs` rewrite in next.config.ts). Empty keeps the nav/footer link
+   * inert — set once DOCS_ORIGIN is live and confirmed.
+   */
+  docsUrl: {
+    vi: env(process.env.NEXT_PUBLIC_DOCS_URL_VI) ?? "",
+    en: env(process.env.NEXT_PUBLIC_DOCS_URL_EN) ?? "",
+  },
 
   /** GA4 measurement ID ("G-XXXXXXXXXX"). Empty skips loading gtag entirely. */
   gaMeasurementId: env(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) ?? "",

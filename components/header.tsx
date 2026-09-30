@@ -4,6 +4,7 @@ import { Logo } from "@/components/logo";
 import { MobileMenu } from "@/components/mobile-menu";
 import { useSite } from "@/components/providers";
 import { LangToggle, ThemeToggle } from "@/components/toggles";
+import { siteConfig } from "@/lib/config";
 import type { CopyKey } from "@/lib/copy";
 import { localizeHref } from "@/lib/i18n";
 
@@ -24,6 +25,7 @@ const NAV: { href: string; key: CopyKey }[] = [
 export function Header() {
   const { t, lang } = useSite();
   const nav = NAV.map(({ href, key }) => ({ href: localizeHref(lang, href), key }));
+  const docsHref = siteConfig.docsUrl[lang];
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-[color-mix(in_oklab,var(--bg)_88%,transparent)] backdrop-blur-[10px]">
@@ -45,6 +47,14 @@ export function Header() {
               {t(key)}
             </a>
           ))}
+          {docsHref && (
+            <a
+              href={docsHref}
+              className="rounded-lg px-[10px] py-[7px] text-[14.5px] text-text2 no-underline hover:bg-surface2 hover:text-text"
+            >
+              {t("docsLabel")}
+            </a>
+          )}
         </nav>
 
         {/* Pushes the actions right while the nav is collapsed. */}
@@ -64,7 +74,7 @@ export function Header() {
             <span className="xs:hidden">{t("ctaJoinShort")}</span>
             <span className="hidden xs:inline">{t("ctaJoin")}</span>
           </a>
-          <MobileMenu items={nav} />
+          <MobileMenu items={nav} docsHref={docsHref} />
         </div>
       </div>
     </header>
