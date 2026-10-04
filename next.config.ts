@@ -25,7 +25,19 @@ if (docsOrigin) {
   ];
 
   nextConfig.rewrites = async () => [
-    // Slash forms first, so the trailing slash survives the rewrite — the
+    // Files first. On Vercel the slash rule below also catches /docs/x and
+    // forwards it as /docs/x/ — fine for pages, a 404 for files (CSS, JS,
+    // fonts, llms.txt, sitemap.xml, the search index). These never take a
+    // trailing slash, so they get their own rules ahead of it.
+    { source: "/docs/_next/:path*", destination: `${docsOrigin}/docs/_next/:path*` },
+    { source: "/docs/api/:path*", destination: `${docsOrigin}/docs/api/:path*` },
+    // Any path whose last segment has an extension (llms.txt, sitemap.xml,
+    // llms.mdx/…/content.md, the RSC payloads …/index.txt).
+    {
+      source: "/docs/:path((?:.*/)?[^/]+\\.[A-Za-z0-9]+)",
+      destination: `${docsOrigin}/docs/:path`,
+    },
+    // Slash forms next, so the trailing slash survives the rewrite — the
     // docs host only serves pages at their slash form.
     { source: "/docs/", destination: `${docsOrigin}/docs/` },
     { source: "/docs/:path*/", destination: `${docsOrigin}/docs/:path*/` },
