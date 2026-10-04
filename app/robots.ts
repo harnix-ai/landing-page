@@ -13,7 +13,9 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: `${siteConfig.url}/sitemap.xml`,
+    // The docs app (harnix-ai/harnix, proxied in at /docs) publishes its own
+    // sitemap; robots.txt only exists at the domain root, so it is listed here.
+    sitemap: [`${siteConfig.url}/sitemap.xml`, `${siteConfig.url}/docs/sitemap.xml`],
     host: siteConfig.url,
   };
 }
