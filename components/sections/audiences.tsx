@@ -49,13 +49,7 @@ export function Audiences() {
               }
             />
             <BentoCard title={b.vendor.title} body={b.vendor.body} />
-            <BentoCard
-              title={b.data.title}
-              body={b.data.body}
-              lead={
-                <span className="self-start rounded-lg bg-subtle px-3 py-1 text-[13px] font-semibold">{b.data.badge}</span>
-              }
-            />
+            <BentoCard title={b.data.title} body={b.data.body} />
             <BentoCard wide title={b.durable.title} body={b.durable.body} />
           </div>
         </div>
