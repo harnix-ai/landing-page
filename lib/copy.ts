@@ -71,7 +71,7 @@ const vi = {
       },
       {
         title: "Dữ liệu được bảo vệ",
-        body: "Tài liệu nội bộ và hội thoại khách hàng được **lưu trữ tách biệt**, **xoá được theo yêu cầu**, đáp ứng NĐ 13/2023.",
+        body: "Tài liệu nội bộ và hội thoại khách hàng được **lưu trữ tách biệt** và **xoá được theo yêu cầu**.",
       },
     ],
   },
@@ -132,7 +132,6 @@ const vi = {
         body: "Dùng OpenAI, mô hình tương thích hoặc tự triển khai, đổi khi cần.",
       },
       data: {
-        badge: "NĐ 13/2023",
         title: "Dữ liệu tách riêng",
         body: "Mỗi doanh nghiệp một vùng dữ liệu; xoá dữ liệu cá nhân theo yêu cầu.",
       },
@@ -460,7 +459,7 @@ const en: Copy = {
       },
       {
         title: "Data kept safe",
-        body: "Internal documents and customer conversations are **stored separately** and **deletable on request**, in line with Decree 13/2023.",
+        body: "Internal documents and customer conversations are **stored separately** and **deletable on request**.",
       },
     ],
   },
@@ -521,7 +520,6 @@ const en: Copy = {
         body: "Use OpenAI, a compatible model or your own deployment — and switch when you need to.",
       },
       data: {
-        badge: "Decree 13/2023",
         title: "Data kept apart",
         body: "One data space per business; personal data deleted on request.",
       },
