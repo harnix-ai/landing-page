@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import { BlogIndexPage } from "@/components/pages/blog-index";
-import { translate } from "@/lib/copy";
+import { getCopy } from "@/lib/copy";
 import { buildPageMetadata } from "@/lib/seo";
+
+const copy = getCopy("en");
 
 export const metadata: Metadata = buildPageMetadata({
   lang: "en",
   path: "/blog",
-  title: translate("en", "blogIndexTitle"),
-  description: translate("en", "blogIndexSub"),
+  title: copy.blogIndex.title,
+  description: copy.blogIndex.sub,
 });
 
 export default function Page() {
-  return <BlogIndexPage />;
+  return <BlogIndexPage lang="en" />;
 }

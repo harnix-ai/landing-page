@@ -1,53 +1,22 @@
 import type { ReactNode } from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { JetBrains_Mono, Public_Sans, Space_Grotesk } from "next/font/google";
+import { Be_Vietnam_Pro } from "next/font/google";
 import { SiteProviders } from "@/components/providers";
 import { siteConfig } from "@/lib/config";
 import type { Lang } from "@/lib/copy";
-import { THEME_STORAGE_KEY } from "@/lib/storage";
 import "@/app/globals.css";
 
-const publicSans = Public_Sans({
+/**
+ * One family for headings, body and figures — picked in the redesign because
+ * it is drawn for Vietnamese diacritics and reads as business, not dev.
+ */
+const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
-  variable: "--font-public-sans",
+  variable: "--font-be-vietnam-pro",
   display: "swap",
 });
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin", "vietnamese"],
-  weight: ["500", "600", "700"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
-
-/**
- * The design specified Azeret Mono, but that face has no Vietnamese coverage —
- * even upstream it maps 2 of the 90 characters in U+1EA0–1EF9 — so every
- * Vietnamese label set in it rendered half in Azeret and half in the system
- * fallback. JetBrains Mono is the nearest geometric substitute that ships the
- * language.
- */
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
-
-/**
- * Applies the stored theme before first paint so the page never flashes the
- * wrong palette. Dark is the design's default and stays the default
- * regardless of the OS setting — only an explicit choice here switches it.
- * Language is not read here: it is fixed by which locale's root layout
- * rendered the page, not by a client-side preference.
- */
-const bootstrap = `(function(){try{
-var d=document.documentElement;
-var t=localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});
-d.dataset.theme=(t==='light'||t==='dark')?t:'dark';
-}catch(e){}})();`;
 
 /**
  * The shared `<html>`/`<body>` shell for both locale root layouts
@@ -64,14 +33,8 @@ export function RootShell({
   children: ReactNode;
 }) {
   return (
-    <html
-      lang={lang}
-      data-theme="dark"
-      className={`${publicSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang={lang} className={beVietnamPro.variable}>
       <body>
-        <script dangerouslySetInnerHTML={{ __html: bootstrap }} />
         <SiteProviders lang={lang}>{children}</SiteProviders>
         {siteConfig.gaMeasurementId && <GoogleAnalytics gaId={siteConfig.gaMeasurementId} />}
       </body>

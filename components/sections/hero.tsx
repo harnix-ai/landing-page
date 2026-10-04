@@ -1,138 +1,125 @@
 "use client";
 
-import { useCopy } from "@/components/providers";
-import { MonoLabel } from "@/components/ui";
+import { useState } from "react";
+import { useSite } from "@/components/providers";
+import { btn } from "@/components/ui";
 import { siteConfig } from "@/lib/config";
 
-const HERO_TRACE: { time: string; label: string; highlight?: boolean }[] = [
-  { time: "00.00s", label: "user_message" },
-  { time: "00.14s", label: "tool_call knowledge_search" },
-  { time: "00.61s", label: "tool_result · 3 chunks" },
-  { time: "00.72s", label: "llm_call · gpt-4o-mini", highlight: true },
-  { time: "02.38s", label: "token_usage · 1,240 tokens" },
-];
+const isReady = siteConfig.demo.status === "ready";
 
-function TokenTile({ label, value }: { label: string; value: string }) {
+export function Hero() {
+  const { c, lang } = useSite();
+  const h = c.hero;
+
   return (
-    <div className="rounded-lg border border-line bg-surface p-[11px]">
-      <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-text3">
-        {label}
+    <section className="relative overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[-30%] left-1/2 h-[900px] w-[1100px] -translate-x-1/2 rounded-full bg-accent opacity-[0.18] blur-[140px]"
+      />
+      <div className="relative mx-auto flex max-w-[1280px] flex-col items-center gap-7 px-5 pt-[clamp(64px,10vw,140px)] pb-[clamp(40px,6vw,72px)] text-center">
+        <div className="flex max-w-full animate-[hx-rise_0.7s_both] justify-center">
+          <p className="m-0 flex items-center justify-center gap-3 text-[clamp(15px,1.8vw,19px)]">
+            <span aria-hidden="true" className="h-px w-5 shrink-0 bg-night-line3 sm:w-9" />
+            <span className="text-balance text-on-night3">
+              {h.kicker}{" "}
+              <span className="border-b-2 border-accent-on-night pb-[3px] font-semibold text-white">{h.kickerEm}</span>
+            </span>
+            <span aria-hidden="true" className="h-px w-5 shrink-0 bg-night-line3 sm:w-9" />
+          </p>
+        </div>
+
+        <h1 className="m-0 max-w-[1100px] animate-[hx-rise_0.9s_0.1s_cubic-bezier(.2,.7,.2,1)_both] text-[clamp(48px,9.5vw,128px)] leading-[0.98] font-extrabold tracking-[-0.045em] text-balance">
+          {h.title}
+          <br />
+          <span className="text-accent-on-night">{h.titleAccent}</span>
+        </h1>
+
+        <p className="m-0 max-w-[640px] animate-[hx-rise_0.9s_0.2s_both] text-[clamp(18px,2vw,21px)] leading-[1.6] text-pretty text-on-night3">
+          {h.sub}
+        </p>
+
+        <div className="flex animate-[hx-rise_0.9s_0.3s_both] flex-wrap justify-center gap-3">
+          <a href="#demo" className={`${btn.primary} h-[58px] px-7 text-[17px]`}>
+            {h.ctaDemo}
+          </a>
+          <a href="#video" className={`${btn.ghost} h-[58px] px-[26px] text-[17px]`}>
+            {h.ctaVideo}
+          </a>
+        </div>
       </div>
-      <div className="mt-[5px] font-mono text-base">{value}</div>
-    </div>
+
+      <div id="video" className="relative mx-auto max-w-[1180px] px-5 pb-[clamp(64px,9vw,120px)]">
+        <HeroVideo
+          videoUrl={siteConfig.demo.videoUrl[lang]}
+          posterUrl={siteConfig.demo.posterUrl[lang]}
+        />
+        {isReady && siteConfig.demo.transcriptUrl && (
+          <a
+            href={siteConfig.demo.transcriptUrl}
+            className="mt-3 inline-block text-[15px] font-semibold text-accent-on-night hover:underline"
+          >
+            {h.transcript}
+          </a>
+        )}
+      </div>
+    </section>
   );
 }
 
-export function Hero() {
-  const t = useCopy();
+/** Poster with a caption bar until clicked, then the film itself, inline. */
+function HeroVideo({ videoUrl, posterUrl }: { videoUrl: string; posterUrl: string }) {
+  const { c } = useSite();
+  const h = c.hero;
+  const [playing, setPlaying] = useState(false);
 
   return (
-    <section className="pt-16">
-      <div className="max-w-[760px]">
-        <MonoLabel>{t("eyebrow")}</MonoLabel>
-
-        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[color-mix(in_oklab,var(--accent)_35%,transparent)] bg-accent-soft py-[5px] pr-3 pl-[10px] text-[13px] text-text">
-          <span className="h-[7px] w-[7px] animate-pulse-dot rounded-full bg-accent" />
-          <span>
-            {t("statusPill")}
-            {siteConfig.milestone}
-          </span>
-        </div>
-
-        <h1 className="mt-5 mb-0 font-display text-[clamp(34px,5.4vw,56px)] leading-[1.04] font-semibold tracking-[-0.03em] text-pretty">
-          {t("heroH1")}
-        </h1>
-
-        <p className="mt-5 max-w-[62ch] text-[17px] text-text2 text-pretty">
-          {t("heroSub")}
-        </p>
-
-        <div className="mt-7 flex flex-wrap gap-[10px]">
-          <a
-            href="#waitlist"
-            className="rounded-lg bg-accent px-5 py-3 text-[15px] font-semibold text-accent-ink no-underline"
-          >
-            {t("ctaJoin")}
-          </a>
-          <a
-            href="#demo"
-            className="rounded-lg border border-line2 px-5 py-3 text-[15px] font-semibold text-text no-underline hover:bg-surface2"
-          >
-            {t("ctaDemo")}
-          </a>
-        </div>
-      </div>
-
-      {/* Recreation of the console's trace viewer. Swap for a real capture. */}
-      <figure
-        className="mt-11 mb-0 overflow-hidden rounded-xl border border-line bg-surface"
-        aria-label={t("heroFrameLabel")}
-      >
-        <div className="flex items-center gap-[10px] border-b border-line bg-surface2 px-3 py-[9px]">
-          <div className="flex gap-[5px]" aria-hidden="true">
-            <span className="h-2 w-2 rounded-full bg-line2" />
-            <span className="h-2 w-2 rounded-full bg-line2" />
-            <span className="h-2 w-2 rounded-full bg-line2" />
-          </div>
-          <div className="font-mono text-[11.5px] text-text3">
-            console.{siteConfig.domain} / runs / run_8c41f2
-          </div>
-        </div>
-
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))]">
-          <div className="border-r border-line p-4">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="font-display text-[15px] font-semibold">
-                Run trace
-              </div>
-              <span className="inline-flex items-center gap-[6px] rounded-full border border-[color-mix(in_oklab,var(--ok)_40%,transparent)] px-[9px] py-[3px] font-mono text-[10.5px] tracking-[0.06em] text-ok uppercase">
-                <span className="h-[6px] w-[6px] rounded-full bg-ok" />
-                completed
+    <div className="reveal-grow relative aspect-video overflow-hidden rounded-[28px] border border-night-ghost bg-night-card">
+      {playing ? (
+        <video
+          src={videoUrl}
+          poster={posterUrl}
+          title={h.videoTitle}
+          autoPlay
+          controls
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 h-full w-full bg-black"
+        />
+      ) : (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element -- remote poster, no loader configured */}
+          <img
+            src={posterUrl}
+            alt={h.videoAlt}
+            className="block h-full w-full object-cover"
+            style={{ opacity: isReady ? 1 : 0.45 }}
+          />
+          <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-center justify-between gap-4 bg-[linear-gradient(transparent,rgba(13,16,20,0.85))] px-[clamp(16px,3vw,28px)] py-[clamp(16px,3vw,24px)] text-left">
+            <div className="flex flex-col gap-1">
+              <strong className="text-[clamp(16px,2vw,20px)] font-semibold">{h.videoTitle}</strong>
+              <span className="hidden text-[15px] text-on-night2 sm:block">{h.videoSub}</span>
+            </div>
+            {isReady ? (
+              <button
+                type="button"
+                onClick={() => setPlaying(true)}
+                aria-label={h.play}
+                className="flex h-16 w-16 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-white transition-transform hover:scale-105"
+              >
+                <span
+                  aria-hidden="true"
+                  className="ml-[5px] h-0 w-0 border-y-[11px] border-l-[18px] border-y-transparent border-l-night"
+                />
+              </button>
+            ) : (
+              <span className="rounded-full border border-night-line2 bg-night-card px-[14px] py-2 text-[14px] font-semibold">
+                {h.soon}
               </span>
-            </div>
-
-            <div className="mt-[14px] flex flex-col gap-[3px]">
-              {HERO_TRACE.map((row) => (
-                <div
-                  key={row.label}
-                  className={`flex items-baseline gap-[10px] rounded-lg border px-[10px] py-[9px] font-mono text-[11.5px] ${
-                    row.highlight
-                      ? "border-[color-mix(in_oklab,var(--accent)_38%,var(--line))] bg-accent-soft"
-                      : "border-line bg-surface2"
-                  }`}
-                >
-                  <span className="w-[42px] shrink-0 text-text3">{row.time}</span>
-                  <span className="text-text">{row.label}</span>
-                </div>
-              ))}
-            </div>
+            )}
           </div>
-
-          <div className="bg-bg p-4">
-            <MonoLabel>Step detail</MonoLabel>
-            <div className="mt-3 rounded-lg border border-line bg-surface p-3">
-              <div className="font-mono text-[11.5px] text-text2">
-                tool_result · knowledge_search
-              </div>
-              <div className="mt-[10px] text-sm text-text">
-                {t("heroDocLine")}
-              </div>
-              <div className="mt-[6px] text-[13.5px] text-text2">
-                {t("heroQuote")}
-              </div>
-            </div>
-
-            <div className="mt-3 grid grid-cols-2 gap-[10px]">
-              <TokenTile label="Tokens in" value="1,024" />
-              <TokenTile label="Tokens out" value="216" />
-            </div>
-
-            <figcaption className="mt-3 text-[12.5px] text-text3">
-              {t("sampleNote")}
-            </figcaption>
-          </div>
-        </div>
-      </figure>
-    </section>
+        </>
+      )}
+    </div>
   );
 }

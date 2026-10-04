@@ -5,7 +5,6 @@ import { clientKey, isRateLimited } from "@/lib/rate-limit";
 import {
   exceedsLimits,
   isHoneypotTriggered,
-  isValidAppValue,
   readLeadContext,
   readPartnerSubmission,
   validatePartner,
@@ -36,16 +35,16 @@ export async function POST(request: Request) {
 
   const oversized = exceedsLimits({
     name: submission.name,
+    phone: submission.phone,
     email: submission.email,
     company: submission.company,
     want: submission.want,
   });
-  const validApp = isValidAppValue(submission.app);
   const validSize =
     submission.size === "" ||
     (companySizes as readonly string[]).includes(submission.size);
 
-  if (oversized || !validApp || !validSize) {
+  if (oversized || !validSize) {
     return NextResponse.json({ error: "invalid_input" }, { status: 400 });
   }
 

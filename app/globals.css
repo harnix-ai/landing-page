@@ -1,139 +1,110 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Design tokens — lifted verbatim from the Harnix console / landing design.
-   Dark is the default; light is applied by `data-theme="light"` on <html>.
+   Harnix design system — lifted verbatim from `Harnix Landing.dc.html` and
+   `Harnix Design System.dc.html`. The page alternates fixed dark ("night")
+   and light ("paper") sections, so there is no theme switch: every token is
+   a literal colour, named for what it is used for.
 --------------------------------------------------------------------------- */
 
-:root {
-  --bg: #0c0c0d;
-  --surface: #141416;
-  --surface2: #1b1b1e;
-  --surface3: #232328;
-  --line: #26262a;
-  --line2: #35353b;
-  --text: #f2f2f3;
-  --text2: #a8a8ae;
-  --text3: #90909a;
-  --accent: oklch(0.74 0.13 165);
-  --accent-hover: oklch(0.82 0.11 165);
-  --accent-ink: #04140e;
-  --accent-soft: rgba(52, 199, 153, 0.13);
-  --ok: oklch(0.74 0.13 160);
-  --warn: oklch(0.81 0.13 82);
-  --err: oklch(0.7 0.16 25);
-  --info: oklch(0.74 0.11 245);
-  --err-ink: #1c0705;
-  --line-input: #70707a;
-  --shim: linear-gradient(90deg, #1b1b1e 0%, #252529 50%, #1b1b1e 100%);
-  color-scheme: dark;
-}
-
-[data-theme="light"] {
-  --bg: #fafafa;
-  --surface: #ffffff;
-  --surface2: #f5f5f6;
-  --surface3: #eaeaec;
-  --line: #e5e5e8;
-  --line2: #d2d2d8;
-  --text: #18181b;
-  --text2: #55555c;
-  --text3: #67676f;
-  --accent: oklch(0.52 0.12 165);
-  --accent-hover: oklch(0.44 0.12 165);
-  --accent-ink: #ffffff;
-  --accent-soft: rgba(16, 124, 96, 0.1);
-  --ok: oklch(0.5 0.12 160);
-  --warn: oklch(0.55 0.13 68);
-  --err: oklch(0.52 0.17 25);
-  --info: oklch(0.52 0.12 250);
-  --err-ink: #ffffff;
-  --line-input: #84848b;
-  --shim: linear-gradient(90deg, #f0f0f1 0%, #e4e4e6 50%, #f0f0f1 100%);
-  color-scheme: light;
-}
-
 @theme {
-  /* Measured: the full desktop header fits one row from 900px with the web
-     font, but not until 940px with the wider fallback font during the swap
-     window — so the collapse point is 940px. Re-measure when a nav label
-     changes length; "Hỏi đáp" replacing "FAQ" moved this by 40px. */
-  --breakpoint-nav: 940px;
-  /* Below this the primary CTA needs its short label to fit beside the logo.
-     Measured against the fallback font, not the web font: during the swap
-     window "Tham gia waitlist" overflows the bar at 344px and 360px, and first
-     fits safely at 375px. */
-  --breakpoint-xs: 375px;
+  /* Night — dark sections, header, footer. */
+  --color-night: #0d1014;
+  --color-night-panel: #12161b;
+  --color-night-card: #171b21;
+  --color-night-hover: #1c2229;
+  --color-night-line: #262b33;
+  --color-night-line2: #2f353e;
+  --color-night-line3: #3a4049;
+  --color-night-rule: #1d2229;
+  --color-night-row: #20252c;
+  --color-night-ghost: #2a3038;
+  --color-on-night: #ffffff;
+  --color-on-night2: #d8dce2;
+  --color-on-night3: #b8bec8;
+  --color-on-night-muted: #8a909a;
+  --color-on-night-faint: #5c636e;
+
+  /* Paper — light sections. */
+  --color-paper: #fafafa;
+  --color-card: #ffffff;
+  --color-subtle: #f1f2f4;
+  --color-line: #e4e6ea;
+  --color-line2: #d5d8de;
+  --color-line3: #c4c9d1;
+  --color-ink: #111418;
+  --color-ink-body: #2a2f36;
+  --color-ink-700: #3a3f47;
+  --color-ink-500: #6b717b;
+  --color-ink-300: #a0a6b0;
+
+  /* Accent — xanh ngọc. */
+  --color-accent: #0f8f6a;
+  --color-accent-hover: #12a079;
+  --color-accent-strong: #0b7254;
+  --color-accent-on-night: #47c496;
+  --color-accent-label: #6fd4b0;
+  --color-accent-soft: #e5f4ee;
+  --color-accent-soft-line: #c6e6d8;
+  --color-accent-tint: #f3faf7;
+  --color-accent-mark: #bfead8;
+  --color-accent-deep: #12392a;
+  --color-accent-deeper: #0f241c;
+  --color-accent-deep-line: #2a5a47;
+  --color-accent-pale: #d6f5e8;
+
+  /* Status. */
+  --color-ok: #3ccf8e;
+  --color-warn: #f0b44c;
+  --color-warn-deep: #3a2c0f;
+  --color-err: #d0453e;
+  --color-err-soft: #f19b96;
+
+  --font-sans: var(--font-be-vietnam-pro), system-ui, sans-serif;
+
+  /* Layout breakpoints, all from the prototype's own width checks. */
+  --breakpoint-blog: 900px; /* blog grid: featured + stacked */
+  --breakpoint-bento: 960px; /* bento wide cards span two columns */
+  --breakpoint-story: 1000px; /* Run story pins (with ≥ 680px height) */
+  --breakpoint-toc: 1080px; /* post table-of-contents column */
+  --breakpoint-wide: 1240px; /* full header nav; ☰ below */
+
+  --animate-rise: hx-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
-@theme inline {
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface2: var(--surface2);
-  --color-surface3: var(--surface3);
-  --color-line: var(--line);
-  --color-line2: var(--line2);
-  --color-line-input: var(--line-input);
-  --color-text: var(--text);
-  --color-text2: var(--text2);
-  --color-text3: var(--text3);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-ink: var(--accent-ink);
-  --color-accent-soft: var(--accent-soft);
-  --color-ok: var(--ok);
-  --color-warn: var(--warn);
-  --color-err: var(--err);
-  --color-err-ink: var(--err-ink);
-  --color-info: var(--info);
-
-  --font-sans: var(--font-public-sans), system-ui, sans-serif;
-  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
-
-  --animate-pulse-dot: hxpulse 1.8s ease-in-out infinite;
-  --animate-shimmer: hxshim 1.3s linear infinite;
-  --animate-spin-slow: hxspin 0.8s linear infinite;
-}
-
-@keyframes hxpulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
+@keyframes hx-rise {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
   }
-  50% {
-    opacity: 0.35;
-    transform: scale(0.82);
-  }
-}
-
-@keyframes hxshim {
-  0% {
-    background-position: -320px 0;
-  }
-  100% {
-    background-position: 320px 0;
-  }
-}
-
-@keyframes hxspin {
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hx-grow {
+  from {
+    opacity: 0.15;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* The header is sticky and 63px tall at every width; keep anchor targets
-       clear of it with a little breathing room. */
-    scroll-padding-top: 76px;
+    /* The floating header is 66px tall plus its 12px inset. */
+    scroll-padding-top: 96px;
   }
 
   body {
-    background: var(--bg);
-    color: var(--text);
+    margin: 0;
+    background: var(--color-night);
+    color: var(--color-on-night);
     font-family: var(--font-sans);
     font-size: 16px;
     line-height: 1.55;
@@ -141,25 +112,43 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--color-accent-on-night);
     outline-offset: 2px;
+  }
+
+  details summary::-webkit-details-marker {
+    display: none;
   }
 }
 
 @layer utilities {
-  /* The prototype leaned on a global anchor colour; keep it as an opt-in. */
-  .link {
-    color: var(--accent);
-    text-decoration: none;
-  }
-  .link:hover {
-    color: var(--accent-hover);
-    text-decoration: underline;
+  /* Scroll-driven entrance, as in the prototype. Browsers without
+     `animation-timeline` show the content in place. */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: hx-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+    .reveal-2 {
+      animation-range: entry 5% cover 35%;
+    }
+    .reveal-3 {
+      animation-range: entry 10% cover 40%;
+    }
+    .reveal-grow {
+      animation: hx-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
   }
 
-  .shim {
-    background: var(--shim);
-    background-size: 320px 100%;
+  /* Highlighter-pen emphasis used in the proof rows. */
+  .hx-mark {
+    background: linear-gradient(transparent 58%, var(--color-accent-mark) 58%);
+    color: var(--color-ink);
+    font-weight: 600;
+    padding: 0 2px;
   }
 }
 
