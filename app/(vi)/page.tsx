@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { HomePage } from "@/components/pages/home";
-import { translate } from "@/lib/copy";
+import { getCopy } from "@/lib/copy";
 import { buildPageMetadata } from "@/lib/seo";
+
+const copy = getCopy("vi");
 
 export const metadata: Metadata = buildPageMetadata({
   lang: "vi",
   path: "/",
-  title: `Harnix — ${translate("vi", "heroH1")}`,
-  description: translate("vi", "heroSub"),
+  title: `Harnix — ${copy.meta.title}`,
+  description: copy.meta.description,
 });
 
 export default function Page() {

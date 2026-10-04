@@ -1,18 +1,19 @@
+import { FloatingActions } from "@/components/floating-actions";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { SkipLink } from "@/components/skip-link";
 import { StructuredData } from "@/components/structured-data";
+import { Audiences } from "@/components/sections/audiences";
 import { Blog } from "@/components/sections/blog";
-import { Demo } from "@/components/sections/demo";
-import { Developer } from "@/components/sections/developer";
+import { DemoRequest } from "@/components/sections/demo-request";
+import { DevCallout } from "@/components/sections/dev-callout";
 import { Faq } from "@/components/sections/faq";
 import { Hero } from "@/components/sections/hero";
 import { HowItWorks } from "@/components/sections/how-it-works";
-import { Operate } from "@/components/sections/operate";
-import { Partner } from "@/components/sections/partner";
-import { RunAnatomy } from "@/components/sections/run-anatomy";
-import { Waitlist } from "@/components/sections/waitlist";
-import { Why } from "@/components/sections/why";
+import { Pricing } from "@/components/sections/pricing";
+import { Proof } from "@/components/sections/proof";
+import { RunStory } from "@/components/sections/run-story";
+import { siteConfig } from "@/lib/config";
 import type { Lang } from "@/lib/copy";
 import { getAllPosts } from "@/lib/posts";
 
@@ -21,24 +22,24 @@ export function HomePage({ lang }: { lang: Lang }) {
   const posts = getAllPosts();
 
   return (
-    <>
+    <div id="top">
       <StructuredData lang={lang} />
       <SkipLink />
       <Header />
-      <main id="top" className="mx-auto max-w-[1160px] px-6">
+      <main id="main">
         <Hero />
-        <Why />
+        <Proof />
         <HowItWorks />
-        <Demo />
-        <RunAnatomy />
-        <Operate />
-        <Developer />
-        <Blog initialPosts={posts} />
-        <Partner />
+        <Audiences />
+        <RunStory />
+        <DevCallout />
+        {siteConfig.pricingEnabled && <Pricing />}
+        <Blog posts={posts} />
+        <DemoRequest />
         <Faq />
-        <Waitlist />
-        <Footer />
       </main>
-    </>
+      <Footer />
+      <FloatingActions />
+    </div>
   );
 }

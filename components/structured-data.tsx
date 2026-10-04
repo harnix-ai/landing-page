@@ -1,4 +1,4 @@
-import { getFaqs, translate, type Lang } from "@/lib/copy";
+import { getCopy, getFaqs, type Lang } from "@/lib/copy";
 import { siteConfig } from "@/lib/config";
 import { absoluteUrl } from "@/lib/seo";
 
@@ -14,11 +14,11 @@ import { absoluteUrl } from "@/lib/seo";
  * - FAQPage — the accordion further down. The answers are already on the page
  *   in full, which is what makes them eligible; the markup only labels them.
  *
- * Keep `faqs` in `lib/copy.ts` the single source: editing a question there
+ * `getFaqs` in `lib/copy.ts` is the single source: editing a question there
  * updates both the rendered accordion and this markup.
  */
 export function StructuredData({ lang }: { lang: Lang }) {
-  const faqs = getFaqs(lang);
+  const faqs = getFaqs(lang, siteConfig.pricingEnabled);
   const inLanguage = lang === "vi" ? "vi-VN" : "en-US";
   const pageUrl = absoluteUrl(lang, "/");
 
@@ -38,7 +38,7 @@ export function StructuredData({ lang }: { lang: Lang }) {
       name: siteConfig.name,
       url: siteConfig.url,
       email: siteConfig.email,
-      description: translate(lang, "footTagline"),
+      description: getCopy(lang).footer.tagline,
       logo: {
         "@type": "ImageObject",
         url: `${siteConfig.url}/apple-icon`,

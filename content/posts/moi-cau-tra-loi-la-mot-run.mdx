@@ -3,10 +3,22 @@ date: "2026-09-15"
 readingMinutes: 6
 title: "Vì sao mỗi câu trả lời phải là một Run"
 excerpt: "Durable execution nghe như chuyện hạ tầng, nhưng nó quyết định việc bạn có trả lời được khách hay không."
+tag: "Run engine"
+cover: "run"
+tags: ["Durable execution", "Vận hành AI"]
 en:
   title: "Why every answer has to be a Run"
   excerpt: "Durable execution sounds like an infrastructure concern, but it decides whether your customer gets an answer at all."
+  tags: ["Durable execution", "AI operations"]
 ---
+
+<Summary>
+
+1. Một câu trả lời của AI là **chuỗi nhiều bước**, không phải một lệnh duy nhất.
+2. Harnix ghi mỗi câu trả lời thành một **Run**: sự cố giữa chừng **không làm mất câu trả lời**.
+3. Bạn xem lại được AI **đã làm gì, tốn bao nhiêu**, và **dừng được** khi cần.
+
+</Summary>
 
 Một câu trả lời của agent hiếm khi chỉ là một lệnh gọi LLM. Nó thường là một chuỗi:
 tìm trong knowledge base, gọi một tool, đợi kết quả, rồi mới soạn câu trả lời cuối
@@ -27,24 +39,41 @@ Một Run ghi lại toàn bộ vòng đời của một câu trả lời: `user_
 
 Điều này có hai hệ quả trực tiếp:
 
-- Nếu worker crash giữa chừng, Run không mất — nó tiếp tục từ sự kiện cuối cùng đã
-  ghi, không phải từ đầu.
-- Vì mọi bước đều được ghi, operator xem lại được chính xác agent đã đọc tài liệu
-  nào, gọi tool gì, và tốn bao nhiêu token cho câu trả lời đó — không phải đoán.
+<Points>
+
+1. Nếu worker crash giữa chừng, Run không mất — nó **tiếp tục từ sự kiện cuối cùng đã ghi**, không phải từ đầu.
+2. Vì mọi bước đều được ghi, operator xem lại được chính xác agent **đã đọc tài liệu nào, gọi tool gì, và tốn bao nhiêu token** cho câu trả lời đó — không phải đoán.
+
+</Points>
+
+<Compare labels="Tình huống|Không có Run|Có Run" caption="Hình 1. So sánh nhanh, tóm tắt từ nội dung bài viết.">
+  <Row cells="Sự cố ở bước 3|Mất hết, khách hỏi lại từ đầu|Chạy tiếp từ bước đã ghi" />
+  <Row cells="Xem lại câu trả lời|Phải đoán|Thấy từng bước, từng token" />
+  <Row cells="Cần can thiệp|Chờ chạy xong mới sửa|Dừng Run đang chạy" />
+</Compare>
 
 ## Vì sao điều này quan trọng hơn nó nghe
 
 Durable execution nghe như một chi tiết vận hành nội bộ, nhưng nó quyết định trải
 nghiệm thực tế của khách hàng: liệu họ có nhận được câu trả lời khi hạ tầng phía sau
 gặp trục trặc thoáng qua hay không. Một chatbot không có khái niệm Run sẽ trả lỗi
-chung chung khi bước xử lý giữa chừng thất bại. Một hệ thống có Run tiếp tục chạy
-và vẫn trả lời được.
+chung chung khi bước xử lý giữa chừng thất bại.
+
+> Một hệ thống có Run tiếp tục chạy và vẫn trả lời được.
 
 Đây cũng là nền tảng cho khả năng dừng một Run đang chạy — một yêu cầu vận hành cơ
 bản khi bạn quản AI như quản một nhân viên: đôi khi bạn cần can thiệp giữa chừng,
 không phải chờ nó chạy xong rồi mới sửa.
 
 {/* en */}
+
+<Summary>
+
+1. An AI answer is **a chain of steps**, not a single call.
+2. Harnix records every answer as a **Run**: a fault mid-way **does not lose the answer**.
+3. You can see **what the AI did and what it cost**, and **stop it** when you need to.
+
+</Summary>
 
 An agent's answer is rarely just one LLM call. It's usually a chain: search the
 knowledge base, call a tool, wait for the result, then draft the final answer. If
@@ -65,19 +94,27 @@ persisted before the next one begins.
 
 This has two direct consequences:
 
-- If a worker crashes partway through, the Run isn't lost — it resumes from the last
-  recorded event, not from the start.
-- Because every step is recorded, an operator can see exactly which documents the
-  agent read, which tools it called, and how many tokens that answer cost — not
-  guess at it.
+<Points>
+
+1. If a worker crashes partway through, the Run isn't lost — it **resumes from the last recorded event**, not from the start.
+2. Because every step is recorded, an operator can see exactly **which documents the agent read, which tools it called, and how many tokens** that answer cost — not guess at it.
+
+</Points>
+
+<Compare labels="Situation|Without a Run|With a Run" caption="Figure 1. A quick comparison, summarised from this post.">
+  <Row cells="Fault at step 3|Everything lost, customer asks again|Resumes from the last recorded step" />
+  <Row cells="Reviewing an answer|Guesswork|Every step, every token" />
+  <Row cells="Need to step in|Wait for it to finish, then fix|Stop the running Run" />
+</Compare>
 
 ## Why this matters more than it sounds
 
 Durable execution sounds like an internal infrastructure detail, but it decides the
 customer's actual experience: whether they get an answer when the backend has a
 brief hiccup. A chatbot with no concept of a Run returns a generic error when a step
-fails partway through. A system built around Runs keeps going and still delivers an
-answer.
+fails partway through.
+
+> A system built around Runs keeps going and still delivers an answer.
 
 This is also the foundation for being able to stop a Run while it's running — a
 basic operational requirement when you manage AI the way you manage a colleague:

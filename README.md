@@ -17,17 +17,53 @@ and lead destination.
 
 | Path | What's in it |
 | --- | --- |
-| `app/layout.tsx` | Fonts, metadata, and the pre-paint theme/language bootstrap |
-| `app/page.tsx` | Section order |
-| `app/globals.css` | Design tokens (dark + light), keyframes, base styles |
-| `app/opengraph-image.tsx` | The 1200×630 social card, rendered from the design's template |
-| `app/icon.tsx` | Favicon drawn from the mark |
-| `app/api/*` | `posts`, `partner`, `waitlist` route handlers |
-| `components/sections/*` | One file per section of the page |
-| `lib/copy.ts` | All copy — VI is the source of truth, EN is a partial overlay |
-| `lib/config.ts` | The knobs the design exposed as editable props |
-| `content/posts.ts` | Blog rows served by `/api/posts` |
-| `design/` | The original handoff bundle: prototypes, transcripts, brief |
+| `components/root-shell.tsx` | `<html>`/`<body>`, Be Vietnam Pro, GA |
+| `components/pages/*` | Home, blog index and blog post page shells |
+| `components/sections/*` | One file per home-page section |
+| `app/globals.css` | Design tokens (night/paper/accent), keyframes, reveal utilities |
+| `lib/copy.ts` | All copy, VI and EN, same shape (`Copy` type) |
+| `lib/config.ts` | Env-driven knobs: pricing/chat flags, demo video, docs, socials |
+| `content/posts/*.mdx` | Blog posts (VI body, then `{/* en */}`, then EN body) |
+| `components/mdx-components.tsx` | Post typography plus `<Summary>`, `<Points>`, `<Compare>` |
+| `design/` | Earlier handoff bundle |
+
+## Redesign (Oct 2026)
+
+Implements `Harnix Landing.dc.html` and `Harnix Blog Post.dc.html` from the
+"Harnix UI redesign" Claude Design handoff.
+
+- **One font, fixed palette.** Be Vietnam Pro for everything (no mono). The
+  page alternates night (`#0d1014`) and paper (`#fafafa`) sections with the
+  xanh ngọc accent (`#0f8f6a` / `#47c496` on dark), so the theme toggle is gone.
+- **Pricing is hidden** until the pricing model is settled. The section is
+  intact in `components/sections/pricing.tsx`; `NEXT_PUBLIC_PRICING_ENABLED=true`
+  brings back the section, the "Bảng giá · Từ 2,9 triệu/tháng" nav item, the
+  footer link and the pricing FAQ answer. While off, the nav shows "Hỏi đáp"
+  and the FAQ says pricing is being finalised.
+- **Chat launcher** ("Hỏi Harnix") is built but off (`NEXT_PUBLIC_CHAT_ENABLED`)
+  — it is UI only. Back-to-top is always on.
+- **Leads.** The demo form posts to `/api/partner` as before (same envelope,
+  `eventType: "partner.submitted"`). Payload is now
+  `name, phone, email, company, size, want` — **`phone` is new, `app` is gone**;
+  the Apps Script/Sheet needs a `phone` column. The client now also sends
+  `locale`, `page` and the honeypot. The waitlist form is removed from the
+  page; `/api/waitlist` still works.
+- **Blog.** Posts gain `tag`, `cover` (`run` | `data` | `console`) and `tags`
+  frontmatter (EN overrides under `en:`). The post page builds its table of
+  contents from `##` headings. MDX runs with JS expressions blocked, so the
+  custom blocks take string props:
+
+  ```mdx
+  <Summary>
+
+  1. Point with **bold**.
+
+  </Summary>
+
+  <Compare labels="Tình huống|Không có Run|Có Run" caption="Hình 1.">
+    <Row cells="Sự cố|Mất hết|Chạy tiếp" />
+  </Compare>
+  ```
 
 ## Decisions worth knowing
 

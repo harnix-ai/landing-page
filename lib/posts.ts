@@ -2,8 +2,9 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import type { Post } from "@/content/posts";
+import { POST_COVERS, type Post, type PostCover } from "@/content/posts";
 import type { Lang } from "@/lib/copy";
+import { slugify } from "@/lib/slug";
 
 const POSTS_DIR = path.join(process.cwd(), "content/posts");
 
@@ -20,7 +21,11 @@ type PostFrontmatter = {
   readingMinutes: number;
   title: string;
   excerpt: string;
-  en?: { title: string; excerpt: string };
+  /** Optional; falls back to "Blog" and the `data` cover. */
+  tag?: string;
+  cover?: string;
+  tags?: string[];
+  en?: { title: string; excerpt: string; tag?: string; tags?: string[] };
 };
 
 export type PostBodyContent = { vi: string; en: string | null };
@@ -47,6 +52,9 @@ function toPost(slug: string, data: PostFrontmatter): Post {
     title: data.title,
     excerpt: data.excerpt,
     url: `/blog/${slug}`,
+    tag: data.tag ?? "Blog",
+    cover: POST_COVERS.includes(data.cover as PostCover) ? (data.cover as PostCover) : "data",
+    tags: data.tags ?? [],
     en: data.en,
   };
 }
@@ -88,7 +96,29 @@ export type LocalizedPost = {
   body: string;
   /** False when `lang` is "en" but the post has no English title/excerpt/body yet. */
   hasTranslation: boolean;
+  /** The body's `##` headings, in order — the post's table of contents. */
+  headings: PostHeading[];
+  /** Whether the body opens with a `<Summary>` block (it gets its own TOC entry). */
+  hasSummary: boolean;
 };
+
+export type PostHeading = { id: string; text: string };
+
+/** Top-level `##` lines outside fenced code blocks. */
+function extractHeadings(body: string): PostHeading[] {
+  const headings: PostHeading[] = [];
+  let inFence = false;
+  for (const line of body.split("\n")) {
+    if (line.trimStart().startsWith("```")) inFence = !inFence;
+    if (inFence) continue;
+    const match = /^##\s+(.+?)\s*$/.exec(line);
+    if (match) {
+      const text = match[1].replace(/[*_`]/g, "");
+      headings.push({ id: slugify(text), text });
+    }
+  }
+  return headings;
+}
 
 /**
  * A single post localized for `lang`, with vi-fallback baked in — the one
@@ -105,5 +135,13 @@ export function getPost(slug: string, lang: Lang): LocalizedPost | null {
     lang === "en" && post.en ? post.en : { title: post.title, excerpt: post.excerpt };
   const body = lang === "en" && hasEnBody ? (content.en as string) : content.vi;
 
-  return { post, title, excerpt, body, hasTranslation };
+  return {
+    post,
+    title,
+    excerpt,
+    body,
+    hasTranslation,
+    headings: extractHeadings(body),
+    hasSummary: /<Summary[\s>]/.test(body),
+  };
 }

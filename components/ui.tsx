@@ -1,105 +1,47 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
-/** Segmented-control styling: the design's `seg(on)` helper. */
-export function segClass(active: boolean) {
-  return active ? "bg-surface3 text-text" : "bg-transparent text-text3";
+/**
+ * Buttons, per the redesign: 14px radius (the logo's square), no icons.
+ * Primary is accent with a bright border and a soft halo that grows on hover;
+ * the outline variants turn their border accent on hover.
+ */
+export const btn = {
+  primary:
+    "inline-flex items-center justify-center rounded-[14px] border border-accent-on-night bg-accent font-semibold whitespace-nowrap text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_0_3px_rgba(71,196,150,0.14),0_10px_28px_-10px_rgba(15,143,106,0.8)] transition-[box-shadow,transform,background-color] duration-200 hover:-translate-y-px hover:bg-accent-hover hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.32),0_0_0_5px_rgba(71,196,150,0.22),0_14px_34px_-10px_rgba(15,143,106,0.95)] disabled:translate-y-0 disabled:cursor-default disabled:opacity-70",
+  /** Outline on night sections. */
+  ghost:
+    "inline-flex items-center justify-center rounded-[14px] border border-night-line3 bg-white/[0.03] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-[border-color,background-color] duration-200 hover:border-accent-on-night hover:bg-accent-on-night/[0.08]",
+  /** Outline on paper sections. */
+  outline:
+    "inline-flex items-center justify-center rounded-[14px] border border-line3 bg-card font-semibold text-ink shadow-[0_1px_0_rgba(17,20,24,0.04)] transition-colors duration-200 hover:border-accent hover:text-accent",
+  /** Solid night on paper sections. */
+  dark: "inline-flex items-center justify-center rounded-[14px] border border-night bg-night font-semibold text-white transition-colors duration-200 hover:bg-night-hover",
+} as const;
+
+/** The shared content column: 1280px with 20px gutters. */
+export function Container({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <div className={`mx-auto max-w-[1280px] px-5 ${className}`}>{children}</div>;
 }
 
-/** Every section on the page shares the same rhythm. */
-export function Section({
-  id,
-  children,
-  className = "",
+/** Vertical rhythm of a full-bleed section. */
+export const sectionPad = "py-[clamp(72px,10vw,140px)]";
+
+/**
+ * Renders `**emphasis**` in copy strings through `em` — a highlighter mark, a
+ * bold span, an accent span, whatever the context calls for.
+ */
+export function Rich({
+  text,
+  em = (part) => <strong>{part}</strong>,
 }: {
-  id?: string;
-  children: ReactNode;
-  className?: string;
+  text: string;
+  em?: (part: string) => ReactNode;
 }) {
   return (
-    <section id={id} className={`pt-[72px] ${className}`}>
-      {children}
-    </section>
-  );
-}
-
-export function SectionHeading({
-  children,
-  className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <h2
-      className={`m-0 font-display text-[clamp(24px,3.2vw,36px)] font-semibold leading-[1.15] tracking-[-0.025em] text-pretty ${className}`}
-    >
-      {children}
-    </h2>
-  );
-}
-
-export function MonoLabel({
-  children,
-  className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`font-mono text-[10px] uppercase tracking-[0.1em] text-text3 ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
-
-export function Card({
-  children,
-  className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={`rounded-xl border border-line bg-surface ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-/** Outline pill used for milestone / availability tags. */
-export function Tag({ children }: { children: ReactNode }) {
-  return (
-    <span className="rounded-full border border-line2 px-[9px] py-[3px] font-mono text-[10px] uppercase tracking-[0.06em] text-text2">
-      {children}
-    </span>
-  );
-}
-
-/** Status pill: a coloured dot plus a word, per the console's status system. */
-export function StatusPill({
-  color,
-  children,
-}: {
-  color: string;
-  children: ReactNode;
-}) {
-  return (
-    <span
-      className="inline-flex items-center gap-[5px] rounded-full px-2 py-[2px] font-mono text-[10px] uppercase tracking-[0.06em]"
-      style={{
-        color,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: `color-mix(in oklab, ${color} 40%, transparent)`,
-      }}
-    >
-      <span
-        className="h-[5px] w-[5px] rounded-full"
-        style={{ background: color }}
-      />
-      {children}
-    </span>
+    <>
+      {text.split("**").map((part, i) => (
+        <Fragment key={i}>{i % 2 === 1 ? em(part) : part}</Fragment>
+      ))}
+    </>
   );
 }

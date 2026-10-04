@@ -1,100 +1,51 @@
-type LogoProps = {
-  /** Square size of the mark, in px. */
-  markSize?: number;
-  /** Type size of the wordmark, in px. */
-  wordSize?: number;
-  /** The accent square that sits in the tittle slot of the dotless ı. */
-  dotSize?: number;
-  dotRadius?: number;
-  /** Optical gap between glyph groups in the wordmark. */
-  gap?: number;
-};
-
-export function LogoMark({ size = 26 }: { size?: number }) {
+/**
+ * The Harnix mark: a rounded square (the 14px button radius echoes it), a
+ * staircase path climbing to an accent block. `filled` puts it on a night
+ * tile so it reads on top of the accent-green chat launcher.
+ */
+export function LogoMark({ size = 34, filled = false }: { size?: number; filled?: boolean }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 28 28"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect
-        x="1.25"
-        y="1.25"
-        width="25.5"
-        height="25.5"
-        rx="7.5"
-        stroke="var(--text)"
-        strokeWidth="1.5"
-      />
+    <svg width={size} height={size} viewBox="0 0 34 34" fill="none" aria-hidden="true" className="shrink-0">
+      {filled ? (
+        <>
+          <rect x="0" y="0" width="34" height="34" rx="9" fill="#0d1014" />
+          <rect x="1.5" y="1.5" width="31" height="31" rx="8" stroke="#fff" strokeWidth="1.8" />
+        </>
+      ) : (
+        <rect x="1" y="1" width="32" height="32" rx="9" stroke="currentColor" strokeWidth="2" />
+      )}
       <path
-        d="M7 19.5 L11.5 19.5 L11.5 13 L16.5 13 L16.5 8.5 L20 8.5"
-        stroke="var(--text)"
-        strokeWidth="1.5"
+        d="M8 25H11.5V21H15V16.5H18.5V12.5H21"
+        stroke={filled ? "#fff" : "currentColor"}
+        strokeWidth="1.8"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="7" cy="19.5" r="1.9" fill="var(--text)" />
-      <rect x="17.6" y="6.1" width="4.8" height="4.8" rx="1.4" fill="var(--accent)" />
+      <circle cx="8" cy="25" r="2.2" fill={filled ? "#fff" : "currentColor"} />
+      <rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496" />
     </svg>
   );
 }
 
 /**
  * "harnıx" — the i is a dotless ı (U+0131) so the accent square can take the
- * tittle slot. The square is positioned from the glyph box, not the line box,
- * so it tracks the type size.
+ * tittle slot. Sized in `em`, so it follows whatever font size it is set in.
  */
-export function Wordmark({
-  wordSize = 20,
-  dotSize = 4.5,
-  dotRadius = 1.4,
-  gap = 0,
-}: Omit<LogoProps, "markSize">) {
+export function Wordmark({ className = "", radius = "0.04em" }: { className?: string; radius?: string }) {
   return (
     <>
-      <span
-        aria-hidden="true"
-        className="flex items-baseline font-display font-semibold tracking-[-0.02em]"
-        style={{ fontSize: wordSize, gap: gap || undefined }}
-      >
+      <span aria-hidden="true" className={className}>
         harn
-        <span className="relative inline-block leading-none">
+        <span className="relative">
           ı
           <span
-            className="absolute left-1/2 -translate-x-1/2 bg-accent"
-            style={{
-              top: "0.10em",
-              width: dotSize,
-              height: dotSize,
-              borderRadius: dotRadius,
-            }}
+            className="absolute top-[0.2em] left-1/2 h-[0.2em] w-[0.2em] -translate-x-1/2 bg-accent-on-night"
+            style={{ borderRadius: radius }}
           />
         </span>
         x
       </span>
       <span className="sr-only">Harnix</span>
     </>
-  );
-}
-
-export function Logo({
-  markSize = 26,
-  wordSize = 20,
-  dotSize = 4.5,
-  dotRadius = 1.4,
-  gap = 0,
-}: LogoProps) {
-  return (
-    <span className="flex items-center gap-[9px]">
-      <LogoMark size={markSize} />
-      <Wordmark
-        wordSize={wordSize}
-        dotSize={dotSize}
-        dotRadius={dotRadius}
-        gap={gap}
-      />
-    </span>
   );
 }

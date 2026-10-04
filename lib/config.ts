@@ -17,6 +17,10 @@ function env(value: string | undefined): string | undefined {
   return trimmed ? trimmed : undefined;
 }
 
+function flag(value: string | undefined): boolean {
+  return env(value) === "true";
+}
+
 function withScheme(host: string | undefined): string | undefined {
   return host ? `https://${host}` : undefined;
 }
@@ -53,15 +57,26 @@ export const siteConfig = {
   url: resolveSiteUrl(),
   email: "hello@harnix.vn",
 
-  /** Shown in the hero status pill: "Đang xây dựng · M1". */
-  milestone: env(process.env.NEXT_PUBLIC_MILESTONE) ?? "M1",
+  /**
+   * Availability tags on the three "how it works" cards. The literal
+   * `available` / `soon` resolve to translated copy; anything else renders
+   * verbatim, which is what milestone codes like "M2" want.
+   */
+  stepTags: ["available", "available", "soon"] as const,
 
   /**
-   * Availability tags on the three "how it works" steps. The literal
-   * `available` resolves to translated copy; anything else renders verbatim,
-   * which is what milestone codes like "M2" want.
+   * The pricing section, its header/footer links and the "from 2.9M/month"
+   * nav caption. Off until the pricing model is settled — the section and its
+   * placeholder numbers stay in `components/sections/pricing.tsx` and
+   * `lib/copy.ts`, ready to switch back on with `NEXT_PUBLIC_PRICING_ENABLED=true`.
    */
-  stepTags: ["available", "available", "M2"] as const,
+  pricingEnabled: flag(process.env.NEXT_PUBLIC_PRICING_ENABLED),
+
+  /**
+   * The "Hỏi Harnix" launcher and chat panel. The panel is UI only — it does
+   * not answer yet — so it stays off until a real chatbot is wired in.
+   */
+  chatEnabled: flag(process.env.NEXT_PUBLIC_CHAT_ENABLED),
 
   demo: {
     status: demoStatus,
@@ -87,15 +102,16 @@ export const siteConfig = {
   },
 
   social: {
-    linkedin: env(process.env.NEXT_PUBLIC_LINKEDIN_URL) ?? "",
+    linkedin:
+      env(process.env.NEXT_PUBLIC_LINKEDIN_URL) ?? "https://www.linkedin.com/company/harnix-ai",
     facebook: env(process.env.NEXT_PUBLIC_FACEBOOK_URL) ?? "",
     github: env(process.env.NEXT_PUBLIC_GITHUB_URL) ?? "",
   },
 
   /**
    * The docs site (a separate Vercel project, proxied in through the
-   * `/docs` rewrite in next.config.ts). Empty keeps the nav/footer link
-   * inert — set once DOCS_ORIGIN is live and confirmed.
+   * `/docs` rewrite in next.config.ts). Empty keeps every docs link inert —
+   * set once DOCS_ORIGIN is live and confirmed.
    */
   docsUrl: {
     vi: env(process.env.NEXT_PUBLIC_DOCS_URL_VI) ?? "",

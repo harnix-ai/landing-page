@@ -6,7 +6,7 @@ import { baseMetadata, siteViewport } from "@/lib/seo";
 export const metadata: Metadata = {
   ...baseMetadata,
   title: {
-    default: "Harnix — Harness every run.",
+    default: "Harnix — Hand work to AI. See every step.",
     template: "%s — Harnix",
   },
 };

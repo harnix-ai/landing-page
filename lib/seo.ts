@@ -33,11 +33,9 @@ export const baseMetadata: Metadata = {
   },
 };
 
+/** The header and the first section are always night, whatever the OS theme. */
 export const siteViewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0c0c0d" },
-    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
-  ],
+  themeColor: "#0d1014",
 };
 
 type PageMetadataInput = {

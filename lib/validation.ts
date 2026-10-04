@@ -2,14 +2,27 @@ import type { Lang } from "@/lib/copy";
 
 export const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
-export type PartnerField = "name" | "email" | "company" | "app" | "want";
+/**
+ * Loose on purpose: Vietnamese mobiles (0912 345 678), landlines with an
+ * area code, and international numbers (+84 912-345-678) all pass. What it
+ * catches is the obvious mistake — letters, or too few digits to dial.
+ */
+const PHONE_ALLOWED_RE = /^\+?[\d\s().-]+$/;
+const PHONE_MIN_DIGITS = 8;
+const PHONE_MAX_DIGITS = 15;
 
+export type PartnerField = "name" | "phone" | "email" | "company" | "want";
+
+/**
+ * The demo-request lead. These keys are the payload delivered to
+ * `LEADS_WEBHOOK_URL` (the leads Sheet), so renaming one renames a column.
+ */
 export type PartnerSubmission = {
   name: string;
+  phone: string;
   email: string;
   company: string;
   size: string;
-  app: string;
   want: string;
 };
 
@@ -17,26 +30,33 @@ export type FieldErrors = Partial<Record<PartnerField, true>>;
 
 export const emptyPartnerSubmission: PartnerSubmission = {
   name: "",
+  phone: "",
   email: "",
   company: "",
   size: "",
-  app: "",
   want: "",
 };
+
+export function isValidEmail(value: string) {
+  return EMAIL_RE.test(value.trim());
+}
+
+export function isValidPhone(value: string) {
+  const trimmed = value.trim();
+  if (!PHONE_ALLOWED_RE.test(trimmed)) return false;
+  const digits = trimmed.replace(/\D/g, "").length;
+  return digits >= PHONE_MIN_DIGITS && digits <= PHONE_MAX_DIGITS;
+}
 
 /** Shared by the form and the route handler so both agree on what is valid. */
 export function validatePartner(values: PartnerSubmission): FieldErrors {
   const errors: FieldErrors = {};
   if (!values.name.trim()) errors.name = true;
-  if (!EMAIL_RE.test(values.email.trim())) errors.email = true;
+  if (!isValidPhone(values.phone)) errors.phone = true;
+  if (!isValidEmail(values.email)) errors.email = true;
   if (!values.company.trim()) errors.company = true;
-  if (!values.app) errors.app = true;
   if (!values.want.trim()) errors.want = true;
   return errors;
-}
-
-export function isValidEmail(value: string) {
-  return EMAIL_RE.test(value.trim());
 }
 
 function asRecord(body: unknown): Record<string, unknown> {
@@ -47,29 +67,23 @@ function str(raw: Record<string, unknown>, key: string): string {
   return typeof raw[key] === "string" ? (raw[key] as string) : "";
 }
 
-/** Narrow an unknown JSON body into the submission shape. */
+/** Narrow an unknown JSON body into the submission shape, trimmed. */
 export function readPartnerSubmission(body: unknown): PartnerSubmission {
   const raw = asRecord(body);
   return {
-    name: str(raw, "name"),
-    email: str(raw, "email"),
-    company: str(raw, "company"),
+    name: str(raw, "name").trim(),
+    phone: str(raw, "phone").trim(),
+    email: str(raw, "email").trim(),
+    company: str(raw, "company").trim(),
     size: str(raw, "size"),
-    app: str(raw, "app"),
-    want: str(raw, "want"),
+    want: str(raw, "want").trim(),
   };
-}
-
-export const APP_VALUES = ["web", "mobile", "both"] as const;
-
-export function isValidAppValue(value: string): boolean {
-  return (APP_VALUES as readonly string[]).includes(value);
 }
 
 /**
  * Every lead form carries a honeypot field alongside its real fields. It is
  * hidden from sighted and assistive-tech users alike (see the `hp_confirm`
- * input in the form components) — a human never fills it, so any non-empty
+ * input in the form component) — a human never fills it, so any non-empty
  * value marks the submission as automated.
  */
 export const HONEYPOT_FIELD = "hp_confirm";
@@ -81,6 +95,7 @@ export function isHoneypotTriggered(body: unknown): boolean {
 /** Max lengths enforced server-side, independent of the client's own UX validation. */
 export const LIMITS = {
   name: 120,
+  phone: 32,
   email: 254,
   company: 160,
   want: 2000,

@@ -1,59 +1,58 @@
 "use client";
 
-import { useId, useState } from "react";
 import { useSite } from "@/components/providers";
-import { Section, SectionHeading } from "@/components/ui";
-import { getFaqs } from "@/lib/copy";
+import { Container, sectionPad } from "@/components/ui";
+import { siteConfig } from "@/lib/config";
 
+/**
+ * Native `<details>` accordion, first item open. The pricing answer depends on
+ * whether the pricing section is live; the JSON-LD reads the same text via
+ * `getFaqs`.
+ */
 export function Faq() {
-  const { t, lang } = useSite();
-  const [open, setOpen] = useState(0);
-  const baseId = useId();
-  const faqs = getFaqs(lang);
+  const { c } = useSite();
+  const f = c.faq;
+  const price = f.price;
+
+  const items = [
+    ...f.items.map((item) => ({ q: item.q, a: <>{item.a}</> })),
+    {
+      q: price.q,
+      a: siteConfig.pricingEnabled ? (
+        <>
+          {price.aEnabled}{" "}
+          <a href="#bang-gia" className="font-semibold text-accent hover:underline">
+            {price.link}
+          </a>
+          .
+        </>
+      ) : (
+        <>{price.aDisabled}</>
+      ),
+    },
+  ];
 
   return (
-    <Section id="faq">
-      <SectionHeading>{t("faqHead")}</SectionHeading>
-
-      <div className="mt-6 max-w-[820px] overflow-hidden rounded-xl border border-line bg-surface">
-        {faqs.map((item, i) => {
-          const isOpen = open === i;
-          return (
-            <div key={item.q} className="border-b border-line last:border-b-0">
-              <h3 className="m-0">
-                <button
-                  type="button"
-                  aria-expanded={isOpen}
-                  aria-controls={`${baseId}-answer-${i}`}
-                  onClick={() => setOpen(isOpen ? -1 : i)}
-                  className="flex w-full cursor-pointer items-center gap-3 border-0 bg-transparent px-[18px] py-4 text-left font-display text-base font-semibold text-text"
+    <section id="hoi-dap" className="bg-paper text-ink">
+      <Container className={`grid grid-cols-[repeat(auto-fit,minmax(min(100%,380px),1fr))] items-start gap-10 ${sectionPad}`}>
+        <h2 className="m-0 text-[clamp(30px,4.5vw,52px)] leading-[1.05] font-extrabold tracking-[-0.035em]">{f.title}</h2>
+        <div className="flex flex-col gap-[10px]">
+          {items.map((item, i) => (
+            <details key={item.q} open={i === 0} className="group rounded-[18px] border border-line bg-card px-6">
+              <summary className="flex cursor-pointer list-none justify-between gap-4 py-[22px] text-[18px] font-semibold">
+                {item.q}
+                <span
+                  aria-hidden="true"
+                  className="text-ink-500 transition-transform duration-200 group-open:rotate-45"
                 >
-                  <span className="flex-1">{item.q}</span>
-                  <span
-                    aria-hidden="true"
-                    className="shrink-0 font-mono text-sm text-text3"
-                  >
-                    {isOpen ? "−" : "+"}
-                  </span>
-                </button>
-              </h3>
-              {/*
-                Always rendered, hidden when collapsed. Two reasons: the
-                FAQPage markup in <StructuredData /> claims these answers are
-                on the page, and `aria-controls` above has to point at an
-                element that actually exists.
-              */}
-              <div
-                id={`${baseId}-answer-${i}`}
-                hidden={!isOpen}
-                className="max-w-[65ch] px-[18px] pb-[18px] text-[15px] text-text2"
-              >
-                {item.a}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </Section>
+                  +
+                </span>
+              </summary>
+              <p className="m-0 mb-[22px] text-[16px] leading-[1.65] text-ink-700">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </Container>
+    </section>
   );
 }
