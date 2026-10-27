@@ -19,7 +19,7 @@ export function Hero() {
       />
       <div className="relative mx-auto flex max-w-[1280px] flex-col items-start gap-[22px] px-5 pt-11 pb-12 text-left md:items-center md:gap-7 md:pt-[clamp(64px,10vw,140px)] md:pb-[clamp(40px,6vw,72px)] md:text-center">
         <div className="flex max-w-full animate-[hx-rise_0.7s_both] justify-start md:justify-center">
-          <p className="m-0 flex items-center justify-center gap-3 text-[15px] leading-[1.5] md:text-[clamp(15px,1.8vw,19px)]">
+          <p className="m-0 flex items-center justify-center gap-3 text-[15px] max-md:leading-[1.5] md:text-[clamp(15px,1.8vw,19px)]">
             <span aria-hidden="true" className="hidden h-px w-5 shrink-0 bg-night-line3 sm:w-9 md:block" />
             <span className="text-balance text-on-night3">
               {h.kicker}{" "}

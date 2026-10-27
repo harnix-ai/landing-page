@@ -17,7 +17,7 @@ export function DevCallout() {
       <div className="mx-auto max-w-[1280px] px-5 pb-14 md:pb-[clamp(64px,8vw,104px)]">
         <div className="flex flex-col gap-4 rounded-[22px] border border-night-line bg-night-panel p-[22px] md:grid md:grid-cols-[repeat(auto-fit,minmax(min(100%,340px),1fr))] md:items-center md:gap-6 md:rounded-3xl md:p-[clamp(24px,3.5vw,36px)]">
           <div className="flex flex-col gap-2">
-            <strong className="text-[20px] font-bold tracking-[-0.02em] leading-[1.25] md:text-[clamp(20px,2.4vw,26px)]">{d.title}</strong>
+            <strong className="text-[20px] font-bold tracking-[-0.02em] max-md:leading-[1.25] md:text-[clamp(20px,2.4vw,26px)]">{d.title}</strong>
             <span className="text-[15px] leading-[1.6] text-on-night3 md:text-[16px]">{d.body}</span>
           </div>
           <div className="flex flex-col gap-2 md:flex-row md:flex-wrap md:justify-start md:gap-[10px] min-[760px]:md:justify-end">
