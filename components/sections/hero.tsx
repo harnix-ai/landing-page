@@ -96,7 +96,7 @@ function HeroVideo({ videoUrl, posterUrl }: { videoUrl: string; posterUrl: strin
             style={{ opacity: isReady ? 1 : 0.45 }}
           />
           <div className="flex items-center gap-3.5 px-[18px] py-4 text-left md:absolute md:inset-x-0 md:bottom-0 md:flex-wrap md:justify-between md:gap-4 md:bg-[linear-gradient(transparent,rgba(13,16,20,0.85))] md:px-[clamp(16px,3vw,28px)] md:py-[clamp(16px,3vw,24px)]">
-            <div className="flex min-w-0 flex-1 flex-col gap-1 md:gap-1">
+            <div className="flex min-w-0 flex-col gap-1 max-md:flex-1">
               <strong className="text-[16px] font-semibold md:text-[clamp(16px,2vw,20px)]">{h.videoTitle}</strong>
               <span className="text-[14px] leading-[1.45] text-on-night3 md:hidden">{h.videoSub}</span>
               <span className="hidden text-[15px] text-on-night2 md:block">{h.videoSub}</span>

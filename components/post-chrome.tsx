@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { LogoMark, Wordmark } from "@/components/logo";
 import { useSite } from "@/components/providers";
 import { btn } from "@/components/ui";
 import { siteConfig } from "@/lib/config";
 import { localizeHref } from "@/lib/i18n";
+import { useFocusTrap } from "@/lib/use-focus-trap";
 
 /** Thin accent bar across the top of the viewport, tracking how far the reader is. */
 export function ReadingProgress() {
@@ -188,14 +190,9 @@ export function MobilePostChrome({
     };
   }, [key]);
 
-  useEffect(() => {
-    if (!menuOpen) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMenuOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [menuOpen]);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  useFocusTrap(menuOpen, menuRef, closeMenu);
 
   useEffect(() => {
     if (menuOpen) {
@@ -221,9 +218,10 @@ export function MobilePostChrome({
   };
 
   const docsHref = siteConfig.docsUrl[lang];
-  const pricingHref = siteConfig.pricingEnabled
-    ? localizeHref(lang, "/#bang-gia")
-    : localizeHref(lang, "/#hoi-dap");
+  // Same rule as the desktop nav: "Bảng giá" only while pricing is on, "Hỏi đáp" otherwise.
+  const thirdItem = siteConfig.pricingEnabled
+    ? { href: localizeHref(lang, "/#bang-gia"), ...c.nav.pricing }
+    : { href: localizeHref(lang, "/#hoi-dap"), ...c.nav.faq };
 
   return (
     <>
@@ -235,29 +233,8 @@ export function MobilePostChrome({
             aria-label="Harnix"
             className="flex items-center gap-2 text-white hover:text-white rounded-lg focus-visible:outline-2 focus-visible:outline-accent-on-night"
           >
-            <svg width="28" height="28" viewBox="0 0 34 34" fill="none" aria-hidden="true">
-              <rect x="1" y="1" width="32" height="32" rx="9" stroke="#fff" strokeWidth="2" />
-              <path
-                d="M8 25H11.5V21H15V16.5H18.5V12.5H21"
-                stroke="#fff"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="8" cy="25" r="2.2" fill="#fff" />
-              <rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496" />
-            </svg>
-            <span className="text-[19px] font-semibold leading-none tracking-[-0.02em]">
-              harn
-              <span className="relative">
-                ı
-                <span
-                  aria-hidden="true"
-                  className="absolute top-[0.2em] left-1/2 h-[0.2em] w-[0.2em] -translate-x-1/2 rounded-[0.04em] bg-accent-on-night"
-                />
-              </span>
-              x
-            </span>
+            <LogoMark size={28} />
+            <Wordmark className="text-[19px] leading-none font-semibold tracking-[-0.02em]" />
           </a>
 
           <span aria-hidden="true" className="h-5 w-px bg-night-line2" />
@@ -345,7 +322,9 @@ export function MobilePostChrome({
       {/* Mobile Menu Overlay (2b) */}
       {menuOpen && (
         <div
+          ref={menuRef}
           id="mobile-menu"
+          tabIndex={-1}
           role="dialog"
           aria-modal="true"
           aria-label={c.post.menuTitle}
@@ -365,7 +344,7 @@ export function MobilePostChrome({
 
           <div className="grid grid-cols-2 gap-2 px-4 pt-2">
             <a
-              href={localizeHref(lang, "/#product")}
+              href={localizeHref(lang, "/#cach-hoat-dong")}
               onClick={() => setMenuOpen(false)}
               className="flex h-[132px] flex-col justify-end gap-[3px] rounded-[18px] border border-night-line bg-night-card p-4 text-white hover:border-night-line2 focus-visible:outline-2 focus-visible:outline-accent-on-night"
             >
@@ -381,12 +360,12 @@ export function MobilePostChrome({
               <span className="text-[12px] text-on-night-muted">{c.nav.run.desc}</span>
             </a>
             <a
-              href={pricingHref}
+              href={thirdItem.href}
               onClick={() => setMenuOpen(false)}
               className="flex h-[132px] flex-col justify-end gap-[3px] rounded-[18px] border border-night-line bg-night-card p-4 text-white hover:border-night-line2 focus-visible:outline-2 focus-visible:outline-accent-on-night"
             >
-              <strong className="text-[19px] font-bold">{c.nav.pricing.label}</strong>
-              <span className="text-[12px] text-on-night-muted">{c.nav.pricing.desc}</span>
+              <strong className="text-[19px] font-bold">{thirdItem.label}</strong>
+              <span className="text-[12px] text-on-night-muted">{thirdItem.desc}</span>
             </a>
             <a
               href={localizeHref(lang, "/blog")}
@@ -400,13 +379,14 @@ export function MobilePostChrome({
 
           <div className="px-5 pt-4">
             <a
-              href={docsHref}
+              href={docsHref || undefined}
+              aria-disabled={docsHref ? undefined : true}
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between py-4 text-white hover:text-white rounded-lg focus-visible:outline-2 focus-visible:outline-accent-on-night"
             >
               <span className="flex flex-col gap-[3px]">
                 <span className="text-[17px] font-semibold">{c.nav.docs.label}</span>
-                <span className="text-[13px] text-on-night-muted">{c.nav.docs.desc}</span>
+                <span className="text-[13px] text-on-night-muted">{docsHref ? c.nav.docs.desc : c.nav.docsSoon}</span>
               </span>
               <span className="text-[20px] text-accent-on-night">↗</span>
             </a>

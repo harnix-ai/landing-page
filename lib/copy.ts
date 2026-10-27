@@ -317,7 +317,7 @@ const vi = {
     allUpdates: "Tất cả cập nhật",
     readNextRelated: "Đọc tiếp: tính năng liên quan",
     readNextRelatedSub:
-      "Run engine là một phần. Hai bài dưới giải thích cách Harnix giữ dữ liệu an toàn và giúp bạn vận hành trợ lý hằng ngày.",
+      "Các bài dưới đây giải thích thêm những phần khác của Harnix.",
     menuTitle: "Menu",
   },
 
@@ -727,7 +727,7 @@ const en: Copy = {
     allUpdates: "All updates",
     readNextRelated: "Read next: related features",
     readNextRelatedSub:
-      "The Run engine is one piece. The two posts below explain how Harnix keeps data safe and helps you operate assistants day to day.",
+      "The posts below cover other parts of Harnix.",
     menuTitle: "Menu",
   },
 

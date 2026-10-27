@@ -132,7 +132,7 @@ export function getMdxComponents(summaryLabel: string) {
     h2: ({ children, ...props }: Props<"h2">) => (
       <h2
         id={slugify(textOf(children))}
-        className="max-md:mt-3 max-md:text-[25px] max-md:leading-[1.15] max-md:tracking-[-0.03em] max-md:font-extrabold max-md:scroll-mt-[105px] md:mt-6 mb-0 md:scroll-mt-[110px] md:text-[clamp(28px,3.4vw,40px)] md:leading-[1.15] md:font-extrabold md:tracking-[-0.03em] text-ink text-balance"
+        className="max-md:mt-3 max-md:text-[25px] max-md:leading-[1.15] max-md:tracking-[-0.03em] max-md:font-extrabold max-md:scroll-mt-[105px] md:mt-6 mb-0 md:scroll-mt-[110px] md:text-[clamp(28px,3.4vw,40px)] md:leading-[1.15] md:font-extrabold md:tracking-[-0.03em] text-ink max-md:text-balance"
         {...props}
       >
         {children}
