@@ -1,9 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { LogoMark, Wordmark } from "@/components/logo";
 import { useSite } from "@/components/providers";
 import { btn } from "@/components/ui";
+import { siteConfig } from "@/lib/config";
 import { localizeHref } from "@/lib/i18n";
+import { useFocusTrap } from "@/lib/use-focus-trap";
 
 /** Thin accent bar across the top of the viewport, tracking how far the reader is. */
 export function ReadingProgress() {
@@ -120,5 +123,286 @@ export function TableOfContents({ items, runLink }: { items: TocItem[]; runLink:
         </a>
       )}
     </aside>
+  );
+}
+
+/**
+ * Mobile post chrome per spec 2b "Compact":
+ * - Sticky header with logo, section label, 2-line menu button
+ * - Position-tracking TOC chips row
+ * - Integrated 2px reading progress bar
+ * - Floating bottom bar with demo CTA and copy link
+ * - Full-screen accessible mobile menu
+ */
+export function MobilePostChrome({
+  items,
+  shareUrl,
+  demoHref,
+}: {
+  items: TocItem[];
+  shareUrl: string;
+  demoHref: string;
+}) {
+  const { c, lang } = useSite();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [activeToc, setActiveToc] = useState(-1);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(timer);
+  }, [copied]);
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+    } catch {
+      // Clipboard blocked
+    }
+  }
+
+  const key = items.map((item) => item.id).join(",");
+  useEffect(() => {
+    const ids = key ? key.split(",") : [];
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(100, Math.round((window.scrollY / max) * 100)) : 0;
+      setProgress(p);
+
+      let current = -1;
+      ids.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < 170) {
+          current = i;
+        }
+      });
+      setActiveToc(current);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [key]);
+
+  const menuRef = useRef<HTMLDivElement>(null);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  useFocusTrap(menuOpen, menuRef, closeMenu);
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "";
+      };
+    }
+  }, [menuOpen]);
+
+  const showChips = activeToc >= 0 || progress > 8;
+
+  const scrollToItem = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (!el) return;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const top = el.getBoundingClientRect().top + window.scrollY - 105;
+    window.scrollTo({
+      top,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+  };
+
+  const docsHref = siteConfig.docsUrl[lang];
+  // Same rule as the desktop nav: "Bảng giá" only while pricing is on, "Hỏi đáp" otherwise.
+  const thirdItem = siteConfig.pricingEnabled
+    ? { href: localizeHref(lang, "/#bang-gia"), ...c.nav.pricing }
+    : { href: localizeHref(lang, "/#hoi-dap"), ...c.nav.faq };
+
+  return (
+    <>
+      {/* Mobile Sticky Header (2b) */}
+      <header className="sticky top-0 z-20 bg-night text-white md:hidden">
+        <div className="flex h-[54px] items-center gap-3 pr-3 pl-[18px]">
+          <a
+            href={localizeHref(lang, "/")}
+            aria-label="Harnix"
+            className="flex items-center gap-2 text-white hover:text-white rounded-lg focus-visible:outline-2 focus-visible:outline-accent-on-night"
+          >
+            <LogoMark size={28} />
+            <Wordmark className="text-[19px] leading-none font-semibold tracking-[-0.02em]" />
+          </a>
+
+          <span aria-hidden="true" className="h-5 w-px bg-night-line2" />
+          <span className="text-[14px] font-semibold text-accent-label">
+            {c.post.mobileCategory}
+          </span>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label={menuOpen ? c.nav.menuClose : c.nav.menuOpen}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            className="ml-auto flex h-11 w-11 shrink-0 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-xl border-0 bg-night-card hover:bg-night-hover focus-visible:outline-2 focus-visible:outline-accent-on-night"
+          >
+            <span aria-hidden="true" className="h-0.5 w-[18px] rounded-[2px] bg-white" />
+            <span aria-hidden="true" className="ml-1.5 h-0.5 w-3 rounded-[2px] bg-accent-on-night" />
+          </button>
+        </div>
+
+        {/* Position-tracking TOC chips row */}
+        {showChips && items.length > 0 && (
+          <nav
+            aria-label={c.post.inThisPost}
+            className="flex gap-1.5 overflow-x-auto px-4 pt-0.5 pb-2.5 [scrollbar-width:none]"
+          >
+            {items.map((item, i) => {
+              const active = activeToc === i;
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => scrollToItem(e, item.id)}
+                  aria-current={active ? "location" : undefined}
+                  className={`relative flex h-[34px] shrink-0 items-center rounded-full px-3 text-[13px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-accent-on-night after:absolute after:-inset-y-[5px] after:inset-x-0 ${
+                    active ? "bg-accent-on-night text-night" : "bg-night-card text-on-night2 hover:text-white"
+                  }`}
+                >
+                  {item.text}
+                </a>
+              );
+            })}
+          </nav>
+        )}
+
+        {/* Integrated 2px reading progress bar */}
+        <div
+          role="progressbar"
+          aria-valuenow={progress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={c.post.inThisPost}
+          className="h-[2px] bg-night-rule"
+        >
+          <div
+            className="h-full bg-accent-on-night transition-[width] duration-100 ease-linear"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </header>
+
+      {/* Floating Bottom Bar (2b) */}
+      {!menuOpen && (
+        <div
+          role="region"
+          aria-label="Actions"
+          className="fixed right-3 bottom-6 left-3 z-40 flex gap-1.5 rounded-[20px] border border-night-line2 bg-[rgba(23,27,33,0.9)] p-1.5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.5)] backdrop-blur-[14px] md:hidden"
+        >
+          <a
+            href={demoHref}
+            className="flex h-[50px] flex-1 items-center justify-center rounded-[14px] border border-accent-on-night bg-accent text-[16px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] transition-colors hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-accent-on-night"
+          >
+            {c.post.ctaDemo}
+          </a>
+          <button
+            type="button"
+            onClick={copy}
+            className="h-[50px] cursor-pointer whitespace-nowrap rounded-[14px] border border-night-line3 bg-night px-3.5 text-[14px] font-semibold text-white transition-colors hover:border-accent-on-night focus-visible:outline-2 focus-visible:outline-accent-on-night"
+          >
+            <span aria-live="polite">{copied ? c.post.copied : c.post.copyLink}</span>
+          </button>
+        </div>
+      )}
+
+      {/* Mobile Menu Overlay (2b) */}
+      {menuOpen && (
+        <div
+          ref={menuRef}
+          id="mobile-menu"
+          tabIndex={-1}
+          role="dialog"
+          aria-modal="true"
+          aria-label={c.post.menuTitle}
+          className="fixed inset-0 z-60 flex flex-col overflow-y-auto bg-night pt-0 pb-[34px] text-white md:hidden"
+        >
+          <div className="flex h-[54px] items-center justify-between pr-3 pl-[18px]">
+            <span className="text-[14px] font-semibold text-on-night-muted">{c.post.menuTitle}</span>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              aria-label={c.nav.menuClose}
+              className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border-0 bg-night-card text-[22px] text-white hover:bg-night-hover focus-visible:outline-2 focus-visible:outline-accent-on-night"
+            >
+              ×
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 px-4 pt-2">
+            <a
+              href={localizeHref(lang, "/#cach-hoat-dong")}
+              onClick={() => setMenuOpen(false)}
+              className="flex h-[132px] flex-col justify-end gap-[3px] rounded-[18px] border border-night-line bg-night-card p-4 text-white hover:border-night-line2 focus-visible:outline-2 focus-visible:outline-accent-on-night"
+            >
+              <strong className="text-[19px] font-bold">{c.nav.product.label}</strong>
+              <span className="text-[12px] text-on-night-muted">{c.nav.product.desc}</span>
+            </a>
+            <a
+              href={localizeHref(lang, "/#run")}
+              onClick={() => setMenuOpen(false)}
+              className="flex h-[132px] flex-col justify-end gap-[3px] rounded-[18px] border border-night-line bg-night-card p-4 text-white hover:border-night-line2 focus-visible:outline-2 focus-visible:outline-accent-on-night"
+            >
+              <strong className="text-[19px] font-bold">{c.nav.run.label}</strong>
+              <span className="text-[12px] text-on-night-muted">{c.nav.run.desc}</span>
+            </a>
+            <a
+              href={thirdItem.href}
+              onClick={() => setMenuOpen(false)}
+              className="flex h-[132px] flex-col justify-end gap-[3px] rounded-[18px] border border-night-line bg-night-card p-4 text-white hover:border-night-line2 focus-visible:outline-2 focus-visible:outline-accent-on-night"
+            >
+              <strong className="text-[19px] font-bold">{thirdItem.label}</strong>
+              <span className="text-[12px] text-on-night-muted">{thirdItem.desc}</span>
+            </a>
+            <a
+              href={localizeHref(lang, "/blog")}
+              onClick={() => setMenuOpen(false)}
+              className="flex h-[132px] flex-col justify-end gap-[3px] rounded-[18px] border border-accent-deep-line bg-accent-deeper p-4 text-white focus-visible:outline-2 focus-visible:outline-accent-on-night"
+            >
+              <strong className="text-[19px] font-bold">{c.post.mobileCategory}</strong>
+              <span className="text-[12px] text-on-night3">{c.post.mobileCategoryDesc}</span>
+            </a>
+          </div>
+
+          <div className="px-5 pt-4">
+            <a
+              href={docsHref || undefined}
+              aria-disabled={docsHref ? undefined : true}
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between py-4 text-white hover:text-white rounded-lg focus-visible:outline-2 focus-visible:outline-accent-on-night"
+            >
+              <span className="flex flex-col gap-[3px]">
+                <span className="text-[17px] font-semibold">{c.nav.docs.label}</span>
+                <span className="text-[13px] text-on-night-muted">{docsHref ? c.nav.docs.desc : c.nav.docsSoon}</span>
+              </span>
+              <span className="text-[20px] text-accent-on-night">↗</span>
+            </a>
+          </div>
+
+          <div className="mt-auto px-4 pt-4">
+            <a
+              href={demoHref}
+              onClick={() => setMenuOpen(false)}
+              className="flex h-14 items-center justify-center rounded-[14px] border border-accent-on-night bg-accent text-[17px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_0_3px_rgba(71,196,150,0.14)] hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-accent-on-night"
+            >
+              {c.nav.cta}
+            </a>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type Dispatch, type SetStateAction, type UIEvent } from "react";
 import { useSite } from "@/components/providers";
+import { SnapRow } from "@/components/ui";
 
 const STEPS = 6;
 /** Pinning needs room: below this the story just renders finished, in flow. */
@@ -91,8 +92,9 @@ export function RunStory() {
       className="relative border-t border-night-rule bg-night"
       style={{ height: pinned ? "440vh" : "auto" }}
     >
+      <MobileRun view={view} setView={setView} />
       <div
-        className="mx-auto grid max-w-[1280px] grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] content-center items-center gap-[clamp(16px,4vw,64px)] px-5 py-[clamp(40px,5vw,48px)]"
+        className="mx-auto hidden max-w-[1280px] grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] content-center items-center gap-[clamp(16px,4vw,64px)] px-5 py-[clamp(40px,5vw,48px)] md:grid"
         style={
           pinned
             ? { position: "sticky", top: 84, height: "calc(100vh - 84px)" }
@@ -243,5 +245,131 @@ export function RunStory() {
         </div>
       </div>
     </section>
+  );
+}
+
+function MobileRun({
+  view,
+  setView,
+}: {
+  view: "biz" | "dev";
+  setView: Dispatch<SetStateAction<"biz" | "dev">>;
+}) {
+  const { c } = useSite();
+  const r = c.run;
+  const m = c.mobile;
+  const [index, setIndex] = useState(0);
+  const biz = view === "biz";
+
+  const onScroll = (event: UIEvent<HTMLDivElement>) => {
+    const el = event.currentTarget;
+    const child = el.children[0] as HTMLElement | undefined;
+    const w = child ? child.offsetWidth + 12 : 1;
+    let i = Math.round(el.scrollLeft / w);
+    if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 4) i = STEPS - 1;
+    setIndex(Math.max(0, Math.min(STEPS - 1, i)));
+  };
+
+  const slideOf = (n: number) => m.slideOf.replace("{N}", String(n)).replace("{T}", String(STEPS));
+
+  return (
+    <div className="flex flex-col gap-[22px] py-16 md:hidden">
+      <div className="flex flex-col gap-3.5 px-5">
+        <span className="self-start rounded-lg border border-accent-deep-line bg-accent-deeper px-3 py-1.5 text-[13px] font-semibold text-accent-label">
+          {r.badge}
+        </span>
+        <h2 className="m-0 text-[36px] leading-[1.02] font-extrabold tracking-[-0.04em] text-balance">
+          {r.title} <span className="text-accent-on-night">{r.titleAccent}</span>.
+        </h2>
+        <p className="m-0 text-[16px] leading-[1.6] text-pretty text-on-night3">{r.sub}</p>
+      </div>
+
+      <div
+        role="group"
+        aria-label={r.viewsLabel}
+        className="mx-5 grid grid-cols-2 gap-1 rounded-xl border border-night-line bg-night-card p-1"
+      >
+        {(["biz", "dev"] as const).map((key) => {
+          const active = view === key;
+          return (
+            <button
+              key={key}
+              type="button"
+              aria-pressed={active}
+              onClick={() => setView(key)}
+              className={`h-10 cursor-pointer rounded-[9px] border-0 text-[14px] font-semibold ${active ? "bg-white text-night" : "bg-transparent text-on-night3"}`}
+            >
+              {key === "biz" ? r.tabBiz : r.tabDev}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="flex items-center gap-3.5 px-5" aria-hidden="true">
+        <span className="text-[40px] leading-[0.9] font-extrabold tracking-[-0.05em] tabular-nums">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <div className="h-[3px] flex-1 overflow-hidden rounded-[3px] bg-night-line">
+          <div
+            className="h-full bg-accent transition-[width] duration-300"
+            style={{ width: `${((index + 1) / STEPS) * 100}%` }}
+          />
+        </div>
+        <span className="text-[14px] font-semibold text-on-night-faint">06</span>
+      </div>
+
+      <SnapRow label={m.carouselRun} hint={m.swipeSteps} hintClassName="text-on-night-muted" onScroll={onScroll}>
+        {r.steps.map((s, i) => {
+          const active = i === index;
+          const line = biz ? r.bizRows[i]?.label : DEV_EVENTS[i];
+          const time = biz ? r.bizRows[i]?.time : DEV_TIMES[i];
+          const badge = i === 4 ? "measured" : "completed";
+          return (
+            <article
+              key={s.tag}
+              aria-label={slideOf(i + 1)}
+              aria-current={active ? "step" : undefined}
+              className={`flex shrink-0 basis-[86%] snap-start flex-col gap-3 rounded-[22px] border bg-night-card p-[22px] transition-[border-color] duration-300 ${active ? "border-accent-deep-line" : "border-night-line"}`}
+            >
+              <span className="self-start rounded-md bg-accent-deep px-2.5 py-[3px] text-[12px] font-semibold text-accent-label">
+                {s.tag}
+              </span>
+              <h3 className="m-0 text-[24px] font-bold tracking-[-0.02em]">{s.title}</h3>
+              <p className="m-0 text-[15px] leading-[1.55] text-on-night3">{s.body}</p>
+              <div className="mt-auto flex flex-col gap-2.5 rounded-[14px] border border-night-line bg-night p-3.5">
+                <span className="text-[12px] font-semibold text-on-night-muted">{biz ? r.bizHead : r.devHead}</span>
+                <div className="grid grid-cols-[10px_minmax(0,1fr)_auto] items-center gap-2.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-ok" />
+                  <span className="text-[14px] leading-[1.4]">{line}</span>
+                  <span className="text-[13px] text-on-night-muted tabular-nums">{time}</span>
+                </div>
+                {!biz && (
+                  <span className="self-start rounded-md bg-accent-deep px-2 py-0.5 text-[11px] font-bold tracking-[0.06em] uppercase text-accent-on-night">
+                    {badge}
+                  </span>
+                )}
+                {biz && i === 2 && (
+                  <div className="rounded-[10px] bg-night-card px-3 py-2.5 text-[13px] leading-[1.5] text-on-night2">
+                    <span className="font-semibold text-accent-label">{r.citeSource}</span>
+                    <br />
+                    {r.citeQuote}
+                  </div>
+                )}
+                {!biz && i === STEPS - 1 && (
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {DEV_METRICS.map((metric) => (
+                      <div key={metric.label} className="rounded-lg bg-night-card px-2.5 py-2">
+                        <div className="text-[11px] text-on-night-muted">{metric.label}</div>
+                        <div className="text-[15px] font-semibold">{metric.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </SnapRow>
+    </div>
   );
 }

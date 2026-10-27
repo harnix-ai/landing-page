@@ -1,7 +1,7 @@
 "use client";
 
 import { useSite } from "@/components/providers";
-import { btn, Container, sectionPad } from "@/components/ui";
+import { btn, Container } from "@/components/ui";
 
 /**
  * Three monthly tiers, the middle one highlighted. The numbers are the
@@ -15,42 +15,43 @@ export function Pricing() {
   const p = c.pricing;
 
   return (
-    <section id="bang-gia" className="bg-night">
-      <Container className={`flex flex-col gap-12 ${sectionPad}`}>
-        <div className="flex flex-col items-center gap-4 text-center">
-          <span className="text-[15px] font-semibold text-accent-label">{p.label}</span>
-          <h2 className="m-0 text-[clamp(34px,5.5vw,68px)] leading-[1.02] font-extrabold tracking-[-0.04em]">
+    <section id="bang-gia" className="border-t border-night-rule bg-night md:border-t-0">
+      <Container className="flex flex-col gap-7 py-16 md:gap-12 md:py-[clamp(72px,10vw,140px)]">
+        <div className="flex flex-col items-center gap-3 text-center md:gap-4">
+          <span className="text-[14px] font-semibold text-accent-label md:text-[15px]">{p.label}</span>
+          <h2 className="m-0 text-[36px] leading-[1.02] font-extrabold tracking-[-0.04em] md:text-[clamp(34px,5.5vw,68px)]">
             {p.title}
           </h2>
-          <p className="m-0 max-w-[520px] text-[17px] leading-[1.6] text-on-night3">{p.sub}</p>
+          <p className="m-0 max-w-[520px] text-[16px] leading-[1.6] text-on-night3 md:text-[17px]">{p.sub}</p>
         </div>
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] items-stretch gap-4">
+        <div className="flex flex-col gap-3.5 md:grid md:grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] md:items-stretch md:gap-4">
           {p.plans.map((plan, i) => {
             const featured = i === 1;
             const isQuote = i === p.plans.length - 1;
+            const order = i === 1 ? "max-md:order-1" : i === 0 ? "max-md:order-2" : "max-md:order-3";
             return (
               <div
                 key={plan.name}
-                className={`flex flex-col gap-[22px] rounded-3xl p-8 ${featured ? "bg-card text-ink shadow-[0_0_0_4px_#0f8f6a]" : "border border-night-line bg-night-card"}`}
+                className={`${order} flex flex-col gap-[18px] rounded-[22px] p-6 md:gap-[22px] md:rounded-3xl md:p-8 ${featured ? "bg-card text-ink shadow-[0_0_0_4px_#0f8f6a]" : "border border-night-line bg-night-card"}`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="m-0 mb-[6px] text-[22px] font-bold">{plan.name}</h3>
-                    <span className={`text-[15px] ${featured ? "text-ink-500" : "text-on-night-muted"}`}>{plan.desc}</span>
+                    <h3 className="m-0 mb-1 text-[21px] font-bold md:mb-[6px] md:text-[22px]">{plan.name}</h3>
+                    <span className={`text-[14px] md:text-[15px] ${featured ? "text-ink-500" : "text-on-night-muted"}`}>{plan.desc}</span>
                   </div>
                   {featured && (
                     <span className="rounded-full bg-accent px-3 py-1 text-[12px] font-semibold text-white">{p.popular}</span>
                   )}
                 </div>
                 <div className="flex flex-wrap items-baseline gap-[6px]">
-                  <span className="text-[42px] font-extrabold tracking-[-0.04em]">{plan.price}</span>
+                  <span className="text-[36px] font-extrabold tracking-[-0.04em] md:text-[42px]">{plan.price}</span>
                   {!isQuote && (
-                    <span className={`text-[15px] ${featured ? "text-ink-500" : "text-on-night-muted"}`}>{p.perMonth}</span>
+                    <span className={`text-[14px] md:text-[15px] ${featured ? "text-ink-500" : "text-on-night-muted"}`}>{p.perMonth}</span>
                   )}
                 </div>
                 <ul
-                  className={`m-0 flex list-none flex-col gap-[10px] border-t p-0 pt-5 text-[15px] ${featured ? "border-line text-ink-700" : "border-night-line text-on-night2"}`}
+                  className={`m-0 flex list-none flex-col gap-[9px] border-t p-0 pt-4 text-[15px] md:gap-[10px] md:pt-5 ${featured ? "border-line text-ink-700" : "border-night-line text-on-night2"}`}
                 >
                   {plan.features.map((f) => (
                     <li key={f}>{f}</li>

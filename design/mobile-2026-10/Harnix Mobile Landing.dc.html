@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>body{margin:0;background:#e6e7e9;color:#111418;font-family:'Be Vietnam Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit;color:inherit}a{color:inherit;text-decoration:none}a:hover{color:#47c496}*{box-sizing:border-box}details summary::-webkit-details-marker{display:none}</style>
+</helmet>
+<section style="padding:56px 64px 96px;display:flex;flex-direction:column;gap:36px">
+  <div style="display:flex;flex-direction:column;gap:8px;max-width:900px">
+    <h1 style="margin:0;font-size:30px;font-weight:800;letter-spacing:-0.03em">Harnix · Mobile landing</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:15px;color:#4a505a"><span>390 × 844 · scroll inside each phone, everything is tappable</span><a href="Harnix Mobile Blog.dc.html" style="color:#0f8f6a;font-weight:600">Blog post (mobile) →</a></div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:72px;align-items:flex-start">
+
+    <sc-if value="{{ showA }}" hint-placeholder-val="{{ true }}"><div id="1a" style="display:flex;flex-direction:column;gap:18px;width:414px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 10px;border-radius:8px;background:#111418;color:#fff;font-size:13px;font-weight:700">1a</span><strong style="font-size:19px;font-weight:700">Editorial</strong></div>
+        <span style="font-size:15px;line-height:1.5;color:#4a505a">Keeps the desktop rhythm: alternating dark/light sections, large type, demo button in the top bar, floating assistant.</span>
+      </div>
+      <div style="width:414px;height:868px;padding:12px;border-radius:64px;background:#050607;box-shadow:0 0 0 2px #2a2f36,0 40px 80px -30px rgba(0,0,0,0.45)">
+        <div style="position:relative;width:390px;height:844px;border-radius:52px;overflow:hidden;background:#0d1014;color:#fff;isolation:isolate">
+          <div style="position:absolute;left:0;right:0;top:0;height:50px;z-index:70;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 42px;pointer-events:none;color:#fff;font-size:16px;font-weight:600"><span>9:41</span><span style="position:absolute;left:50%;top:11px;width:124px;height:36px;transform:translateX(-50%);border-radius:20px;background:#000"></span><span style="display:flex;align-items:center;gap:6px"><span style="display:flex;align-items:flex-end;gap:2px;height:12px"><span style="width:3px;height:4px;background:#fff;border-radius:1px"></span><span style="width:3px;height:6px;background:#fff;border-radius:1px"></span><span style="width:3px;height:9px;background:#fff;border-radius:1px"></span><span style="width:3px;height:12px;background:#fff;border-radius:1px"></span></span><span style="width:25px;height:12px;border:1.5px solid rgba(255,255,255,0.5);border-radius:4px;padding:1.5px;display:flex"><span style="flex:1;background:#fff;border-radius:2px"></span></span></span></div>
+
+          <div ref="{{ refA }}" onScroll="{{ scrollA }}" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;overscroll-behavior:contain">
+            <header style="position:sticky;top:0;z-index:20;padding-top:50px;background:rgba(13,16,20,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #1d2229">
+              <div style="height:60px;padding:0 12px 0 18px;display:flex;align-items:center;gap:10px">
+                <a href="#a-top" onClick="{{ go }}" aria-label="Harnix" style="display:flex;align-items:center;gap:8px;color:#fff" style-hover="color:#fff"><svg width="30" height="30" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="9" stroke="#fff" stroke-width="2"></rect><path d="M8 25H11.5V21H15V16.5H18.5V12.5H21" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="8" cy="25" r="2.2" fill="#fff"></circle><rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496"></rect></svg><span style="font-size:21px;font-weight:600;letter-spacing:-0.02em;line-height:1">harn<span style="position:relative">ı<span style="position:absolute;left:50%;top:0.2em;width:0.2em;height:0.2em;transform:translateX(-50%);background:#47c496;border-radius:0.04em"></span></span>x</span></a>
+                <a href="#a-demo" onClick="{{ go }}" style="margin-left:auto;height:42px;padding:0 14px;display:flex;align-items:center;border-radius:12px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),0 0 0 3px rgba(71,196,150,0.14);color:#fff;font-weight:600;font-size:14px;white-space:nowrap" style-hover="color:#fff">Đặt lịch demo</a>
+                <button onClick="{{ toggleMenuA }}" aria-label="Menu" style="width:44px;height:44px;border:1px solid #2f353e;border-radius:12px;background:#171b21;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;flex:none"><span style="width:18px;height:2px;background:#fff;border-radius:2px"></span><span style="width:12px;height:2px;background:#47c496;border-radius:2px;margin-left:6px"></span></button>
+              </div>
+            </header>
+
+            <section style="position:relative;overflow:hidden;padding:44px 20px 48px;display:flex;flex-direction:column;gap:22px">
+              <div style="position:absolute;left:50%;top:-160px;width:520px;height:520px;transform:translateX(-50%);border-radius:50%;background:#0f8f6a;opacity:0.2;filter:blur(100px);pointer-events:none"></div>
+              <div style="position:relative;font-size:15px;line-height:1.5;color:#b8bec8">Nền tảng vận hành trợ lý AI cho <span style="font-weight:600;color:#fff;padding-bottom:2px;border-bottom:2px solid #47c496">doanh nghiệp</span></div>
+              <h1 style="position:relative;margin:0;font-size:50px;line-height:0.98;letter-spacing:-0.045em;font-weight:800;text-wrap:balance">Giao việc cho AI.<br><span style="color:#47c496">Nắm từng bước.</span></h1>
+              <p style="position:relative;margin:0;font-size:17px;line-height:1.6;color:#b8bec8;text-wrap:pretty">Harnix giúp doanh nghiệp đưa trợ lý AI vào app sẵn có, và thấy rõ từng câu trả lời: AI đã đọc tài liệu nào, làm những bước gì, tốn bao nhiêu.</p>
+              <div style="position:relative;display:flex;flex-direction:column;gap:10px">
+                <a href="#a-demo" onClick="{{ go }}" style="height:56px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),0 0 0 3px rgba(71,196,150,0.14),0 10px 28px -10px rgba(15,143,106,0.8);color:#fff;font-weight:600;font-size:17px" style-hover="color:#fff">Đặt lịch demo</a>
+                <a href="#a-video" onClick="{{ go }}" style="height:56px;display:flex;align-items:center;justify-content:center;border-radius:14px;border:1px solid #3a4049;background:rgba(255,255,255,0.03);color:#fff;font-weight:600;font-size:17px" style-hover="color:#fff">Xem video 40 giây</a>
+              </div>
+              <div id="a-video" style="position:relative;margin-top:10px;border-radius:22px;overflow:hidden;border:1px solid #2a3038;background:#171b21">
+                <img src="https://s3.lequoctrung.id.vn/harnix/harnix-film-vi-poster.png" alt="Video giới thiệu Harnix: xem cả hành trình trong 40 giây" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block">
+                <div style="padding:16px 18px;display:flex;align-items:center;gap:14px">
+                  <div style="flex:1;display:flex;flex-direction:column;gap:4px"><strong style="font-size:16px;font-weight:600">Xem cả hành trình trong 40 giây</strong><span style="font-size:14px;line-height:1.45;color:#b8bec8">Từ một tổ chức trống tới trợ lý AI đang trả lời khách trong app mẫu.</span></div>
+                  <span style="width:48px;height:48px;flex:none;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;margin-left:4px;border-left:14px solid #0d1014;border-top:9px solid transparent;border-bottom:9px solid transparent"></span></span>
+                </div>
+              </div>
+            </section>
+
+            <section style="background:#fafafa;color:#111418;padding:64px 20px;display:flex;flex-direction:column;gap:32px">
+              <h2 style="margin:0;font-size:36px;line-height:1.02;letter-spacing:-0.04em;font-weight:800;text-wrap:balance">Chatbot khác chỉ trả lời.<br><span style="color:#0f8f6a">Harnix cho bạn thấy vì sao.</span></h2>
+              <div style="display:flex;flex-direction:column;border-top:1px solid #d5d8de">
+                <div style="padding:26px 0;border-bottom:1px solid #d5d8de;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:14px;font-weight:700;color:#0f8f6a">01</span><h3 style="margin:0;font-size:23px;letter-spacing:-0.02em;font-weight:700">Câu trả lời có căn cứ</h3></div><p style="margin:0;font-size:17px;line-height:1.6;color:#3a3f47;text-wrap:pretty">Mỗi câu trả lời <mark style="background:linear-gradient(transparent 58%,#bfead8 58%);color:#111418;font-weight:600;padding:0 2px">dẫn được nguồn</mark> từ tài liệu công ty, để đội ngũ <mark style="background:linear-gradient(transparent 58%,#bfead8 58%);color:#111418;font-weight:600;padding:0 2px">chủ động rà soát chất lượng</mark> thay vì chờ phản hồi từ khách hàng.</p></div>
+                <div style="padding:26px 0;border-bottom:1px solid #d5d8de;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:14px;font-weight:700;color:#0f8f6a">02</span><h3 style="margin:0;font-size:23px;letter-spacing:-0.02em;font-weight:700">Ngân sách trong tầm kiểm soát</h3></div><p style="margin:0;font-size:17px;line-height:1.6;color:#3a3f47;text-wrap:pretty">Biết rõ <mark style="background:linear-gradient(transparent 58%,#bfead8 58%);color:#111418;font-weight:600;padding:0 2px">mỗi câu trả lời tốn bao nhiêu</mark> là nền tảng để <mark style="background:linear-gradient(transparent 58%,#bfead8 58%);color:#111418;font-weight:600;padding:0 2px">lập kế hoạch chi phí</mark> và tự tin mở rộng khi cần.</p></div>
+                <div style="padding:26px 0;border-bottom:1px solid #d5d8de;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:14px;font-weight:700;color:#0f8f6a">03</span><h3 style="margin:0;font-size:23px;letter-spacing:-0.02em;font-weight:700">Dữ liệu được bảo vệ</h3></div><p style="margin:0;font-size:17px;line-height:1.6;color:#3a3f47;text-wrap:pretty">Tài liệu nội bộ và hội thoại khách hàng được <mark style="background:linear-gradient(transparent 58%,#bfead8 58%);color:#111418;font-weight:600;padding:0 2px">lưu trữ tách biệt</mark>, <mark style="background:linear-gradient(transparent 58%,#bfead8 58%);color:#111418;font-weight:600;padding:0 2px">xoá được theo yêu cầu</mark>, đáp ứng NĐ 13/2023.</p></div>
+              </div>
+            </section>
+
+            <section id="a-cach" style="padding:64px 20px;display:flex;flex-direction:column;gap:32px;border-top:1px solid #1d2229">
+              <div style="display:flex;flex-direction:column;gap:14px"><span style="font-size:14px;font-weight:600;color:#6fd4b0">Cách hoạt động</span><h2 style="margin:0;font-size:34px;line-height:1.04;letter-spacing:-0.04em;font-weight:800;text-wrap:balance">Tài liệu bạn đã có. <span style="color:#47c496">Phần còn lại Harnix lo.</span></h2><p style="margin:0;font-size:17px;line-height:1.6;color:#b8bec8;text-wrap:pretty">Không cần đội AI riêng, không cần xây hệ thống mới. Trợ lý dùng chính tài liệu công ty để trả lời khách ngay trong app bạn đang có.</p></div>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="padding:24px;border-radius:22px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:18px">
+                  <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:48px;font-weight:800;letter-spacing:-0.05em;line-height:0.8;color:#2a3038">1</span><span style="font-size:13px;font-weight:600;color:#47c496">Có sẵn</span></div>
+                  <h3 style="margin:0;font-size:22px;line-height:1.25;font-weight:700;letter-spacing:-0.02em;text-wrap:balance">Trợ lý nắm chính sách công ty ngay từ ngày đầu</h3>
+                  <div style="display:flex;flex-direction:column;border-top:1px solid #262b33">
+                    <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid #262b33"><span style="font-size:13px;font-weight:600;color:#8a909a">Bạn chỉ cần</span><span style="font-size:15px;line-height:1.5;color:#d8dce2">Tải lên tài liệu đang dùng: chính sách, bảng giá, hướng dẫn (PDF, Word)</span></div>
+                    <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;padding:12px 0 0"><span style="font-size:13px;font-weight:600;color:#47c496">Harnix lo</span><span style="font-size:15px;line-height:1.5;color:#fff;font-weight:500">Đọc, ghi nhớ và trả lời kèm trích dẫn đúng nguồn</span></div>
+                  </div>
+                </div>
+                <div style="padding:24px;border-radius:22px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:18px">
+                  <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:48px;font-weight:800;letter-spacing:-0.05em;line-height:0.8;color:#2a3038">2</span><span style="font-size:13px;font-weight:600;color:#47c496">Có sẵn</span></div>
+                  <h3 style="margin:0;font-size:22px;line-height:1.25;font-weight:700;letter-spacing:-0.02em;text-wrap:balance">Trả lời nhất quán, đúng phạm vi bạn cho phép</h3>
+                  <div style="display:flex;flex-direction:column;border-top:1px solid #262b33">
+                    <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid #262b33"><span style="font-size:13px;font-weight:600;color:#8a909a">Bạn chỉ cần</span><span style="font-size:15px;line-height:1.5;color:#d8dce2">Mô tả vai trò trong vài câu, VD: “nhân viên CSKH, chỉ tư vấn đổi trả”</span></div>
+                    <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;padding:12px 0 0"><span style="font-size:13px;font-weight:600;color:#47c496">Harnix lo</span><span style="font-size:15px;line-height:1.5;color:#fff;font-weight:500">Giữ trợ lý trong đúng phạm vi đó, không trả lời lan man</span></div>
+                  </div>
+                </div>
+                <div style="padding:24px;border-radius:22px;background:#0f8f6a;display:flex;flex-direction:column;gap:18px">
+                  <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:48px;font-weight:800;letter-spacing:-0.05em;line-height:0.8;color:rgba(255,255,255,0.35)">3</span><span style="font-size:13px;font-weight:600;color:#d6f5e8">Sắp có</span></div>
+                  <h3 style="margin:0;font-size:22px;line-height:1.25;font-weight:700;letter-spacing:-0.02em;text-wrap:balance">Khách được phục vụ 24/7, chi phí minh bạch</h3>
+                  <div style="display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,0.2)">
+                    <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.2)"><span style="font-size:13px;font-weight:600;color:#d6f5e8">Bạn chỉ cần</span><span style="font-size:15px;line-height:1.5;color:#fff">Đội kỹ thuật gắn khung chat vào app, có Harnix hỗ trợ trực tiếp</span></div>
+                    <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;padding:12px 0 0"><span style="font-size:13px;font-weight:600;color:#fff">Harnix lo</span><span style="font-size:15px;line-height:1.5;color:#fff;font-weight:500">Ghi lại từng bước và chi phí của từng câu trả lời</span></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section style="background:#fafafa;color:#111418;padding:64px 0;display:flex;flex-direction:column;gap:24px">
+              <h2 style="margin:0;padding:0 20px;font-size:31px;line-height:1.06;letter-spacing:-0.04em;font-weight:800;text-wrap:balance">Quản AI như quản một nhân viên giỏi: <span style="color:#a0a6b0">có báo cáo, có kiểm soát, có ngân sách.</span></h2>
+              <div style="margin:0 20px;padding:20px;border-radius:20px;background:#fff;border:1px solid #e4e6ea;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;align-items:center;gap:14px"><span style="width:46px;height:46px;flex:none;border-radius:13px;background:#e5f4ee;color:#0f8f6a;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800">01</span><div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0f8f6a">Dành cho</span><strong style="font-size:20px;letter-spacing:-0.02em;font-weight:700">Ban điều hành &amp; vận hành</strong></div></div>
+                <span style="font-size:15px;line-height:1.5;color:#3a3f47"><strong style="color:#111418">Bạn nắm được:</strong> AI đang làm gì, tốn bao nhiêu, và can thiệp lúc nào.</span>
+                <div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:6px 12px;border-radius:8px;border:1px solid #d5d8de;font-size:13px;font-weight:600;color:#3a3f47">Chủ doanh nghiệp</span><span style="padding:6px 12px;border-radius:8px;border:1px solid #d5d8de;font-size:13px;font-weight:600;color:#3a3f47">Trưởng phòng CSKH</span><span style="padding:6px 12px;border-radius:8px;border:1px solid #d5d8de;font-size:13px;font-weight:600;color:#3a3f47">Vận hành</span></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;padding:0 20px 4px;scrollbar-width:none">
+                  <div style="flex:0 0 80%;scroll-snap-align:start;padding:24px;border-radius:22px;background:#0d1014;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;min-height:230px"><h3 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.02em">Báo cáo từng việc</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#b8bec8">Mỗi câu trả lời có biên bản riêng: AI đã đọc tài liệu nào, làm những bước gì.</p></div>
+                  <div style="flex:0 0 80%;scroll-snap-align:start;padding:24px;border-radius:22px;background:#fff;border:1px solid #e4e6ea;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;min-height:230px"><h3 style="margin:0;font-size:22px;font-weight:700;letter-spacing:-0.02em">Can thiệp tức thì</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#3a3f47">Dừng một câu trả lời đang xử lý ngay khi thấy chưa ổn.</p></div>
+                  <div style="flex:0 0 80%;scroll-snap-align:start;padding:24px;border-radius:22px;background:#e5f4ee;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;min-height:230px"><span style="font-size:40px;font-weight:800;letter-spacing:-0.04em;color:#0f8f6a">~38đ</span><h3 style="margin:0;font-size:22px;font-weight:700;letter-spacing:-0.02em">Chi phí theo từng câu</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#3a3f47">Biết chính xác mỗi câu trả lời, mỗi trợ lý tốn bao nhiêu.</p></div>
+                  <div style="flex:0 0 80%;scroll-snap-align:start;padding:24px;border-radius:22px;background:#fff;border:1px solid #e4e6ea;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;min-height:230px"><h3 style="margin:0;font-size:22px;font-weight:700;letter-spacing:-0.02em">Không bị khoá nhà cung cấp</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#3a3f47">Dùng OpenAI, mô hình tương thích hoặc tự triển khai, đổi khi cần.</p></div>
+                  <div style="flex:0 0 80%;scroll-snap-align:start;padding:24px;border-radius:22px;background:#fff;border:1px solid #e4e6ea;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;min-height:230px"><span style="align-self:flex-start;padding:4px 12px;border-radius:8px;background:#f1f2f4;font-size:13px;font-weight:600">NĐ 13/2023</span><h3 style="margin:0;font-size:22px;font-weight:700;letter-spacing:-0.02em">Dữ liệu tách riêng</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#3a3f47">Mỗi doanh nghiệp một vùng dữ liệu; xoá dữ liệu cá nhân theo yêu cầu.</p></div>
+                  <div style="flex:0 0 80%;scroll-snap-align:start;padding:24px;border-radius:22px;background:#fff;border:1px solid #e4e6ea;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;min-height:230px"><h3 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.02em">Không bỏ dở việc</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#3a3f47">Hệ thống gặp sự cố, câu trả lời vẫn được hoàn thành.</p></div>
+                </div>
+                <span style="padding:0 20px;font-size:13px;font-weight:600;color:#6b717b">Vuốt để xem thêm →</span>
+              </div>
+              <div style="margin:16px 20px 0;padding:20px;border-radius:20px;background:#0d1014;color:#fff;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;align-items:center;gap:14px"><span style="width:46px;height:46px;flex:none;border-radius:13px;background:#0f8f6a;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800">02</span><div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6fd4b0">Dành cho</span><strong style="font-size:20px;letter-spacing:-0.02em;font-weight:700">Đội kỹ thuật</strong></div></div>
+                <span style="font-size:15px;line-height:1.5;color:#b8bec8"><strong style="color:#fff">Bạn nắm được:</strong> tích hợp ra sao, an toàn thế nào, cần làm gì ở phía app.</span>
+                <div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:6px 12px;border-radius:8px;background:#171b21;border:1px solid #2f353e;font-size:13px;font-weight:600;color:#d8dce2">Giám đốc IT / CTO</span><span style="padding:6px 12px;border-radius:8px;background:#171b21;border:1px solid #2f353e;font-size:13px;font-weight:600;color:#d8dce2">Developer</span></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;padding:0 20px 4px;scrollbar-width:none">
+                  <div style="flex:0 0 72%;scroll-snap-align:start;padding:22px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:10px;min-height:170px"><strong style="font-size:18px;font-weight:700;color:#fff">API key chỉ ở máy chủ</strong><span style="font-size:15px;line-height:1.6;color:#b8bec8">Backend đổi API key lấy token ngắn hạn cho từng người dùng. Trình duyệt không bao giờ thấy key.</span></div>
+                  <div style="flex:0 0 72%;scroll-snap-align:start;padding:22px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:10px;min-height:170px"><strong style="font-size:18px;font-weight:700;color:#fff">Streaming kèm trích dẫn</strong><span style="font-size:15px;line-height:1.6;color:#b8bec8">Câu trả lời hiện dần theo thời gian thực, mỗi đoạn kèm nguồn tài liệu.</span></div>
+                  <div style="flex:0 0 72%;scroll-snap-align:start;padding:22px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:10px;min-height:170px"><strong style="font-size:18px;font-weight:700;color:#fff">Widget cách ly CSS</strong><span style="font-size:15px;line-height:1.6;color:#b8bec8">Khung chat chạy trong shadow DOM, không ảnh hưởng giao diện app sẵn có.</span></div>
+                  <div style="flex:0 0 72%;scroll-snap-align:start;padding:22px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:10px;min-height:170px"><strong style="font-size:18px;font-weight:700;color:#fff">Model tuỳ chọn</strong><span style="font-size:15px;line-height:1.6;color:#b8bec8">Endpoint OpenAI-compatible hoặc mô hình tự host.</span></div>
+                </div>
+                <span style="padding:0 20px;font-size:13px;font-weight:600;color:#6b717b">Vuốt để xem thêm →</span>
+              </div>
+              <div style="padding:8px 20px 0;display:flex;flex-direction:column;gap:10px">
+                <a href="https://harnix.vn/docs" style="height:52px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:#0d1014;color:#fff;font-weight:600;font-size:16px" style-hover="color:#fff">Đọc tài liệu tích hợp</a>
+                <a href="Harnix Mobile Blog.dc.html" style="height:52px;display:flex;align-items:center;justify-content:center;border-radius:14px;border:1px solid #c4c9d1;background:#fff;color:#111418;font-weight:600;font-size:16px" style-hover="color:#0f8f6a">Vì sao mỗi câu trả lời là một Run</a>
+              </div>
+            </section>
+
+            <section id="a-run" style="padding:64px 0 48px;display:flex;flex-direction:column;gap:22px;border-top:1px solid #1d2229">
+              <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px">
+                <span style="align-self:flex-start;padding:6px 12px;border-radius:8px;border:1px solid #2a5a47;background:#0f241c;color:#6fd4b0;font-size:13px;font-weight:600">Tính năng cốt lõi · Run engine</span>
+                <h2 style="margin:0;font-size:36px;line-height:1.02;letter-spacing:-0.04em;font-weight:800;text-wrap:balance">Mỗi câu trả lời là một <span style="color:#47c496">Run</span>.</h2>
+                <p style="margin:0;font-size:16px;line-height:1.6;color:#b8bec8;text-wrap:pretty">Run là biên bản làm việc của AI: ghi lại từng bước, đo đúng chi phí, dừng được giữa chừng và không bỏ dở kể cả khi hệ thống gặp sự cố.</p>
+              </div>
+              <div style="margin:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:12px;background:#171b21;border:1px solid #262b33">
+                <button onClick="{{ bizA }}" style="height:40px;border:0;border-radius:9px;background:{{ bizBgA }};color:{{ bizFgA }};font-size:14px;font-weight:600;cursor:pointer">Góc nhìn kinh doanh</button>
+                <button onClick="{{ devA }}" style="height:40px;border:0;border-radius:9px;background:{{ devBgA }};color:{{ devFgA }};font-size:14px;font-weight:600;cursor:pointer">Góc nhìn kỹ thuật</button>
+              </div>
+              <div style="padding:0 20px;display:flex;align-items:center;gap:14px"><span style="font-size:40px;font-weight:800;letter-spacing:-0.05em;line-height:0.9;font-variant-numeric:tabular-nums">{{ runNoA }}</span><div style="flex:1;height:3px;border-radius:3px;background:#262b33;overflow:hidden"><div style="height:100%;width:{{ runBarA }};background:#0f8f6a;transition:width .3s"></div></div><span style="font-size:14px;color:#5c636e;font-weight:600">06</span></div>
+              <div onScroll="{{ runScrollA }}" style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;padding:0 20px 4px;scrollbar-width:none">
+                <sc-for list="{{ stepsA }}" as="item" hint-placeholder-count="2">
+                  <div style="flex:0 0 86%;scroll-snap-align:start;padding:22px;border-radius:22px;background:#171b21;border:1px solid {{ item.bd }};display:flex;flex-direction:column;gap:12px;transition:border-color .3s">
+                    <span style="align-self:flex-start;padding:3px 10px;border-radius:6px;background:#12392a;color:#6fd4b0;font-size:12px;font-weight:600">{{ item.tag }}</span>
+                    <h3 style="margin:0;font-size:24px;letter-spacing:-0.02em;font-weight:700">{{ item.title }}</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.55;color:#b8bec8">{{ item.desc }}</p>
+                    <div style="margin-top:auto;padding:14px;border-radius:14px;background:#0d1014;border:1px solid #262b33;display:flex;flex-direction:column;gap:10px">
+                      <span style="font-size:12px;font-weight:600;color:#8a909a">{{ item.panelTitle }}</span>
+                      <div style="display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:10px;align-items:center"><span style="width:10px;height:10px;border-radius:50%;background:#3ccf8e"></span><span style="font-size:14px;line-height:1.4">{{ item.line }}</span><span style="font-size:13px;color:#8a909a;font-variant-numeric:tabular-nums">{{ item.time }}</span></div>
+                      <sc-if value="{{ item.showBadge }}" hint-placeholder-val="{{ false }}"><span style="align-self:flex-start;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:#12392a;color:#47c496">{{ item.badge }}</span></sc-if>
+                      <sc-if value="{{ item.showQuote }}" hint-placeholder-val="{{ false }}"><div style="padding:10px 12px;border-radius:10px;background:#171b21;font-size:13px;line-height:1.5;color:#d8dce2"><span style="color:#6fd4b0;font-weight:600">Chính sách bảo hành.pdf · trang 4</span><br>“Khách hàng có thể đổi trả trong 30 ngày kể từ ngày nhận hàng…”</div></sc-if>
+                      <sc-if value="{{ item.showMetrics }}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px"><div style="padding:8px 10px;border-radius:8px;background:#171b21"><div style="font-size:11px;color:#8a909a">Tokens in</div><div style="font-size:15px;font-weight:600">1,024</div></div><div style="padding:8px 10px;border-radius:8px;background:#171b21"><div style="font-size:11px;color:#8a909a">Tokens out</div><div style="font-size:15px;font-weight:600">216</div></div><div style="padding:8px 10px;border-radius:8px;background:#171b21"><div style="font-size:11px;color:#8a909a">Latency</div><div style="font-size:15px;font-weight:600">2.40s</div></div></div></sc-if>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <span style="padding:0 20px;font-size:13px;font-weight:600;color:#8a909a">Vuốt để xem từng bước →</span>
+            </section>
+
+            <section style="padding:0 20px 56px">
+              <div style="padding:22px;border-radius:22px;border:1px solid #262b33;background:#12161b;display:flex;flex-direction:column;gap:16px">
+                <div style="display:flex;flex-direction:column;gap:8px"><strong style="font-size:20px;font-weight:700;letter-spacing:-0.02em;line-height:1.25">Đội kỹ thuật của bạn sẽ muốn đọc phần này</strong><span style="font-size:15px;line-height:1.6;color:#b8bec8">Durable execution, trace đầy đủ, huỷ Run đang chạy, endpoint OpenAI-compatible. Gửi cho họ để cùng đánh giá.</span></div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <a href="Harnix Mobile Blog.dc.html" style="height:50px;display:flex;align-items:center;justify-content:center;border-radius:14px;border:1px solid #3a4049;background:rgba(255,255,255,0.03);font-weight:600;font-size:15px" style-hover="color:#fff">Vì sao mỗi câu trả lời là một Run</a>
+                  <a href="https://harnix.vn/docs" style="height:50px;display:flex;align-items:center;justify-content:center;border-radius:14px;border:1px solid #3a4049;background:rgba(255,255,255,0.03);font-weight:600;font-size:15px" style-hover="color:#fff">Tài liệu tích hợp</a>
+                </div>
+              </div>
+            </section>
+
+            <section id="a-gia" style="padding:64px 20px;display:flex;flex-direction:column;gap:28px;border-top:1px solid #1d2229">
+              <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px"><span style="font-size:14px;font-weight:600;color:#6fd4b0">Bảng giá</span><h2 style="margin:0;font-size:36px;line-height:1.02;letter-spacing:-0.04em;font-weight:800">Gói tháng, rõ ràng</h2><p style="margin:0;font-size:16px;line-height:1.6;color:#b8bec8">Chi phí mô hình AI trả trực tiếp cho nhà cung cấp bạn chọn. Harnix không cộng thêm.</p></div>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="padding:24px;border-radius:22px;background:#fff;color:#111418;display:flex;flex-direction:column;gap:18px;box-shadow:0 0 0 4px #0f8f6a"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div><h3 style="margin:0 0 4px;font-size:21px;font-weight:700">Business</h3><span style="font-size:14px;color:#6b717b">Vận hành nhiều phòng ban</span></div><span style="padding:4px 12px;border-radius:999px;background:#0f8f6a;color:#fff;font-size:12px;font-weight:600">Phổ biến</span></div><div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap"><span style="font-size:36px;font-weight:800;letter-spacing:-0.04em">9.900.000đ</span><span style="font-size:14px;color:#6b717b">/tháng</span></div><div style="display:flex;flex-direction:column;gap:9px;font-size:15px;color:#3a3f47;padding-top:16px;border-top:1px solid #e4e6ea"><span>5 trợ lý AI</span><span>20.000 câu trả lời/tháng</span><span>5 GB tài liệu</span><span>Nhật ký 1 năm, báo cáo chi phí</span><span>Hỗ trợ tích hợp trực tiếp</span></div><a href="#a-demo" onClick="{{ go }}" style="height:54px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),0 0 0 3px rgba(71,196,150,0.14);color:#fff;font-weight:600;font-size:16px" style-hover="color:#fff">Đặt lịch demo</a></div>
+                <div style="padding:24px;border-radius:22px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:18px"><div><h3 style="margin:0 0 4px;font-size:21px;font-weight:700">Starter</h3><span style="font-size:14px;color:#8a909a">Thử nghiệm với một nhóm nhỏ</span></div><div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap"><span style="font-size:36px;font-weight:800;letter-spacing:-0.04em">2.900.000đ</span><span style="font-size:14px;color:#8a909a">/tháng</span></div><div style="display:flex;flex-direction:column;gap:9px;font-size:15px;color:#d8dce2;padding-top:16px;border-top:1px solid #262b33"><span>1 trợ lý AI</span><span>3.000 câu trả lời/tháng</span><span>500 MB tài liệu</span><span>Nhật ký 30 ngày</span></div><a href="#a-demo" onClick="{{ go }}" style="height:52px;display:flex;align-items:center;justify-content:center;border-radius:14px;border:1px solid #3a4049;background:rgba(255,255,255,0.03);font-weight:600" style-hover="color:#fff">Đặt lịch demo</a></div>
+                <div style="padding:24px;border-radius:22px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:18px"><div><h3 style="margin:0 0 4px;font-size:21px;font-weight:700">Enterprise</h3><span style="font-size:14px;color:#8a909a">Yêu cầu riêng về bảo mật</span></div><span style="font-size:36px;font-weight:800;letter-spacing:-0.04em">Liên hệ</span><div style="display:flex;flex-direction:column;gap:9px;font-size:15px;color:#d8dce2;padding-top:16px;border-top:1px solid #262b33"><span>Không giới hạn trợ lý</span><span>Triển khai trên hạ tầng riêng</span><span>Cam kết chất lượng dịch vụ (SLA)</span><span>Đầu mối hỗ trợ riêng</span></div><a href="#a-demo" onClick="{{ go }}" style="height:52px;display:flex;align-items:center;justify-content:center;border-radius:14px;border:1px solid #3a4049;background:rgba(255,255,255,0.03);font-weight:600" style-hover="color:#fff">Liên hệ sales</a></div>
+              </div>
+              <p style="margin:0;text-align:center;font-size:13px;color:#8a909a;font-style:italic">Giá và giới hạn là số giả định, sẽ cập nhật.</p>
+            </section>
+
+            <section id="a-blog" style="background:#fafafa;color:#111418;padding:64px 20px;display:flex;flex-direction:column;gap:24px">
+              <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:14px;font-weight:600;color:#0f8f6a">Cập nhật</span><h2 style="margin:0;font-size:34px;line-height:1.04;letter-spacing:-0.04em;font-weight:800">Harnix có gì mới</h2><p style="margin:0;font-size:16px;line-height:1.6;color:#3a3f47">Tính năng mới nhất và hướng dẫn dùng từng bước, để đội ngũ của bạn khai thác Harnix hiệu quả ngay từ ngày đầu.</p></div>
+              <a href="Harnix Mobile Blog.dc.html" style="display:flex;flex-direction:column;border-radius:24px;overflow:hidden;background:#fff;border:1px solid #e4e6ea;color:#111418" style-hover="color:#111418">
+                <div style="position:relative;height:220px;background:#0d1014;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:20px">
+                  <div style="position:absolute;right:-120px;top:-120px;width:320px;height:320px;border-radius:50%;background:#0f8f6a;opacity:0.35;filter:blur(80px)"></div>
+                  <span style="position:relative;align-self:flex-start;padding:5px 11px;border-radius:8px;background:#12392a;color:#6fd4b0;font-size:12px;font-weight:600">Run engine</span>
+                  <div style="position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:16px">
+                    <span style="font-size:110px;font-weight:800;letter-spacing:-0.06em;line-height:0.78;color:#47c496">Run</span>
+                    <div style="display:flex;flex-direction:column;gap:7px;padding-bottom:6px"><span style="display:flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:#47c496"></span><span style="width:70px;height:5px;border-radius:3px;background:#2a3038"></span></span><span style="display:flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:#47c496"></span><span style="width:52px;height:5px;border-radius:3px;background:#2a3038"></span></span><span style="display:flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:#f0b44c"></span><span style="width:40px;height:5px;border-radius:3px;background:#2a3038"></span></span></div>
+                  </div>
+                </div>
+                <div style="padding:20px;display:flex;flex-direction:column;gap:10px"><span style="font-size:14px;color:#6b717b">Mới nhất · 15/09/2026 · 6 phút đọc</span><strong style="font-size:24px;line-height:1.18;letter-spacing:-0.025em;font-weight:800;text-wrap:balance">Vì sao mỗi câu trả lời phải là một Run</strong><span style="font-size:16px;line-height:1.55;color:#3a3f47">Nó quyết định việc bạn có trả lời được khách hay không.</span></div>
+              </a>
+              <a href="https://harnix.vn/blog/tach-du-lieu-tu-ngay-dau" style="display:flex;gap:14px;align-items:center;padding:12px;border-radius:20px;background:#fff;border:1px solid #e4e6ea;color:#111418" style-hover="color:#111418"><span style="width:88px;height:88px;flex:none;border-radius:14px;background:#0f8f6a;padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px"><span style="border-radius:6px;background:#fff"></span><span style="border-radius:6px;border:2px solid rgba(255,255,255,0.6)"></span><span style="border-radius:6px;border:2px solid rgba(255,255,255,0.6)"></span><span style="border-radius:6px;border:2px solid rgba(255,255,255,0.35)"></span></span><span style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:600;color:#0b7254">Bảo mật dữ liệu</span><strong style="font-size:18px;line-height:1.25;font-weight:700">Tách dữ liệu từ ngày đầu</strong><span style="font-size:13px;color:#6b717b">02/09/2026 · 4 phút đọc</span></span></a>
+              <a href="https://harnix.vn/blog/console-khong-co-top-bar" style="display:flex;gap:14px;align-items:center;padding:12px;border-radius:20px;background:#fff;border:1px solid #e4e6ea;color:#111418" style-hover="color:#111418"><span style="width:88px;height:88px;flex:none;border-radius:14px;background:#e5f4ee;padding:12px;display:flex"><span style="flex:1;display:grid;grid-template-columns:18px 1fr;gap:5px;padding:5px;border-radius:8px;background:#fff;border:1px solid #c6e6d8"><span style="border-radius:4px;background:#0d1014"></span><span style="border-radius:4px;background:#f1f2f4"></span></span></span><span style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:600;color:#0b7254">Thiết kế sản phẩm</span><strong style="font-size:18px;line-height:1.25;font-weight:700">Console không có top bar</strong><span style="font-size:13px;color:#6b717b">21/08/2026 · 5 phút đọc</span></span></a>
+              <a href="https://harnix.vn/blog" style="height:52px;display:flex;align-items:center;justify-content:center;border-radius:14px;border:1px solid #c4c9d1;background:#fff;font-weight:600;font-size:16px;color:#111418" style-hover="color:#0f8f6a">Xem tất cả cập nhật</a>
+            </section>
+
+            <section id="a-demo" style="position:relative;overflow:hidden;padding:64px 20px;display:flex;flex-direction:column;gap:28px">
+              <div style="position:absolute;right:-200px;bottom:-200px;width:520px;height:520px;border-radius:50%;background:#0f8f6a;opacity:0.16;filter:blur(110px);pointer-events:none"></div>
+              <div style="position:relative;display:flex;flex-direction:column;gap:16px"><h2 style="margin:0;font-size:44px;line-height:0.98;letter-spacing:-0.045em;font-weight:800;text-wrap:balance">Sẵn sàng giao việc cho AI?</h2><p style="margin:0;font-size:16px;line-height:1.6;color:#b8bec8">Để lại thông tin, đội ngũ Harnix gọi lại trong 1 ngày làm việc để hẹn buổi demo 30 phút theo đúng bài toán của bạn.</p></div>
+              <div style="position:relative;background:#171b21;border:1px solid #262b33;border-radius:24px;padding:22px">
+                <sc-if value="{{ fANot }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+                    <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600"><span style="color:#fff">{{ fLabelA }}</span><span style="color:#8a909a">{{ fCountA }}</span></div>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><span style="height:4px;border-radius:2px;background:{{ segA0 }};transition:background .3s"></span><span style="height:4px;border-radius:2px;background:{{ segA1 }};transition:background .3s"></span><span style="height:4px;border-radius:2px;background:{{ segA2 }};transition:background .3s"></span></div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ fA0 }}" hint-placeholder-val="{{ true }}">
+                  <form onSubmit="{{ nextA }}" style="display:flex;flex-direction:column;gap:14px">
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#d8dce2">Họ tên<input required style="height:52px;padding:0 16px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;outline:none" style-focus="border-color:#3fb98f"></label>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#d8dce2">Số điện thoại<input required type="tel" style="height:52px;padding:0 16px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;outline:none" style-focus="border-color:#3fb98f"></label>
+                    <button type="submit" style="height:56px;margin-top:6px;border-radius:14px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),0 0 0 3px rgba(71,196,150,0.14);color:#fff;font-weight:600;font-size:17px;cursor:pointer">Tiếp tục</button>
+                  </form>
+                </sc-if>
+                <sc-if value="{{ fA1 }}" hint-placeholder-val="{{ false }}">
+                  <form onSubmit="{{ nextA }}" style="display:flex;flex-direction:column;gap:14px">
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#d8dce2">Email công việc<input required type="email" placeholder="ban@congty.vn" style="height:52px;padding:0 16px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;outline:none" style-focus="border-color:#3fb98f"></label>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#d8dce2">Công ty<input required style="height:52px;padding:0 16px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;outline:none" style-focus="border-color:#3fb98f"></label>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#d8dce2">Quy mô<select style="height:52px;padding:0 12px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400"><option>1–10</option><option>11–50</option><option>51–200</option><option>200+</option></select></label>
+                    <div style="display:grid;grid-template-columns:auto 1fr;gap:8px;margin-top:6px"><button type="button" onClick="{{ backA }}" style="height:56px;padding:0 18px;border-radius:14px;border:1px solid #3a4049;background:transparent;color:#fff;font-weight:600;font-size:16px;cursor:pointer">Quay lại</button><button type="submit" style="height:56px;border-radius:14px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),0 0 0 3px rgba(71,196,150,0.14);color:#fff;font-weight:600;font-size:17px;cursor:pointer">Tiếp tục</button></div>
+                  </form>
+                </sc-if>
+                <sc-if value="{{ fA2 }}" hint-placeholder-val="{{ false }}">
+                  <form onSubmit="{{ nextA }}" style="display:flex;flex-direction:column;gap:14px">
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:#d8dce2">Bạn muốn AI làm gì?<textarea rows="4" placeholder="VD: trả lời khách về chính sách đổi trả, bảo hành" style="padding:14px 16px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;resize:vertical;outline:none" style-focus="border-color:#3fb98f"></textarea></label>
+                    <div style="display:grid;grid-template-columns:auto 1fr;gap:8px;margin-top:6px"><button type="button" onClick="{{ backA }}" style="height:56px;padding:0 18px;border-radius:14px;border:1px solid #3a4049;background:transparent;color:#fff;font-weight:600;font-size:16px;cursor:pointer">Quay lại</button><button type="submit" style="height:56px;border-radius:14px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),0 0 0 3px rgba(71,196,150,0.14);color:#fff;font-weight:600;font-size:17px;cursor:pointer">Gửi yêu cầu demo</button></div>
+                    <span style="font-size:13px;color:#8a909a;text-align:center">Chúng tôi chỉ dùng thông tin này để liên hệ hẹn demo.</span>
+                  </form>
+                </sc-if>
+                <sc-if value="{{ fASent }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:32px 4px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center"><span style="width:56px;height:56px;border-radius:50%;background:#12392a;color:#3ccf8e;display:flex;align-items:center;justify-content:center;font-size:26px">✓</span><strong style="font-size:22px;font-weight:700">Đã nhận yêu cầu</strong><span style="font-size:15px;line-height:1.6;color:#b8bec8">Đội ngũ Harnix sẽ gọi cho bạn trong 1 ngày làm việc.</span></div>
+                </sc-if>
+              </div>
+              <div style="position:relative;display:flex;flex-direction:column;gap:12px;padding-top:24px;border-top:1px solid #262b33">
+                <strong style="font-size:18px;font-weight:700">Trở thành design partner</strong>
+                <span style="font-size:15px;line-height:1.55;color:#b8bec8">Chúng tôi tìm 1–3 doanh nghiệp dùng thử sớm.</span>
+                <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="padding:8px 14px;border-radius:999px;background:#171b21;border:1px solid #262b33;font-size:14px">Dùng miễn phí trong thời gian pilot</span><span style="padding:8px 14px;border-radius:999px;background:#171b21;border:1px solid #262b33;font-size:14px">Hỗ trợ tích hợp trực tiếp</span><span style="padding:8px 14px;border-radius:999px;background:#171b21;border:1px solid #262b33;font-size:14px">Ảnh hưởng tới roadmap</span></div>
+                <span style="font-size:14px;line-height:1.55;color:#8a909a">Đổi lại: một buổi feedback mỗi tuần, và cho phép viết case study (khi bạn đồng ý).</span>
+              </div>
+            </section>
+
+            <section style="background:#fafafa;color:#111418;padding:64px 20px;display:flex;flex-direction:column;gap:24px">
+              <h2 style="margin:0;font-size:30px;line-height:1.05;letter-spacing:-0.035em;font-weight:800">Câu hỏi thường gặp</h2>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <details open="" style="padding:0 18px;border-radius:16px;background:#fff;border:1px solid #e4e6ea"><summary style="list-style:none;cursor:pointer;padding:18px 0;font-size:16px;font-weight:600;display:flex;justify-content:space-between;gap:14px">Harnix đã dùng được chưa?<span style="color:#6b717b">+</span></summary><p style="margin:0 0 18px;font-size:15px;line-height:1.65;color:#3a3f47">Chưa. Chúng tôi đang xây dựng và mở cho design partner trước. Đặt lịch demo để được báo khi mở.</p></details>
+                <details style="padding:0 18px;border-radius:16px;background:#fff;border:1px solid #e4e6ea"><summary style="list-style:none;cursor:pointer;padding:18px 0;font-size:16px;font-weight:600;display:flex;justify-content:space-between;gap:14px">“Tự mang mô hình AI” nghĩa là gì?<span style="color:#6b717b">+</span></summary><p style="margin:0 0 18px;font-size:15px;line-height:1.65;color:#3a3f47">Bạn dùng tài khoản mô hình AI của chính mình (OpenAI, nhà cung cấp tương thích, hoặc mô hình tự triển khai). Chi phí mô hình trả thẳng cho nhà cung cấp.</p></details>
+                <details style="padding:0 18px;border-radius:16px;background:#fff;border:1px solid #e4e6ea"><summary style="list-style:none;cursor:pointer;padding:18px 0;font-size:16px;font-weight:600;display:flex;justify-content:space-between;gap:14px">Dữ liệu của tôi lưu ở đâu, ai xem được?<span style="color:#6b717b">+</span></summary><p style="margin:0 0 18px;font-size:15px;line-height:1.65;color:#3a3f47">Mỗi doanh nghiệp có vùng dữ liệu riêng. Chỉ thành viên bạn cấp quyền mới xem được, và bạn xoá được dữ liệu cá nhân của khách khi có yêu cầu.</p></details>
+                <details style="padding:0 18px;border-radius:16px;background:#fff;border:1px solid #e4e6ea"><summary style="list-style:none;cursor:pointer;padding:18px 0;font-size:16px;font-weight:600;display:flex;justify-content:space-between;gap:14px">Có phụ thuộc ngành không?<span style="color:#6b717b">+</span></summary><p style="margin:0 0 18px;font-size:15px;line-height:1.65;color:#3a3f47">Không. Trợ lý trả lời dựa trên tài liệu của chính bạn, nên dùng được cho bán lẻ, tài chính, giáo dục, dịch vụ và nhiều ngành khác.</p></details>
+                <details style="padding:0 18px;border-radius:16px;background:#fff;border:1px solid #e4e6ea"><summary style="list-style:none;cursor:pointer;padding:18px 0;font-size:16px;font-weight:600;display:flex;justify-content:space-between;gap:14px">Giá bao nhiêu?<span style="color:#6b717b">+</span></summary><p style="margin:0 0 18px;font-size:15px;line-height:1.65;color:#3a3f47">Gói tháng cố định: Starter, Business và Enterprise. Xem <a href="#a-gia" onClick="{{ go }}" style="color:#0f8f6a;font-weight:600">bảng giá</a>.</p></details>
+              </div>
+            </section>
+
+            <footer style="border-top:1px solid #1d2229;padding:48px 20px 110px;display:flex;flex-direction:column;gap:36px">
+              <span style="font-size:15px;line-height:1.6;color:#b8bec8">Nền tảng vận hành trợ lý AI. Mỗi câu trả lời được ghi lại từng bước.</span>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;font-size:15px;color:#d8dce2"><a href="#a-gia" onClick="{{ go }}">Bảng giá</a><a href="https://harnix.vn/blog">Cập nhật</a><a href="https://harnix.vn/docs">Tài liệu</a><a href="#a-demo" onClick="{{ go }}">Design partner</a><a href="https://www.linkedin.com/company/harnix-ai">LinkedIn</a><a href="#">Facebook</a><a href="#">GitHub</a></div>
+              <div style="display:flex;flex-direction:column;gap:14px"><span style="font-size:96px;font-weight:800;letter-spacing:-0.06em;line-height:0.8;color:#1d2229">harn<span style="position:relative">ı<span style="position:absolute;left:50%;top:0.2em;width:0.2em;height:0.2em;transform:translateX(-50%);background:#47c496;border-radius:0.03em"></span></span>x</span><span style="font-size:13px;color:#8a909a">© 2026 Harnix</span></div>
+            </footer>
+          </div>
+
+          <sc-if value="{{ fabA }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;right:16px;bottom:30px;z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:10px">
+              <sc-if value="{{ topA }}" hint-placeholder-val="{{ false }}"><a href="#a-top" onClick="{{ go }}" aria-label="Lên đầu trang" style="width:46px;height:46px;border-radius:14px;border:1px solid #3a4049;background:rgba(18,22,27,0.9);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 20H8V15.5H12.5V11H17" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17 3.5V11M13.5 7L17 3.5L20.5 7" stroke="#47c496" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></a></sc-if>
+              <button onClick="{{ toggleChatA }}" aria-label="Hỏi trợ lý Harnix" style="height:54px;padding:0 18px 0 8px;display:flex;align-items:center;gap:10px;border-radius:16px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),0 0 0 3px rgba(71,196,150,0.16),0 16px 36px -12px rgba(15,143,106,0.9);color:#fff;font-weight:600;font-size:15px;cursor:pointer"><svg width="36" height="36" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="0" y="0" width="34" height="34" rx="9" fill="#0d1014"></rect><rect x="1.5" y="1.5" width="31" height="31" rx="8" stroke="#fff" stroke-width="1.8"></rect><path d="M8 25H11.5V21H15V16.5H18.5V12.5H21" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="8" cy="25" r="2.2" fill="#fff"></circle><rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496"></rect></svg>Hỏi Harnix</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ chatA }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ toggleChatA }}" style="position:absolute;inset:0;z-index:50;background:rgba(5,6,7,0.6)"></div>
+            <div role="dialog" aria-label="Trợ lý Harnix" style="position:absolute;left:0;right:0;bottom:0;height:56%;z-index:51;border-radius:28px 28px 0 0;background:#12161b;border-top:1px solid #2f353e;box-shadow:0 -20px 60px -20px rgba(0,0,0,0.7);display:flex;flex-direction:column">
+              <span style="align-self:center;width:40px;height:5px;margin-top:8px;border-radius:3px;background:#3a4049"></span>
+              <div style="padding:10px 16px 12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #262b33">
+                <svg width="38" height="38" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="0" y="0" width="34" height="34" rx="9" fill="#0d1014"></rect><rect x="1.5" y="1.5" width="31" height="31" rx="8" stroke="#fff" stroke-width="1.8"></rect><path d="M8 25H11.5V21H15V16.5H18.5V12.5H21" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="8" cy="25" r="2.2" fill="#fff"></circle><rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496"></rect></svg>
+                <div style="flex:1;display:flex;flex-direction:column;gap:2px"><strong style="font-size:16px;font-weight:600">Trợ lý Harnix</strong><span style="font-size:12px;color:#8a909a">Trả lời kèm nguồn · Bản xem trước</span></div>
+                <button onClick="{{ toggleChatA }}" aria-label="Đóng" style="width:44px;height:44px;border-radius:12px;border:1px solid #2f353e;background:transparent;color:#d8dce2;font-size:20px;cursor:pointer">×</button>
+              </div>
+              <div style="flex:1;overflow-y:auto;scrollbar-width:none;padding:16px;display:flex;flex-direction:column;gap:12px">
+                <div style="align-self:flex-start;max-width:88%;padding:12px 14px;border-radius:14px 14px 14px 4px;background:#1c2229;font-size:15px;line-height:1.55">Chào bạn. Mình có thể giải thích cách Harnix hoạt động, tư vấn gói phù hợp, hoặc giúp bạn đặt lịch demo.</div>
+                <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+                  <button style="padding:10px 14px;border-radius:10px;border:1px solid #2a5a47;background:#0f241c;color:#d6f5e8;font-size:14px;font-weight:500;cursor:pointer;text-align:left">Harnix khác chatbot thông thường thế nào?</button>
+                  <button style="padding:10px 14px;border-radius:10px;border:1px solid #2a5a47;background:#0f241c;color:#d6f5e8;font-size:14px;font-weight:500;cursor:pointer;text-align:left">Gói nào phù hợp với doanh nghiệp tôi?</button>
+                  <a href="#a-demo" onClick="{{ go }}" style="padding:10px 14px;border-radius:10px;border:1px solid #2a5a47;background:#0f241c;color:#d6f5e8;font-size:14px;font-weight:500">Đặt lịch demo</a>
+                </div>
+              </div>
+              <div style="padding:10px 12px 30px;border-top:1px solid #262b33;display:flex;gap:8px">
+                <input placeholder="Nhập câu hỏi của bạn…" style="flex:1;min-width:0;height:48px;padding:0 14px;border-radius:12px;border:1px solid #2f353e;background:#0d1014;color:#fff;font-size:16px;outline:none" style-focus="border-color:#47c496">
+                <button style="height:48px;padding:0 16px;border-radius:12px;background:#0f8f6a;border:1px solid #47c496;color:#fff;font-weight:600;font-size:15px;cursor:pointer">Gửi</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ menuA }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:60;background:#0d1014;padding:50px 0 34px;display:flex;flex-direction:column">
+              <div style="height:60px;padding:0 12px 0 18px;display:flex;align-items:center;justify-content:space-between">
+                <span style="display:flex;align-items:center;gap:8px"><svg width="30" height="30" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="9" stroke="#fff" stroke-width="2"></rect><path d="M8 25H11.5V21H15V16.5H18.5V12.5H21" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="8" cy="25" r="2.2" fill="#fff"></circle><rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496"></rect></svg><span style="font-size:21px;font-weight:600;letter-spacing:-0.02em">harnix</span></span>
+                <button onClick="{{ toggleMenuA }}" aria-label="Đóng menu" style="width:44px;height:44px;border:1px solid #2f353e;border-radius:12px;background:#171b21;color:#fff;font-size:22px;cursor:pointer">×</button>
+              </div>
+              <nav style="padding:12px 20px 0;display:flex;flex-direction:column">
+                <a href="#a-cach" onClick="{{ go }}" style="padding:18px 0;border-bottom:1px solid #1d2229;display:flex;align-items:center;gap:16px" style-hover="color:#fff"><span style="font-size:13px;font-weight:700;color:#47c496;width:20px">01</span><span style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:28px;font-weight:700;letter-spacing:-0.03em;color:#fff">Sản phẩm</span><span style="font-size:14px;color:#8a909a">Harnix làm được gì</span></span><span style="font-size:20px;color:#5c636e">→</span></a>
+                <a href="#a-run" onClick="{{ go }}" style="padding:18px 0;border-bottom:1px solid #1d2229;display:flex;align-items:center;gap:16px" style-hover="color:#fff"><span style="font-size:13px;font-weight:700;color:#47c496;width:20px">02</span><span style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:28px;font-weight:700;letter-spacing:-0.03em;color:#fff">Run engine</span><span style="font-size:14px;color:#8a909a">Xem AI làm từng bước</span></span><span style="font-size:20px;color:#5c636e">→</span></a>
+                <a href="#a-gia" onClick="{{ go }}" style="padding:18px 0;border-bottom:1px solid #1d2229;display:flex;align-items:center;gap:16px" style-hover="color:#fff"><span style="font-size:13px;font-weight:700;color:#47c496;width:20px">03</span><span style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:28px;font-weight:700;letter-spacing:-0.03em;color:#fff">Bảng giá</span><span style="font-size:14px;color:#8a909a">Từ 2,9 triệu/tháng</span></span><span style="font-size:20px;color:#5c636e">→</span></a>
+                <a href="#a-blog" onClick="{{ go }}" style="padding:18px 0;border-bottom:1px solid #1d2229;display:flex;align-items:center;gap:16px" style-hover="color:#fff"><span style="font-size:13px;font-weight:700;color:#47c496;width:20px">04</span><span style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:28px;font-weight:700;letter-spacing:-0.03em;color:#fff">Cập nhật</span><span style="font-size:14px;color:#8a909a">Tính năng mới &amp; hướng dẫn</span></span><span style="font-size:20px;color:#5c636e">→</span></a>
+                <a href="https://harnix.vn/docs" style="padding:18px 0;display:flex;align-items:center;gap:16px" style-hover="color:#fff"><span style="font-size:13px;font-weight:700;color:#47c496;width:20px">05</span><span style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:28px;font-weight:700;letter-spacing:-0.03em;color:#fff">Tài liệu</span><span style="font-size:14px;color:#8a909a">Hướng dẫn tích hợp cho đội kỹ thuật</span></span><span style="font-size:20px;color:#47c496">↗</span></a>
+              </nav>
+              <div style="margin-top:auto;padding:0 20px;display:flex;flex-direction:column;gap:14px">
+                <a href="https://harnix.vn/en" style="align-self:flex-start;height:44px;padding:0 14px;display:flex;align-items:center;gap:8px;border-radius:12px;border:1px solid #2f353e;font-size:14px;font-weight:600;color:#8a909a"><span style="color:#fff">VI</span><span style="color:#3a4049">/</span>English</a>
+                <a href="#a-demo" onClick="{{ go }}" style="height:56px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),0 0 0 3px rgba(71,196,150,0.14);color:#fff;font-weight:600;font-size:17px" style-hover="color:#fff">Đặt lịch demo</a>
+              </div>
+            </div>
+          </sc-if>
+          <span style="position:absolute;left:50%;bottom:8px;width:134px;height:5px;transform:translateX(-50%);border-radius:3px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,0.12);z-index:80;pointer-events:none"></span>
+        </div>
+      </div>
+    </div></sc-if>
+
+    <sc-if value="{{ showB }}" hint-placeholder-val="{{ true }}"><div id="1b" style="display:flex;flex-direction:column;gap:18px;width:414px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 10px;border-radius:8px;background:#111418;color:#fff;font-size:13px;font-weight:700">1b</span><strong style="font-size:19px;font-weight:700">Compact</strong></div>
+        <span style="font-size:15px;line-height:1.5;color:#4a505a">All-dark and denser. Header shows the current section and scroll progress; demo button and assistant sit in a bottom action bar.</span>
+      </div>
+      <div style="width:414px;height:868px;padding:12px;border-radius:64px;background:#050607;box-shadow:0 0 0 2px #2a2f36,0 40px 80px -30px rgba(0,0,0,0.45)">
+        <div style="position:relative;width:390px;height:844px;border-radius:52px;overflow:hidden;background:#0d1014;color:#fff;isolation:isolate">
+          <div style="position:absolute;left:0;right:0;top:0;height:50px;z-index:70;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 42px;pointer-events:none;color:#fff;font-size:16px;font-weight:600"><span>9:41</span><span style="position:absolute;left:50%;top:11px;width:124px;height:36px;transform:translateX(-50%);border-radius:20px;background:#000"></span><span style="display:flex;align-items:center;gap:6px"><span style="display:flex;align-items:flex-end;gap:2px;height:12px"><span style="width:3px;height:4px;background:#fff;border-radius:1px"></span><span style="width:3px;height:6px;background:#fff;border-radius:1px"></span><span style="width:3px;height:9px;background:#fff;border-radius:1px"></span><span style="width:3px;height:12px;background:#fff;border-radius:1px"></span></span><span style="width:25px;height:12px;border:1.5px solid rgba(255,255,255,0.5);border-radius:4px;padding:1.5px;display:flex"><span style="flex:1;background:#fff;border-radius:2px"></span></span></span></div>
+
+          <div ref="{{ refB }}" onScroll="{{ scrollB }}" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;overscroll-behavior:contain">
+            <header style="position:sticky;top:0;z-index:20;padding-top:50px;background:#0d1014;border-bottom:1px solid #1d2229">
+              <div style="height:54px;padding:0 12px 0 18px;display:flex;align-items:center;gap:12px">
+                <a href="#b-top" onClick="{{ go }}" aria-label="Harnix" style="display:flex;align-items:center;gap:8px;color:#fff" style-hover="color:#fff"><svg width="28" height="28" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="9" stroke="#fff" stroke-width="2"></rect><path d="M8 25H11.5V21H15V16.5H18.5V12.5H21" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="8" cy="25" r="2.2" fill="#fff"></circle><rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496"></rect></svg><span style="font-size:19px;font-weight:600;letter-spacing:-0.02em;line-height:1">harn<span style="position:relative">ı<span style="position:absolute;left:50%;top:0.2em;width:0.2em;height:0.2em;transform:translateX(-50%);background:#47c496;border-radius:0.04em"></span></span>x</span></a>
+                <sc-if value="{{ hasSecB }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:10px;min-width:0"><span style="width:1px;height:20px;background:#2f353e"></span><span style="font-size:14px;font-weight:600;color:#6fd4b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ secNameB }}</span></span></sc-if>
+                <button onClick="{{ toggleMenuB }}" aria-label="Menu" style="margin-left:auto;width:44px;height:44px;border:0;border-radius:12px;background:#171b21;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;flex:none"><span style="width:18px;height:2px;background:#fff;border-radius:2px"></span><span style="width:12px;height:2px;background:#47c496;border-radius:2px;margin-left:6px"></span></button>
+              </div>
+              <div style="height:2px;background:#1d2229"><div style="height:100%;width:{{ progB }};background:#47c496"></div></div>
+            </header>
+
+            <section style="position:relative;overflow:hidden;padding:32px 20px 40px;display:flex;flex-direction:column;gap:18px">
+              <div style="position:absolute;right:-200px;top:-140px;width:440px;height:440px;border-radius:50%;background:#0f8f6a;opacity:0.22;filter:blur(90px);pointer-events:none"></div>
+              <span style="position:relative;align-self:flex-start;padding:6px 12px;border-radius:999px;border:1px solid #2a5a47;background:#0f241c;color:#d6f5e8;font-size:13px;font-weight:500">Nền tảng vận hành trợ lý AI cho <strong style="font-weight:700;color:#fff">doanh nghiệp</strong></span>
+              <h1 style="position:relative;margin:0;font-size:42px;line-height:1;letter-spacing:-0.045em;font-weight:800;text-wrap:balance">Giao việc cho AI. <span style="color:#47c496">Nắm từng bước.</span></h1>
+              <p style="position:relative;margin:0;font-size:16px;line-height:1.6;color:#b8bec8;text-wrap:pretty">Harnix giúp doanh nghiệp đưa trợ lý AI vào app sẵn có, và thấy rõ từng câu trả lời: AI đã đọc tài liệu nào, làm những bước gì, tốn bao nhiêu.</p>
+              <div style="position:relative;border-radius:18px;overflow:hidden;border:1px solid #2a3038;background:#171b21">
+                <img src="https://s3.lequoctrung.id.vn/harnix/harnix-film-vi-poster.png" alt="Video giới thiệu Harnix: xem cả hành trình trong 40 giây" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block">
+                <div style="position:absolute;left:12px;bottom:12px;right:12px;display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;flex:none;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;margin-left:3px;border-left:12px solid #0d1014;border-top:7px solid transparent;border-bottom:7px solid transparent"></span></span><span style="padding:6px 10px;border-radius:8px;background:rgba(13,16,20,0.8);font-size:13px;font-weight:600">Xem video 40 giây</span></div>
+              </div>
+              <span style="position:relative;font-size:14px;line-height:1.5;color:#8a909a">Xem cả hành trình trong 40 giây. Từ một tổ chức trống tới trợ lý AI đang trả lời khách trong app mẫu.</span>
+            </section>
+
+            <section style="padding:40px 20px;display:flex;flex-direction:column;gap:20px;border-top:1px solid #1d2229">
+              <span style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6fd4b0">01 · Khác biệt</span>
+              <h2 style="margin:0;font-size:29px;line-height:1.08;letter-spacing:-0.035em;font-weight:800;text-wrap:balance">Chatbot khác chỉ trả lời. <span style="color:#47c496">Harnix cho bạn thấy vì sao.</span></h2>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="padding:18px;border-radius:16px;background:#171b21;border:1px solid #262b33;display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 10px"><span style="font-size:13px;font-weight:700;color:#47c496;padding-top:3px">01</span><strong style="font-size:18px;font-weight:700">Câu trả lời có căn cứ</strong><span></span><span style="font-size:15px;line-height:1.55;color:#b8bec8">Mỗi câu trả lời <strong style="color:#fff;font-weight:600">dẫn được nguồn</strong> từ tài liệu công ty, để đội ngũ <strong style="color:#fff;font-weight:600">chủ động rà soát chất lượng</strong> thay vì chờ phản hồi từ khách hàng.</span></div>
+                <div style="padding:18px;border-radius:16px;background:#171b21;border:1px solid #262b33;display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 10px"><span style="font-size:13px;font-weight:700;color:#47c496;padding-top:3px">02</span><strong style="font-size:18px;font-weight:700">Ngân sách trong tầm kiểm soát</strong><span></span><span style="font-size:15px;line-height:1.55;color:#b8bec8">Biết rõ <strong style="color:#fff;font-weight:600">mỗi câu trả lời tốn bao nhiêu</strong> là nền tảng để <strong style="color:#fff;font-weight:600">lập kế hoạch chi phí</strong> và tự tin mở rộng khi cần.</span></div>
+                <div style="padding:18px;border-radius:16px;background:#171b21;border:1px solid #262b33;display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 10px"><span style="font-size:13px;font-weight:700;color:#47c496;padding-top:3px">03</span><strong style="font-size:18px;font-weight:700">Dữ liệu được bảo vệ</strong><span></span><span style="font-size:15px;line-height:1.55;color:#b8bec8">Tài liệu nội bộ và hội thoại khách hàng được <strong style="color:#fff;font-weight:600">lưu trữ tách biệt</strong>, <strong style="color:#fff;font-weight:600">xoá được theo yêu cầu</strong>, đáp ứng NĐ 13/2023.</span></div>
+              </div>
+            </section>
+
+            <section id="b-cach" style="padding:40px 20px;display:flex;flex-direction:column;gap:20px;border-top:1px solid #1d2229">
+              <span style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6fd4b0">02 · Cách hoạt động</span>
+              <h2 style="margin:0;font-size:29px;line-height:1.08;letter-spacing:-0.035em;font-weight:800;text-wrap:balance">Tài liệu bạn đã có. <span style="color:#47c496">Phần còn lại Harnix lo.</span></h2>
+              <p style="margin:0;font-size:15px;line-height:1.6;color:#b8bec8">Không cần đội AI riêng, không cần xây hệ thống mới. Trợ lý dùng chính tài liệu công ty để trả lời khách ngay trong app bạn đang có.</p>
+              <div style="position:relative;display:flex;flex-direction:column;gap:22px;padding-left:44px">
+                <span style="position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:linear-gradient(#2a5a47,#0f8f6a)"></span>
+                <div style="position:relative;display:flex;flex-direction:column;gap:10px"><span style="position:absolute;left:-44px;top:0;width:32px;height:32px;border-radius:10px;background:#171b21;border:1px solid #2a5a47;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800">1</span><span style="font-size:12px;font-weight:600;color:#47c496">Có sẵn</span><strong style="font-size:18px;line-height:1.3;font-weight:700">Trợ lý nắm chính sách công ty ngay từ ngày đầu</strong><span style="font-size:14px;line-height:1.5;color:#b8bec8"><span style="color:#8a909a;font-weight:600">Bạn chỉ cần · </span>Tải lên tài liệu đang dùng: chính sách, bảng giá, hướng dẫn (PDF, Word)</span><span style="font-size:14px;line-height:1.5;color:#fff"><span style="color:#47c496;font-weight:600">Harnix lo · </span>Đọc, ghi nhớ và trả lời kèm trích dẫn đúng nguồn</span></div>
+                <div style="position:relative;display:flex;flex-direction:column;gap:10px"><span style="position:absolute;left:-44px;top:0;width:32px;height:32px;border-radius:10px;background:#171b21;border:1px solid #2a5a47;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800">2</span><span style="font-size:12px;font-weight:600;color:#47c496">Có sẵn</span><strong style="font-size:18px;line-height:1.3;font-weight:700">Trả lời nhất quán, đúng phạm vi bạn cho phép</strong><span style="font-size:14px;line-height:1.5;color:#b8bec8"><span style="color:#8a909a;font-weight:600">Bạn chỉ cần · </span>Mô tả vai trò trong vài câu, VD: “nhân viên CSKH, chỉ tư vấn đổi trả”</span><span style="font-size:14px;line-height:1.5;color:#fff"><span style="color:#47c496;font-weight:600">Harnix lo · </span>Giữ trợ lý trong đúng phạm vi đó, không trả lời lan man</span></div>
+                <div style="position:relative;padding:16px;margin-left:-8px;border-radius:16px;background:#0f8f6a;display:flex;flex-direction:column;gap:10px"><span style="position:absolute;left:-36px;top:16px;width:32px;height:32px;border-radius:10px;background:#0f8f6a;border:1px solid #47c496;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800">3</span><span style="font-size:12px;font-weight:600;color:#d6f5e8">Sắp có</span><strong style="font-size:18px;line-height:1.3;font-weight:700">Khách được phục vụ 24/7, chi phí minh bạch</strong><span style="font-size:14px;line-height:1.5;color:#fff"><span style="color:#d6f5e8;font-weight:600">Bạn chỉ cần · </span>Đội kỹ thuật gắn khung chat vào app, có Harnix hỗ trợ trực tiếp</span><span style="font-size:14px;line-height:1.5;color:#fff;font-weight:500"><span style="font-weight:700">Harnix lo · </span>Ghi lại từng bước và chi phí của từng câu trả lời</span></div>
+              </div>
+            </section>
+
+            <section style="padding:40px 0;display:flex;flex-direction:column;gap:18px;border-top:1px solid #1d2229">
+              <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px"><span style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6fd4b0">03 · Kiểm soát</span><h2 style="margin:0;font-size:27px;line-height:1.1;letter-spacing:-0.035em;font-weight:800;text-wrap:balance">Quản AI như quản một nhân viên giỏi: <span style="color:#8a909a">có báo cáo, có kiểm soát, có ngân sách.</span></h2></div>
+              <div style="padding:0 20px;display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 8px;border-radius:6px;background:#e5f4ee;color:#0b7254;font-size:12px;font-weight:800">01</span><strong style="font-size:17px;font-weight:700">Ban điều hành &amp; vận hành</strong></div><span style="font-size:14px;line-height:1.5;color:#b8bec8">AI đang làm gì, tốn bao nhiêu, và can thiệp lúc nào.</span><div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:4px 10px;border-radius:6px;background:#171b21;border:1px solid #2f353e;font-size:12px;font-weight:600;color:#d8dce2">Chủ doanh nghiệp</span><span style="padding:4px 10px;border-radius:6px;background:#171b21;border:1px solid #2f353e;font-size:12px;font-weight:600;color:#d8dce2">Trưởng phòng CSKH</span><span style="padding:4px 10px;border-radius:6px;background:#171b21;border:1px solid #2f353e;font-size:12px;font-weight:600;color:#d8dce2">Vận hành</span></div></div>
+              <div style="display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;padding:0 20px;scrollbar-width:none">
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:20px;border-radius:18px;background:#fff;color:#111418;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;min-height:190px"><strong style="font-size:20px;font-weight:700;letter-spacing:-0.02em">Báo cáo từng việc</strong><span style="font-size:14px;line-height:1.55;color:#3a3f47">Mỗi câu trả lời có biên bản riêng: AI đã đọc tài liệu nào, làm những bước gì.</span></div>
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:20px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;min-height:190px"><strong style="font-size:18px;font-weight:700">Can thiệp tức thì</strong><span style="font-size:14px;line-height:1.55;color:#b8bec8">Dừng một câu trả lời đang xử lý ngay khi thấy chưa ổn.</span></div>
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:20px;border-radius:18px;background:#0f241c;border:1px solid #2a5a47;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;min-height:190px"><span style="font-size:34px;font-weight:800;letter-spacing:-0.04em;color:#47c496">~38đ</span><strong style="font-size:18px;font-weight:700">Chi phí theo từng câu</strong><span style="font-size:14px;line-height:1.55;color:#b8bec8">Biết chính xác mỗi câu trả lời, mỗi trợ lý tốn bao nhiêu.</span></div>
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:20px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;min-height:190px"><strong style="font-size:18px;font-weight:700">Không bị khoá nhà cung cấp</strong><span style="font-size:14px;line-height:1.55;color:#b8bec8">Dùng OpenAI, mô hình tương thích hoặc tự triển khai, đổi khi cần.</span></div>
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:20px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;min-height:190px"><span style="align-self:flex-start;padding:3px 10px;border-radius:6px;background:#262b33;font-size:12px;font-weight:600">NĐ 13/2023</span><strong style="font-size:18px;font-weight:700">Dữ liệu tách riêng</strong><span style="font-size:14px;line-height:1.55;color:#b8bec8">Mỗi doanh nghiệp một vùng dữ liệu; xoá dữ liệu cá nhân theo yêu cầu.</span></div>
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:20px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;min-height:190px"><strong style="font-size:18px;font-weight:700">Không bỏ dở việc</strong><span style="font-size:14px;line-height:1.55;color:#b8bec8">Hệ thống gặp sự cố, câu trả lời vẫn được hoàn thành.</span></div>
+              </div>
+              <div style="padding:14px 20px 0;display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 8px;border-radius:6px;background:#0f8f6a;color:#fff;font-size:12px;font-weight:800">02</span><strong style="font-size:17px;font-weight:700">Đội kỹ thuật</strong></div><span style="font-size:14px;line-height:1.5;color:#b8bec8">Tích hợp ra sao, an toàn thế nào, cần làm gì ở phía app.</span><div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:4px 10px;border-radius:6px;background:#171b21;border:1px solid #2f353e;font-size:12px;font-weight:600;color:#d8dce2">Giám đốc IT / CTO</span><span style="padding:4px 10px;border-radius:6px;background:#171b21;border:1px solid #2f353e;font-size:12px;font-weight:600;color:#d8dce2">Developer</span></div></div>
+              <div style="display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;padding:0 20px;scrollbar-width:none">
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:18px;border-radius:16px;background:#12161b;border:1px solid #262b33;display:flex;flex-direction:column;gap:8px"><strong style="font-size:16px;font-weight:700">API key chỉ ở máy chủ</strong><span style="font-size:14px;line-height:1.55;color:#b8bec8">Backend đổi API key lấy token ngắn hạn cho từng người dùng. Trình duyệt không bao giờ thấy key.</span></div>
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:18px;border-radius:16px;background:#12161b;border:1px solid #262b33;display:flex;flex-direction:column;gap:8px"><strong style="font-size:16px;font-weight:700">Streaming kèm trích dẫn</strong><span style="font-size:14px;line-height:1.55;color:#b8bec8">Câu trả lời hiện dần theo thời gian thực, mỗi đoạn kèm nguồn tài liệu.</span></div>
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:18px;border-radius:16px;background:#12161b;border:1px solid #262b33;display:flex;flex-direction:column;gap:8px"><strong style="font-size:16px;font-weight:700">Widget cách ly CSS</strong><span style="font-size:14px;line-height:1.55;color:#b8bec8">Khung chat chạy trong shadow DOM, không ảnh hưởng giao diện app sẵn có.</span></div>
+                <div style="flex:0 0 68%;scroll-snap-align:start;padding:18px;border-radius:16px;background:#12161b;border:1px solid #262b33;display:flex;flex-direction:column;gap:8px"><strong style="font-size:16px;font-weight:700">Model tuỳ chọn</strong><span style="font-size:14px;line-height:1.55;color:#b8bec8">Endpoint OpenAI-compatible hoặc mô hình tự host.</span></div>
+              </div>
+              <div style="padding:4px 20px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <a href="https://harnix.vn/docs" style="min-height:48px;padding:8px 12px;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:12px;background:#fff;color:#0d1014;font-weight:600;font-size:14px;line-height:1.3" style-hover="color:#0f8f6a">Đọc tài liệu tích hợp</a>
+                <a href="Harnix Mobile Blog.dc.html" style="min-height:48px;padding:8px 12px;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:12px;border:1px solid #3a4049;font-weight:600;font-size:14px;line-height:1.3" style-hover="color:#fff">Vì sao mỗi câu trả lời là một Run</a>
+              </div>
+            </section>
+
+            <section id="b-run" style="padding:40px 0;display:flex;flex-direction:column;gap:18px;border-top:1px solid #1d2229;background:#0a0c0f">
+              <div style="padding:0 20px;display:flex;flex-direction:column;gap:12px">
+                <span style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6fd4b0">04 · Tính năng cốt lõi · Run engine</span>
+                <h2 style="margin:0;font-size:31px;line-height:1.04;letter-spacing:-0.04em;font-weight:800">Mỗi câu trả lời là một <span style="color:#47c496">Run</span>.</h2>
+                <p style="margin:0;font-size:15px;line-height:1.6;color:#b8bec8">Run là biên bản làm việc của AI: ghi lại từng bước, đo đúng chi phí, dừng được giữa chừng và không bỏ dở kể cả khi hệ thống gặp sự cố.</p>
+              </div>
+              <div style="padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+                <div style="display:flex;gap:4px;padding:3px;border-radius:10px;background:#171b21;border:1px solid #262b33">
+                  <button onClick="{{ bizB }}" style="height:36px;padding:0 12px;border:0;border-radius:8px;background:{{ bizBgB }};color:{{ bizFgB }};font-size:13px;font-weight:600;cursor:pointer">Kinh doanh</button>
+                  <button onClick="{{ devB }}" style="height:36px;padding:0 12px;border:0;border-radius:8px;background:{{ devBgB }};color:{{ devFgB }};font-size:13px;font-weight:600;cursor:pointer">Kỹ thuật</button>
+                </div>
+                <span style="font-size:13px;font-weight:600;color:#8a909a;font-variant-numeric:tabular-nums"><span style="color:#fff">{{ runNoB }}</span> / 06</span>
+              </div>
+              <div onScroll="{{ runScrollB }}" style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;padding:0 20px;scrollbar-width:none">
+                <sc-for list="{{ stepsB }}" as="item" hint-placeholder-count="2">
+                  <div style="flex:0 0 84%;scroll-snap-align:start;border-radius:18px;background:#12161b;border:1px solid {{ item.bd }};overflow:hidden;display:flex;flex-direction:column;transition:border-color .3s">
+                    <div style="padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid #262b33;background:#171b21"><span style="font-size:12px;font-weight:600;color:#6fd4b0">{{ item.tag }}</span><span style="font-size:12px;color:#8a909a;font-variant-numeric:tabular-nums">{{ item.time }}</span></div>
+                    <div style="padding:18px 16px;display:flex;flex-direction:column;gap:10px;flex:1">
+                      <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;color:#5c636e">{{ item.n }}</span><h3 style="margin:0;font-size:21px;letter-spacing:-0.02em;font-weight:700">{{ item.title }}</h3></div>
+                      <p style="margin:0;font-size:14px;line-height:1.55;color:#b8bec8">{{ item.desc }}</p>
+                      <div style="margin-top:auto;padding-top:12px;border-top:1px dashed #2f353e;display:flex;flex-direction:column;gap:8px">
+                        <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#5c636e">{{ item.panelTitle }}</span>
+                        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="width:8px;height:8px;border-radius:50%;background:#3ccf8e"></span><span style="font-size:14px">{{ item.line }}</span><sc-if value="{{ item.showBadge }}" hint-placeholder-val="{{ false }}"><span style="padding:2px 7px;border-radius:5px;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:#12392a;color:#47c496">{{ item.badge }}</span></sc-if></div>
+                        <sc-if value="{{ item.showQuote }}" hint-placeholder-val="{{ false }}"><div style="padding:10px 12px;border-radius:10px;background:#0d1014;font-size:13px;line-height:1.5;color:#d8dce2"><span style="color:#6fd4b0;font-weight:600">Chính sách bảo hành.pdf · trang 4</span><br>“Khách hàng có thể đổi trả trong 30 ngày kể từ ngày nhận hàng…”</div></sc-if>
+                        <sc-if value="{{ item.showMetrics }}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px"><div style="padding:8px;border-radius:8px;background:#0d1014"><div style="font-size:11px;color:#8a909a">Tokens in</div><div style="font-size:14px;font-weight:600">1,024</div></div><div style="padding:8px;border-radius:8px;background:#0d1014"><div style="font-size:11px;color:#8a909a">Tokens out</div><div style="font-size:14px;font-weight:600">216</div></div><div style="padding:8px;border-radius:8px;background:#0d1014"><div style="font-size:11px;color:#8a909a">Latency</div><div style="font-size:14px;font-weight:600">2.40s</div></div></div></sc-if>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;justify-content:center;gap:6px"><span style="width:{{ dwB0 }};height:6px;border-radius:3px;background:{{ dcB0 }};transition:width .25s"></span><span style="width:{{ dwB1 }};height:6px;border-radius:3px;background:{{ dcB1 }};transition:width .25s"></span><span style="width:{{ dwB2 }};height:6px;border-radius:3px;background:{{ dcB2 }};transition:width .25s"></span><span style="width:{{ dwB3 }};height:6px;border-radius:3px;background:{{ dcB3 }};transition:width .25s"></span><span style="width:{{ dwB4 }};height:6px;border-radius:3px;background:{{ dcB4 }};transition:width .25s"></span><span style="width:{{ dwB5 }};height:6px;border-radius:3px;background:{{ dcB5 }};transition:width .25s"></span></div>
+              <div style="margin:8px 20px 0;padding:18px;border-radius:16px;border:1px solid #262b33;background:#12161b;display:flex;flex-direction:column;gap:12px">
+                <strong style="font-size:17px;font-weight:700;line-height:1.3">Đội kỹ thuật của bạn sẽ muốn đọc phần này</strong>
+                <span style="font-size:14px;line-height:1.55;color:#b8bec8">Durable execution, trace đầy đủ, huỷ Run đang chạy, endpoint OpenAI-compatible. Gửi cho họ để cùng đánh giá.</span>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><a href="Harnix Mobile Blog.dc.html" style="min-height:46px;padding:8px 10px;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:12px;border:1px solid #3a4049;font-weight:600;font-size:13px;line-height:1.3" style-hover="color:#fff">Vì sao mỗi câu trả lời là một Run</a><a href="https://harnix.vn/docs" style="min-height:46px;padding:8px 10px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid #3a4049;font-weight:600;font-size:13px" style-hover="color:#fff">Tài liệu tích hợp</a></div>
+              </div>
+            </section>
+
+            <section id="b-gia" style="padding:40px 20px;display:flex;flex-direction:column;gap:18px;border-top:1px solid #1d2229">
+              <span style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6fd4b0">05 · Bảng giá</span>
+              <h2 style="margin:0;font-size:31px;line-height:1.04;letter-spacing:-0.04em;font-weight:800">Gói tháng, rõ ràng</h2>
+              <p style="margin:0;font-size:15px;line-height:1.6;color:#b8bec8">Chi phí mô hình AI trả trực tiếp cho nhà cung cấp bạn chọn. Harnix không cộng thêm.</p>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="padding:20px;border-radius:18px;background:#fff;color:#111418;display:flex;flex-direction:column;gap:14px;box-shadow:0 0 0 3px #0f8f6a"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="display:flex;flex-direction:column;gap:2px"><strong style="font-size:19px;font-weight:700">Business</strong><span style="font-size:13px;color:#6b717b">Vận hành nhiều phòng ban</span></div><span style="padding:4px 10px;border-radius:999px;background:#0f8f6a;color:#fff;font-size:11px;font-weight:600">Phổ biến</span></div><div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:30px;font-weight:800;letter-spacing:-0.04em">9.900.000đ</span><span style="font-size:13px;color:#6b717b">/tháng</span></div><div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:5px 10px;border-radius:7px;background:#f1f2f4;font-size:13px">5 trợ lý AI</span><span style="padding:5px 10px;border-radius:7px;background:#f1f2f4;font-size:13px">20.000 câu trả lời/tháng</span><span style="padding:5px 10px;border-radius:7px;background:#f1f2f4;font-size:13px">5 GB tài liệu</span><span style="padding:5px 10px;border-radius:7px;background:#f1f2f4;font-size:13px">Nhật ký 1 năm, báo cáo chi phí</span><span style="padding:5px 10px;border-radius:7px;background:#f1f2f4;font-size:13px">Hỗ trợ tích hợp trực tiếp</span></div><a href="#b-demo" onClick="{{ go }}" style="height:50px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#0f8f6a;color:#fff;font-weight:600;font-size:15px" style-hover="color:#fff">Đặt lịch demo</a></div>
+                <div style="padding:20px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:14px"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><div style="display:flex;flex-direction:column;gap:2px"><strong style="font-size:19px;font-weight:700">Starter</strong><span style="font-size:13px;color:#8a909a">Thử nghiệm với một nhóm nhỏ</span></div><span style="text-align:right"><span style="font-size:22px;font-weight:800;letter-spacing:-0.03em">2.900.000đ</span><span style="font-size:12px;color:#8a909a">/tháng</span></span></div><div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:5px 10px;border-radius:7px;background:#20252c;font-size:13px;color:#d8dce2">1 trợ lý AI</span><span style="padding:5px 10px;border-radius:7px;background:#20252c;font-size:13px;color:#d8dce2">3.000 câu trả lời/tháng</span><span style="padding:5px 10px;border-radius:7px;background:#20252c;font-size:13px;color:#d8dce2">500 MB tài liệu</span><span style="padding:5px 10px;border-radius:7px;background:#20252c;font-size:13px;color:#d8dce2">Nhật ký 30 ngày</span></div><a href="#b-demo" onClick="{{ go }}" style="height:48px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid #3a4049;font-weight:600;font-size:15px" style-hover="color:#fff">Đặt lịch demo</a></div>
+                <div style="padding:20px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;gap:14px"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><div style="display:flex;flex-direction:column;gap:2px"><strong style="font-size:19px;font-weight:700">Enterprise</strong><span style="font-size:13px;color:#8a909a">Yêu cầu riêng về bảo mật</span></div><span style="font-size:22px;font-weight:800;letter-spacing:-0.03em">Liên hệ</span></div><div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:5px 10px;border-radius:7px;background:#20252c;font-size:13px;color:#d8dce2">Không giới hạn trợ lý</span><span style="padding:5px 10px;border-radius:7px;background:#20252c;font-size:13px;color:#d8dce2">Triển khai trên hạ tầng riêng</span><span style="padding:5px 10px;border-radius:7px;background:#20252c;font-size:13px;color:#d8dce2">Cam kết chất lượng dịch vụ (SLA)</span><span style="padding:5px 10px;border-radius:7px;background:#20252c;font-size:13px;color:#d8dce2">Đầu mối hỗ trợ riêng</span></div><a href="#b-demo" onClick="{{ go }}" style="height:48px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid #3a4049;font-weight:600;font-size:15px" style-hover="color:#fff">Liên hệ sales</a></div>
+              </div>
+              <p style="margin:0;font-size:12px;color:#8a909a;font-style:italic">Giá và giới hạn là số giả định, sẽ cập nhật.</p>
+            </section>
+
+            <section id="b-blog" style="padding:40px 20px;display:flex;flex-direction:column;gap:16px;border-top:1px solid #1d2229">
+              <span style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6fd4b0">06 · Cập nhật</span>
+              <h2 style="margin:0;font-size:29px;line-height:1.06;letter-spacing:-0.035em;font-weight:800">Harnix có gì mới</h2>
+              <p style="margin:0;font-size:15px;line-height:1.6;color:#b8bec8">Tính năng mới nhất và hướng dẫn dùng từng bước, để đội ngũ của bạn khai thác Harnix hiệu quả ngay từ ngày đầu.</p>
+              <a href="Harnix Mobile Blog.dc.html" style="position:relative;overflow:hidden;padding:20px;border-radius:18px;background:#12161b;border:1px solid #262b33;display:flex;flex-direction:column;gap:10px" style-hover="color:#fff"><div style="position:absolute;right:-80px;top:-80px;width:220px;height:220px;border-radius:50%;background:#0f8f6a;opacity:0.3;filter:blur(60px)"></div><span style="position:relative;display:flex;justify-content:space-between;align-items:center"><span style="padding:4px 10px;border-radius:6px;background:#12392a;color:#6fd4b0;font-size:12px;font-weight:600">Run engine</span><span style="font-size:44px;font-weight:800;letter-spacing:-0.06em;line-height:0.8;color:#47c496">Run</span></span><span style="position:relative;font-size:13px;color:#8a909a">Mới nhất · 15/09/2026 · 6 phút đọc</span><strong style="position:relative;font-size:20px;line-height:1.2;letter-spacing:-0.02em;font-weight:800">Vì sao mỗi câu trả lời phải là một Run</strong><span style="position:relative;font-size:14px;line-height:1.5;color:#b8bec8">Nó quyết định việc bạn có trả lời được khách hay không.</span></a>
+              <div style="display:flex;flex-direction:column;border-top:1px solid #1d2229">
+                <a href="https://harnix.vn/blog/tach-du-lieu-tu-ngay-dau" style="padding:14px 0;border-bottom:1px solid #1d2229;display:flex;justify-content:space-between;align-items:center;gap:12px" style-hover="color:#fff"><span style="display:flex;flex-direction:column;gap:4px"><strong style="font-size:16px;font-weight:600">Tách dữ liệu từ ngày đầu</strong><span style="font-size:13px;color:#8a909a">Bảo mật dữ liệu · 02/09/2026 · 4 phút đọc</span></span><span style="color:#5c636e">→</span></a>
+                <a href="https://harnix.vn/blog/console-khong-co-top-bar" style="padding:14px 0;border-bottom:1px solid #1d2229;display:flex;justify-content:space-between;align-items:center;gap:12px" style-hover="color:#fff"><span style="display:flex;flex-direction:column;gap:4px"><strong style="font-size:16px;font-weight:600">Console không có top bar</strong><span style="font-size:13px;color:#8a909a">Thiết kế sản phẩm · 21/08/2026 · 5 phút đọc</span></span><span style="color:#5c636e">→</span></a>
+                <a href="https://harnix.vn/blog" style="padding:14px 0;font-size:15px;font-weight:600;color:#47c496">Xem tất cả cập nhật →</a>
+              </div>
+            </section>
+
+            <section id="b-demo" style="position:relative;overflow:hidden;padding:40px 20px;display:flex;flex-direction:column;gap:18px;border-top:1px solid #1d2229">
+              <span style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6fd4b0">07 · Đặt lịch demo</span>
+              <h2 style="margin:0;font-size:34px;line-height:1;letter-spacing:-0.045em;font-weight:800;text-wrap:balance">Sẵn sàng giao việc cho AI?</h2>
+              <p style="margin:0;font-size:15px;line-height:1.6;color:#b8bec8">Để lại thông tin, đội ngũ Harnix gọi lại trong 1 ngày làm việc để hẹn buổi demo 30 phút theo đúng bài toán của bạn.</p>
+              <div style="border-radius:20px;background:#171b21;border:1px solid #262b33;overflow:hidden">
+                <sc-if value="{{ fBNot }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #262b33">
+                    <span style="padding:12px 8px;text-align:center;font-size:12px;font-weight:600;color:{{ tcB0 }};border-bottom:2px solid {{ segB0 }}">1 · Liên hệ</span>
+                    <span style="padding:12px 8px;text-align:center;font-size:12px;font-weight:600;color:{{ tcB1 }};border-bottom:2px solid {{ segB1 }}">2 · Công ty</span>
+                    <span style="padding:12px 8px;text-align:center;font-size:12px;font-weight:600;color:{{ tcB2 }};border-bottom:2px solid {{ segB2 }}">3 · Nhu cầu</span>
+                  </div>
+                </sc-if>
+                <div style="padding:18px">
+                  <sc-if value="{{ fB0 }}" hint-placeholder-val="{{ true }}">
+                    <form onSubmit="{{ nextB }}" style="display:flex;flex-direction:column;gap:12px">
+                      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#d8dce2">Họ tên<input required style="height:50px;padding:0 14px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;outline:none" style-focus="border-color:#3fb98f"></label>
+                      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#d8dce2">Số điện thoại<input required type="tel" style="height:50px;padding:0 14px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;outline:none" style-focus="border-color:#3fb98f"></label>
+                      <button type="submit" style="height:52px;margin-top:4px;border-radius:12px;background:#0f8f6a;border:1px solid #47c496;color:#fff;font-weight:600;font-size:16px;cursor:pointer">Tiếp tục →</button>
+                    </form>
+                  </sc-if>
+                  <sc-if value="{{ fB1 }}" hint-placeholder-val="{{ false }}">
+                    <form onSubmit="{{ nextB }}" style="display:flex;flex-direction:column;gap:12px">
+                      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#d8dce2">Email công việc<input required type="email" placeholder="ban@congty.vn" style="height:50px;padding:0 14px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;outline:none" style-focus="border-color:#3fb98f"></label>
+                      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#d8dce2">Công ty<input required style="height:50px;padding:0 14px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;outline:none" style-focus="border-color:#3fb98f"></label>
+                      <span style="font-size:13px;font-weight:600;color:#d8dce2">Quy mô</span>
+                      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+                        <button type="button" onClick="{{ size0 }}" style="height:44px;border-radius:10px;border:1px solid {{ szBd0 }};background:{{ szBg0 }};color:#fff;font-size:14px;font-weight:600;cursor:pointer">1–10</button>
+                        <button type="button" onClick="{{ size1 }}" style="height:44px;border-radius:10px;border:1px solid {{ szBd1 }};background:{{ szBg1 }};color:#fff;font-size:14px;font-weight:600;cursor:pointer">11–50</button>
+                        <button type="button" onClick="{{ size2 }}" style="height:44px;border-radius:10px;border:1px solid {{ szBd2 }};background:{{ szBg2 }};color:#fff;font-size:14px;font-weight:600;cursor:pointer">51–200</button>
+                        <button type="button" onClick="{{ size3 }}" style="height:44px;border-radius:10px;border:1px solid {{ szBd3 }};background:{{ szBg3 }};color:#fff;font-size:14px;font-weight:600;cursor:pointer">200+</button>
+                      </div>
+                      <div style="display:grid;grid-template-columns:auto 1fr;gap:8px;margin-top:4px"><button type="button" onClick="{{ backB }}" style="height:52px;padding:0 16px;border-radius:12px;border:1px solid #3a4049;background:transparent;color:#fff;font-weight:600;font-size:15px;cursor:pointer">←</button><button type="submit" style="height:52px;border-radius:12px;background:#0f8f6a;border:1px solid #47c496;color:#fff;font-weight:600;font-size:16px;cursor:pointer">Tiếp tục →</button></div>
+                    </form>
+                  </sc-if>
+                  <sc-if value="{{ fB2 }}" hint-placeholder-val="{{ false }}">
+                    <form onSubmit="{{ nextB }}" style="display:flex;flex-direction:column;gap:12px">
+                      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#d8dce2">Bạn muốn AI làm gì?<textarea rows="4" placeholder="VD: trả lời khách về chính sách đổi trả, bảo hành" style="padding:12px 14px;border:1px solid #2f353e;border-radius:12px;background:#0d1014;color:#fff;font-size:16px;font-weight:400;resize:vertical;outline:none" style-focus="border-color:#3fb98f"></textarea></label>
+                      <div style="display:grid;grid-template-columns:auto 1fr;gap:8px;margin-top:4px"><button type="button" onClick="{{ backB }}" style="height:52px;padding:0 16px;border-radius:12px;border:1px solid #3a4049;background:transparent;color:#fff;font-weight:600;font-size:15px;cursor:pointer">←</button><button type="submit" style="height:52px;border-radius:12px;background:#0f8f6a;border:1px solid #47c496;color:#fff;font-weight:600;font-size:16px;cursor:pointer">Gửi yêu cầu demo</button></div>
+                      <span style="font-size:12px;color:#8a909a;text-align:center">Chúng tôi chỉ dùng thông tin này để liên hệ hẹn demo.</span>
+                    </form>
+                  </sc-if>
+                  <sc-if value="{{ fBSent }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:24px 4px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center"><span style="width:52px;height:52px;border-radius:50%;background:#12392a;color:#3ccf8e;display:flex;align-items:center;justify-content:center;font-size:24px">✓</span><strong style="font-size:20px;font-weight:700">Đã nhận yêu cầu</strong><span style="font-size:14px;line-height:1.6;color:#b8bec8">Đội ngũ Harnix sẽ gọi cho bạn trong 1 ngày làm việc.</span></div>
+                  </sc-if>
+                </div>
+              </div>
+              <details style="border-radius:16px;background:#12161b;border:1px solid #262b33;padding:0 16px"><summary style="list-style:none;cursor:pointer;padding:16px 0;display:flex;justify-content:space-between;align-items:center;gap:12px"><span style="display:flex;flex-direction:column;gap:3px"><strong style="font-size:16px;font-weight:700">Trở thành design partner</strong><span style="font-size:13px;color:#8a909a">Chúng tôi tìm 1–3 doanh nghiệp dùng thử sớm.</span></span><span style="color:#47c496;font-size:18px">+</span></summary><div style="padding:0 0 16px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:6px 12px;border-radius:999px;background:#171b21;border:1px solid #262b33;font-size:13px">Dùng miễn phí trong thời gian pilot</span><span style="padding:6px 12px;border-radius:999px;background:#171b21;border:1px solid #262b33;font-size:13px">Hỗ trợ tích hợp trực tiếp</span><span style="padding:6px 12px;border-radius:999px;background:#171b21;border:1px solid #262b33;font-size:13px">Ảnh hưởng tới roadmap</span></div><span style="font-size:13px;line-height:1.55;color:#8a909a">Đổi lại: một buổi feedback mỗi tuần, và cho phép viết case study (khi bạn đồng ý).</span></div></details>
+            </section>
+
+            <section style="padding:40px 20px;display:flex;flex-direction:column;gap:16px;border-top:1px solid #1d2229">
+              <span style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6fd4b0">08 · FAQ</span>
+              <h2 style="margin:0;font-size:27px;line-height:1.06;letter-spacing:-0.035em;font-weight:800">Câu hỏi thường gặp</h2>
+              <div style="display:flex;flex-direction:column;border-top:1px solid #262b33">
+                <details open="" style="border-bottom:1px solid #262b33"><summary style="list-style:none;cursor:pointer;padding:16px 0;font-size:15px;font-weight:600;display:flex;justify-content:space-between;gap:12px">Harnix đã dùng được chưa?<span style="color:#47c496">+</span></summary><p style="margin:0 0 16px;font-size:14px;line-height:1.65;color:#b8bec8">Chưa. Chúng tôi đang xây dựng và mở cho design partner trước. Đặt lịch demo để được báo khi mở.</p></details>
+                <details style="border-bottom:1px solid #262b33"><summary style="list-style:none;cursor:pointer;padding:16px 0;font-size:15px;font-weight:600;display:flex;justify-content:space-between;gap:12px">“Tự mang mô hình AI” nghĩa là gì?<span style="color:#47c496">+</span></summary><p style="margin:0 0 16px;font-size:14px;line-height:1.65;color:#b8bec8">Bạn dùng tài khoản mô hình AI của chính mình (OpenAI, nhà cung cấp tương thích, hoặc mô hình tự triển khai). Chi phí mô hình trả thẳng cho nhà cung cấp.</p></details>
+                <details style="border-bottom:1px solid #262b33"><summary style="list-style:none;cursor:pointer;padding:16px 0;font-size:15px;font-weight:600;display:flex;justify-content:space-between;gap:12px">Dữ liệu của tôi lưu ở đâu, ai xem được?<span style="color:#47c496">+</span></summary><p style="margin:0 0 16px;font-size:14px;line-height:1.65;color:#b8bec8">Mỗi doanh nghiệp có vùng dữ liệu riêng. Chỉ thành viên bạn cấp quyền mới xem được, và bạn xoá được dữ liệu cá nhân của khách khi có yêu cầu.</p></details>
+                <details style="border-bottom:1px solid #262b33"><summary style="list-style:none;cursor:pointer;padding:16px 0;font-size:15px;font-weight:600;display:flex;justify-content:space-between;gap:12px">Có phụ thuộc ngành không?<span style="color:#47c496">+</span></summary><p style="margin:0 0 16px;font-size:14px;line-height:1.65;color:#b8bec8">Không. Trợ lý trả lời dựa trên tài liệu của chính bạn, nên dùng được cho bán lẻ, tài chính, giáo dục, dịch vụ và nhiều ngành khác.</p></details>
+                <details style="border-bottom:1px solid #262b33"><summary style="list-style:none;cursor:pointer;padding:16px 0;font-size:15px;font-weight:600;display:flex;justify-content:space-between;gap:12px">Giá bao nhiêu?<span style="color:#47c496">+</span></summary><p style="margin:0 0 16px;font-size:14px;line-height:1.65;color:#b8bec8">Gói tháng cố định: Starter, Business và Enterprise. Xem <a href="#b-gia" onClick="{{ go }}" style="color:#47c496;font-weight:600">bảng giá</a>.</p></details>
+              </div>
+            </section>
+
+            <footer style="border-top:1px solid #1d2229;padding:36px 20px 120px;display:flex;flex-direction:column;gap:24px">
+              <div style="display:flex;align-items:center;gap:10px"><svg width="28" height="28" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="9" stroke="#fff" stroke-width="2"></rect><path d="M8 25H11.5V21H15V16.5H18.5V12.5H21" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="8" cy="25" r="2.2" fill="#fff"></circle><rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496"></rect></svg><span style="font-size:14px;line-height:1.5;color:#b8bec8">Nền tảng vận hành trợ lý AI. Mỗi câu trả lời được ghi lại từng bước.</span></div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px 18px;font-size:14px;color:#d8dce2"><a href="#b-gia" onClick="{{ go }}">Bảng giá</a><a href="https://harnix.vn/blog">Cập nhật</a><a href="https://harnix.vn/docs">Tài liệu</a><a href="#b-demo" onClick="{{ go }}">Design partner</a><a href="https://www.linkedin.com/company/harnix-ai">LinkedIn</a><a href="#">Facebook</a><a href="#">GitHub</a></div>
+              <span style="font-size:12px;color:#8a909a">© 2026 Harnix</span>
+            </footer>
+          </div>
+
+          <sc-if value="{{ fabB }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;left:12px;right:12px;bottom:24px;z-index:40;padding:6px;border-radius:20px;background:rgba(23,27,33,0.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid #2f353e;box-shadow:0 16px 40px -12px rgba(0,0,0,0.7);display:flex;gap:6px">
+              <a href="#b-demo" onClick="{{ go }}" style="flex:1;height:50px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);color:#fff;font-weight:600;font-size:16px" style-hover="color:#fff">Đặt lịch demo</a>
+              <button onClick="{{ toggleChatB }}" aria-label="Hỏi trợ lý Harnix" style="height:50px;padding:0 14px 0 8px;display:flex;align-items:center;gap:8px;border-radius:14px;border:1px solid #3a4049;background:#0d1014;color:#fff;font-weight:600;font-size:14px;cursor:pointer"><svg width="32" height="32" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="1.5" y="1.5" width="31" height="31" rx="8" stroke="#fff" stroke-width="1.8"></rect><path d="M8 25H11.5V21H15V16.5H18.5V12.5H21" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="8" cy="25" r="2.2" fill="#fff"></circle><rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496"></rect></svg>Hỏi</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ chatB }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ toggleChatB }}" style="position:absolute;inset:0;z-index:50;background:rgba(5,6,7,0.6)"></div>
+            <div role="dialog" aria-label="Trợ lý Harnix" style="position:absolute;left:0;right:0;bottom:0;height:54%;z-index:51;border-radius:26px 26px 0 0;background:#12161b;border-top:1px solid #2f353e;display:flex;flex-direction:column">
+              <span style="align-self:center;width:40px;height:5px;margin-top:8px;border-radius:3px;background:#3a4049"></span>
+              <div style="padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px"><div style="display:flex;flex-direction:column;gap:2px"><strong style="font-size:16px;font-weight:600">Trợ lý Harnix</strong><span style="font-size:12px;color:#8a909a">Trả lời kèm nguồn · Bản xem trước</span></div><button onClick="{{ toggleChatB }}" aria-label="Đóng" style="width:44px;height:44px;border-radius:12px;border:0;background:#1c2229;color:#d8dce2;font-size:20px;cursor:pointer">×</button></div>
+              <div style="flex:1;overflow-y:auto;scrollbar-width:none;padding:6px 16px 12px;display:flex;flex-direction:column;gap:12px">
+                <div style="align-self:flex-start;max-width:88%;padding:12px 14px;border-radius:14px 14px 14px 4px;background:#1c2229;font-size:15px;line-height:1.55">Chào bạn. Mình có thể giải thích cách Harnix hoạt động, tư vấn gói phù hợp, hoặc giúp bạn đặt lịch demo.</div>
+              </div>
+              <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 16px 10px">
+                <button style="flex:none;padding:9px 13px;border-radius:999px;border:1px solid #2a5a47;background:#0f241c;color:#d6f5e8;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap">Harnix khác chatbot thông thường thế nào?</button>
+                <button style="flex:none;padding:9px 13px;border-radius:999px;border:1px solid #2a5a47;background:#0f241c;color:#d6f5e8;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap">Gói nào phù hợp với doanh nghiệp tôi?</button>
+                <a href="#b-demo" onClick="{{ go }}" style="flex:none;padding:9px 13px;border-radius:999px;border:1px solid #2a5a47;background:#0f241c;color:#d6f5e8;font-size:13px;font-weight:500;white-space:nowrap">Đặt lịch demo</a>
+              </div>
+              <div style="padding:10px 12px 30px;border-top:1px solid #262b33;display:flex;gap:8px">
+                <input placeholder="Nhập câu hỏi của bạn…" style="flex:1;min-width:0;height:48px;padding:0 14px;border-radius:12px;border:1px solid #2f353e;background:#0d1014;color:#fff;font-size:16px;outline:none" style-focus="border-color:#47c496">
+                <button style="height:48px;padding:0 16px;border-radius:12px;background:#0f8f6a;border:1px solid #47c496;color:#fff;font-weight:600;font-size:15px;cursor:pointer">Gửi</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ menuB }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:60;background:#0d1014;padding:50px 0 34px;display:flex;flex-direction:column">
+              <div style="height:54px;padding:0 12px 0 18px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;font-weight:600;color:#8a909a">Menu</span><button onClick="{{ toggleMenuB }}" aria-label="Đóng menu" style="width:44px;height:44px;border:0;border-radius:12px;background:#171b21;color:#fff;font-size:22px;cursor:pointer">×</button></div>
+              <div style="padding:8px 16px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <a href="#b-cach" onClick="{{ go }}" style="height:132px;padding:16px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;justify-content:space-between" style-hover="color:#fff"><span style="font-size:12px;font-weight:700;color:#47c496">02</span><span style="display:flex;flex-direction:column;gap:3px"><strong style="font-size:19px;font-weight:700">Sản phẩm</strong><span style="font-size:12px;color:#8a909a">Harnix làm được gì</span></span></a>
+                <a href="#b-run" onClick="{{ go }}" style="height:132px;padding:16px;border-radius:18px;background:#0f241c;border:1px solid #2a5a47;display:flex;flex-direction:column;justify-content:space-between" style-hover="color:#fff"><span style="font-size:12px;font-weight:700;color:#47c496">04</span><span style="display:flex;flex-direction:column;gap:3px"><strong style="font-size:19px;font-weight:700">Run engine</strong><span style="font-size:12px;color:#b8bec8">Xem AI làm từng bước</span></span></a>
+                <a href="#b-gia" onClick="{{ go }}" style="height:132px;padding:16px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;justify-content:space-between" style-hover="color:#fff"><span style="font-size:12px;font-weight:700;color:#47c496">05</span><span style="display:flex;flex-direction:column;gap:3px"><strong style="font-size:19px;font-weight:700">Bảng giá</strong><span style="font-size:12px;color:#8a909a">Từ 2,9 triệu/tháng</span></span></a>
+                <a href="#b-blog" onClick="{{ go }}" style="height:132px;padding:16px;border-radius:18px;background:#171b21;border:1px solid #262b33;display:flex;flex-direction:column;justify-content:space-between" style-hover="color:#fff"><span style="font-size:12px;font-weight:700;color:#47c496">06</span><span style="display:flex;flex-direction:column;gap:3px"><strong style="font-size:19px;font-weight:700">Cập nhật</strong><span style="font-size:12px;color:#8a909a">Tính năng mới &amp; hướng dẫn</span></span></a>
+              </div>
+              <div style="padding:16px 20px 0;display:flex;flex-direction:column">
+                <a href="https://harnix.vn/docs" style="padding:16px 0;border-bottom:1px solid #1d2229;display:flex;justify-content:space-between;align-items:center" style-hover="color:#fff"><span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:17px;font-weight:600">Tài liệu</span><span style="font-size:13px;color:#8a909a">Hướng dẫn tích hợp cho đội kỹ thuật</span></span><span style="color:#47c496">↗</span></a>
+                <a href="https://harnix.vn/en" style="padding:16px 0;display:flex;justify-content:space-between;align-items:center" style-hover="color:#fff"><span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:17px;font-weight:600">English</span><span style="font-size:13px;color:#8a909a">Switch to English</span></span><span style="color:#47c496">↗</span></a>
+              </div>
+              <div style="margin-top:auto;padding:0 16px"><a href="#b-demo" onClick="{{ go }}" style="height:56px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:#0f8f6a;border:1px solid #47c496;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),0 0 0 3px rgba(71,196,150,0.14);color:#fff;font-weight:600;font-size:17px" style-hover="color:#fff">Đặt lịch demo</a></div>
+            </div>
+          </sc-if>
+          <span style="position:absolute;left:50%;bottom:8px;width:134px;height:5px;transform:translateX(-50%);border-radius:3px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,0.12);z-index:80;pointer-events:none"></span>
+        </div>
+      </div>
+    </div></sc-if>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuA: false, menuB: false, chatA: false, chatB: false, formA: 0, formB: 0, runA: 0, runB: 0, viewA: "biz", viewB: "biz", topA: false, progB: 0, secB: -1, sizeB: 0 };
+  refA = React.createRef();
+  refB = React.createRef();
+  steps = [
+    { n: "01", tag: "user_message", title: "Khách đặt câu hỏi", desc: "Run được mở, ghi nhận câu hỏi và thời điểm.", log: "“Chính sách đổi trả trong bao lâu?”", t: "0,00s", trace: "user_message", tt: "00.00s" },
+    { n: "02", tag: "tool_call · knowledge_search", title: "AI tra cứu tài liệu", desc: "Tìm trong “Chính sách bảo hành.pdf”.", log: "Tra cứu tài liệu nội bộ", t: "0,14s", trace: "tool_call knowledge_search", tt: "00.14s" },
+    { n: "03", tag: "tool_result · 3 chunks", title: "Tìm thấy căn cứ", desc: "3 đoạn liên quan, có trích dẫn nguồn.", log: "Tìm thấy 3 đoạn liên quan", t: "0,61s", trace: "tool_result · 3 chunks", tt: "00.61s", quote: true },
+    { n: "04", tag: "llm_call · gpt-4o-mini", title: "Soạn câu trả lời", desc: "Mô hình AI viết câu trả lời từ đúng các đoạn đó.", log: "Soạn câu trả lời", t: "0,72s", trace: "llm_call · gpt-4o-mini", tt: "00.72s" },
+    { n: "05", tag: "token_usage · 1,240 tokens", title: "Ghi nhận chi phí", desc: "Chi phí của đúng câu trả lời này, tính theo lượng chữ AI đọc và viết.", log: "1.240 lượt xử lý · ~38đ", t: "2,38s", trace: "token_usage · 1,240", tt: "02.38s", badge: "measured" },
+    { n: "06", tag: "state_change · completed", title: "Hoàn tất", desc: "Có thể dừng giữa chừng nếu cần. Hệ thống gặp sự cố, Run vẫn chạy tiếp tới khi xong.", log: "Hoàn tất", t: "2,40s", trace: "state_change · completed", tt: "02.40s" }
+  ];
+  secIds = ["b-cach", "b-run", "b-gia", "b-blog", "b-demo"];
+  secNames = ["Cách hoạt động", "Run engine", "Bảng giá", "Cập nhật", "Đặt lịch demo"];
+  go = e => {
+    const h = e.currentTarget.getAttribute("href") || "";
+    if (h[0] !== "#") return;
+    e.preventDefault();
+    const id = h.slice(1), p = id[0], box = (p === "a" ? this.refA : this.refB).current;
+    const U = p.toUpperCase();
+    this.setState({ ["menu" + U]: false, ["chat" + U]: false });
+    if (!box) return;
+    let top = 0;
+    const el = document.getElementById(id);
+    if (el && !id.endsWith("top")) {
+      const br = box.getBoundingClientRect(), k = br.height / box.offsetHeight || 1;
+      top = (el.getBoundingClientRect().top - br.top) / k + box.scrollTop - (p === "a" ? 110 : 106);
+    }
+    box.scrollTo({ top, behavior: "smooth" });
+  };
+  scrollA = e => { const t = e.currentTarget.scrollTop > 600; if (t !== this.state.topA) this.setState({ topA: t }); };
+  scrollB = e => {
+    const b = e.currentTarget, max = b.scrollHeight - b.clientHeight;
+    const prog = max > 0 ? Math.round((b.scrollTop / max) * 100) : 0;
+    const br = b.getBoundingClientRect(), k = br.height / b.offsetHeight || 1;
+    let sec = -1;
+    this.secIds.forEach((id, i) => { const el = document.getElementById(id); if (el && (el.getBoundingClientRect().top - br.top) / k < 140) sec = i; });
+    if (prog !== this.state.progB || sec !== this.state.secB) this.setState({ progB: prog, secB: sec });
+  };
+  runScroll = p => e => {
+    const el = e.currentTarget, c = el.children[0], w = c ? c.offsetWidth + 12 : 1;
+    let i = Math.round(el.scrollLeft / w);
+    if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 4) i = 5;
+    i = Math.max(0, Math.min(5, i));
+    if (i !== this.state["run" + p]) this.setState({ ["run" + p]: i });
+  };
+  runScrollA = this.runScroll("A");
+  runScrollB = this.runScroll("B");
+  toggle = k => () => this.setState(s => ({ [k]: !s[k] }));
+  toggleMenuA = this.toggle("menuA"); toggleMenuB = this.toggle("menuB");
+  toggleChatA = this.toggle("chatA"); toggleChatB = this.toggle("chatB");
+  next = k => e => { e.preventDefault(); this.setState(s => ({ [k]: s[k] + 1 })); };
+  back = k => () => this.setState(s => ({ [k]: Math.max(0, s[k] - 1) }));
+  nextA = this.next("formA"); nextB = this.next("formB");
+  backA = this.back("formA"); backB = this.back("formB");
+  stepsFor(p) {
+    const vb = this.state["view" + p] === "biz", cur = this.state["run" + p];
+    return this.steps.map((s, i) => ({
+      ...s, line: vb ? s.log : s.trace, time: vb ? s.t : s.tt,
+      panelTitle: vb ? "Nhật ký câu trả lời" : "Run trace · run_8c41f2",
+      showQuote: vb && !!s.quote, showBadge: !vb, badge: s.badge || "completed", showMetrics: !vb && i === 5,
+      bd: i === cur ? "#2a5a47" : "#262b33"
+    }));
+  }
+  renderVals() {
+    const st = this.state, v = {};
+    const labels = ["Liên hệ", "Công ty", "Nhu cầu"];
+    for (let i = 0; i < 3; i++) {
+      v["fA" + i] = st.formA === i; v["fB" + i] = st.formB === i;
+      v["segA" + i] = st.formA >= i ? "#47c496" : "#2f353e";
+      v["segB" + i] = st.formB === i ? "#47c496" : st.formB > i ? "#2a5a47" : "transparent";
+      v["tcB" + i] = st.formB >= i ? "#fff" : "#5c636e";
+    }
+    for (let i = 0; i < 6; i++) { v["dwB" + i] = i === st.runB ? "20px" : "6px"; v["dcB" + i] = i === st.runB ? "#47c496" : "#2f353e"; }
+    for (let i = 0; i < 4; i++) { v["szBg" + i] = st.sizeB === i ? "#0f241c" : "#0d1014"; v["szBd" + i] = st.sizeB === i ? "#47c496" : "#2f353e"; v["size" + i] = () => this.setState({ sizeB: i }); }
+    const vA = st.viewA === "biz", vB = st.viewB === "biz";
+    return {
+      ...v, showA: this.props.only !== "b", showB: this.props.only !== "a", refA: this.refA, refB: this.refB, go: this.go, scrollA: this.scrollA, scrollB: this.scrollB,
+      runScrollA: this.runScrollA, runScrollB: this.runScrollB,
+      stepsA: this.stepsFor("A"), stepsB: this.stepsFor("B"),
+      runNoA: "0" + (st.runA + 1), runBarA: ((st.runA + 1) / 6) * 100 + "%", runNoB: "0" + (st.runB + 1),
+      bizA: () => this.setState({ viewA: "biz" }), devA: () => this.setState({ viewA: "dev" }),
+      bizB: () => this.setState({ viewB: "biz" }), devB: () => this.setState({ viewB: "dev" }),
+      bizBgA: vA ? "#fff" : "transparent", bizFgA: vA ? "#0d1014" : "#b8bec8", devBgA: vA ? "transparent" : "#fff", devFgA: vA ? "#b8bec8" : "#0d1014",
+      bizBgB: vB ? "#fff" : "transparent", bizFgB: vB ? "#0d1014" : "#b8bec8", devBgB: vB ? "transparent" : "#fff", devFgB: vB ? "#b8bec8" : "#0d1014",
+      menuA: st.menuA, menuB: st.menuB, chatA: st.chatA, chatB: st.chatB,
+      toggleMenuA: this.toggleMenuA, toggleMenuB: this.toggleMenuB, toggleChatA: this.toggleChatA, toggleChatB: this.toggleChatB,
+      fabA: !st.menuA && !st.chatA, fabB: !st.menuB && !st.chatB, topA: st.topA,
+      progB: st.progB + "%", hasSecB: st.secB >= 0, secNameB: this.secNames[st.secB] || "",
+      fANot: st.formA < 3, fASent: st.formA >= 3, fBNot: st.formB < 3, fBSent: st.formB >= 3,
+      fLabelA: "Bước " + Math.min(3, st.formA + 1) + " · " + (labels[st.formA] || ""), fCountA: Math.min(3, st.formA + 1) + "/3",
+      nextA: this.nextA, nextB: this.nextB, backA: this.backA, backB: this.backB
+    };
+  }
+}
+</script>
+</body>
+</html>

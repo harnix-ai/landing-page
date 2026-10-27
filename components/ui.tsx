@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, type ReactNode, type UIEvent } from "react";
 
 /**
  * Buttons, per the redesign: 14px radius (the logo's square), no icons.
@@ -43,5 +43,35 @@ export function Rich({
         <Fragment key={i}>{i % 2 === 1 ? em(part) : part}</Fragment>
       ))}
     </>
+  );
+}
+
+/** Horizontal snap carousel used on mobile audiences + Run steps. */
+export function SnapRow({
+  label,
+  hint,
+  hintClassName = "text-ink-500",
+  children,
+  onScroll,
+}: {
+  label: string;
+  hint?: string;
+  hintClassName?: string;
+  children: ReactNode;
+  onScroll?: (event: UIEvent<HTMLDivElement>) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-2.5">
+      <div
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={label}
+        onScroll={onScroll}
+        className="hx-snap"
+      >
+        {children}
+      </div>
+      {hint && <span className={`px-5 text-[13px] font-semibold ${hintClassName}`}>{hint}</span>}
+    </div>
   );
 }

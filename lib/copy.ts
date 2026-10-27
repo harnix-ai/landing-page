@@ -31,7 +31,7 @@ const vi = {
     run: { label: "Run engine", desc: "Xem AI làm từng bước" },
     pricing: { label: "Bảng giá", desc: "Từ 2,9 triệu/tháng" },
     faq: { label: "Hỏi đáp", desc: "Giải đáp nhanh" },
-    blog: { label: "Blog", desc: "Nhật ký xây dựng" },
+    blog: { label: "Cập nhật", desc: "Tính năng mới & hướng dẫn" },
     docs: { label: "Tài liệu", desc: "Hướng dẫn tích hợp cho đội kỹ thuật" },
     docsSoon: "Sắp có",
     other: { label: "English", desc: "Switch to English" },
@@ -274,10 +274,10 @@ const vi = {
   },
 
   blog: {
-    label: "Blog",
-    title: "Đang xây dựng công khai",
-    sub: "Vì sao chúng tôi chọn từng giải pháp, kể lại bằng ngôn ngữ dễ hiểu.",
-    all: "Xem tất cả bài viết",
+    label: "Cập nhật",
+    title: "Harnix có gì mới",
+    sub: "Tính năng mới nhất và hướng dẫn dùng từng bước, để đội ngũ của bạn khai thác Harnix hiệu quả ngay từ ngày đầu.",
+    all: "Xem tất cả cập nhật",
     latest: "Mới nhất",
     readingTime: "{N} phút đọc",
     emptyTitle: "Bài viết đầu tiên sắp ra mắt",
@@ -291,7 +291,7 @@ const vi = {
   },
 
   post: {
-    crumb: "Blog",
+    crumb: "Cập nhật",
     author: "Đội ngũ Harnix",
     copyLink: "Sao chép link",
     copied: "Đã sao chép ✓",
@@ -312,6 +312,13 @@ const vi = {
     allPosts: "Tất cả bài viết",
     notFoundTitle: "Không tìm thấy bài viết",
     notFoundBody: "Bài viết này không tồn tại hoặc đã bị gỡ.",
+    mobileCategory: "Cập nhật",
+    mobileCategoryDesc: "Tính năng mới & hướng dẫn",
+    allUpdates: "Tất cả cập nhật",
+    readNextRelated: "Đọc tiếp: tính năng liên quan",
+    readNextRelatedSub:
+      "Các bài dưới đây giải thích thêm những phần khác của Harnix.",
+    menuTitle: "Menu",
   },
 
   demo: {
@@ -402,6 +409,21 @@ const vi = {
     placeholder: "Nhập câu hỏi của bạn…",
     send: "Gửi",
   },
+
+  mobile: {
+    swipeMore: "Vuốt để xem thêm →",
+    swipeSteps: "Vuốt để xem từng bước →",
+    carouselBiz: "Tính năng cho ban điều hành và vận hành",
+    carouselDev: "Tính năng cho đội kỹ thuật",
+    carouselRun: "Các bước của một Run",
+    slideOf: "{N} / {T}",
+    formStep: "Bước {N} · {label}",
+    formCount: "{N}/3",
+    formStepLabels: ["Liên hệ", "Công ty", "Nhu cầu"],
+    formNext: "Tiếp tục",
+    formBack: "Quay lại",
+    dataBadge: "NĐ 13/2023",
+  },
 };
 
 export type Copy = typeof vi;
@@ -419,7 +441,7 @@ const en: Copy = {
     run: { label: "Run engine", desc: "Watch AI work step by step" },
     pricing: { label: "Pricing", desc: "From 2.9M VND/month" },
     faq: { label: "FAQ", desc: "Quick answers" },
-    blog: { label: "Blog", desc: "Build log" },
+    blog: { label: "Updates", desc: "New features & guides" },
     docs: { label: "Docs", desc: "Integration guide for your tech team" },
     docsSoon: "Soon",
     other: { label: "Tiếng Việt", desc: "Chuyển sang tiếng Việt" },
@@ -662,10 +684,10 @@ const en: Copy = {
   },
 
   blog: {
-    label: "Blog",
-    title: "Building in public",
-    sub: "Why we chose each solution, explained in plain language.",
-    all: "See all posts",
+    label: "Updates",
+    title: "What's new in Harnix",
+    sub: "The latest features and step-by-step guides, so your team gets the most out of Harnix from day one.",
+    all: "See all updates",
     latest: "Latest",
     readingTime: "{N} min read",
     emptyTitle: "The first post is on its way",
@@ -679,7 +701,7 @@ const en: Copy = {
   },
 
   post: {
-    crumb: "Blog",
+    crumb: "Updates",
     author: "The Harnix team",
     copyLink: "Copy link",
     copied: "Copied ✓",
@@ -700,6 +722,13 @@ const en: Copy = {
     allPosts: "All posts",
     notFoundTitle: "Post not found",
     notFoundBody: "This post does not exist or has been removed.",
+    mobileCategory: "Updates",
+    mobileCategoryDesc: "New features & guides",
+    allUpdates: "All updates",
+    readNextRelated: "Read next: related features",
+    readNextRelatedSub:
+      "The posts below cover other parts of Harnix.",
+    menuTitle: "Menu",
   },
 
   demo: {
@@ -787,6 +816,21 @@ const en: Copy = {
     bookDemo: "Book a demo",
     placeholder: "Type your question…",
     send: "Send",
+  },
+
+  mobile: {
+    swipeMore: "Swipe for more →",
+    swipeSteps: "Swipe through each step →",
+    carouselBiz: "Features for leadership and operations",
+    carouselDev: "Features for the technical team",
+    carouselRun: "Steps in a Run",
+    slideOf: "{N} / {T}",
+    formStep: "Step {N} · {label}",
+    formCount: "{N}/3",
+    formStepLabels: ["Contact", "Company", "Needs"],
+    formNext: "Continue",
+    formBack: "Back",
+    dataBadge: "Decree 13/2023",
   },
 };
 
