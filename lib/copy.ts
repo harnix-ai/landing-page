@@ -312,6 +312,13 @@ const vi = {
     allPosts: "Tất cả bài viết",
     notFoundTitle: "Không tìm thấy bài viết",
     notFoundBody: "Bài viết này không tồn tại hoặc đã bị gỡ.",
+    mobileCategory: "Cập nhật",
+    mobileCategoryDesc: "Tính năng mới & hướng dẫn",
+    allUpdates: "Tất cả cập nhật",
+    readNextRelated: "Đọc tiếp: tính năng liên quan",
+    readNextRelatedSub:
+      "Run engine là một phần. Hai bài dưới giải thích cách Harnix giữ dữ liệu an toàn và giúp bạn vận hành trợ lý hằng ngày.",
+    menuTitle: "Menu",
   },
 
   demo: {
@@ -715,6 +722,13 @@ const en: Copy = {
     allPosts: "All posts",
     notFoundTitle: "Post not found",
     notFoundBody: "This post does not exist or has been removed.",
+    mobileCategory: "Updates",
+    mobileCategoryDesc: "New features & guides",
+    allUpdates: "All updates",
+    readNextRelated: "Read next: related features",
+    readNextRelatedSub:
+      "The Run engine is one piece. The two posts below explain how Harnix keeps data safe and helps you operate assistants day to day.",
+    menuTitle: "Menu",
   },
 
   demo: {
