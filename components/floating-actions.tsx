@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LogoMark } from "@/components/logo";
 import { useSite } from "@/components/providers";
 import { siteConfig } from "@/lib/config";
+import { useFocusTrap } from "@/lib/use-focus-trap";
 
 /** Scroll distance before "back to top" appears. */
 const SHOW_AFTER = 700;
@@ -13,11 +14,14 @@ const SHOW_AFTER = 700;
  * back-to-top button (a staircase climbing to an accent arrow, from the logo)
  * and — once `siteConfig.chatEnabled` is on — the "Hỏi Harnix" launcher.
  * Back to top steps aside while the chat panel is open so the two never overlap.
+ * On mobile the whole stack hides while the menu or the chat sheet is open.
  */
 export function FloatingActions({ demoHref = "#demo" }: { demoHref?: string }) {
-  const { c } = useSite();
+  const { c, overlay, setOverlay } = useSite();
   const [scrolled, setScrolled] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
+  const chatOpen = overlay === "chat";
+  const menuOpen = overlay === "menu";
+  const closeChat = useCallback(() => setOverlay(null), [setOverlay]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > SHOW_AFTER);
@@ -26,14 +30,22 @@ export function FloatingActions({ demoHref = "#demo" }: { demoHref?: string }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const showTop = scrolled && !chatOpen;
+  const showTop = scrolled && !chatOpen && !menuOpen;
+  const hideStack = menuOpen || chatOpen;
 
   return (
     <>
       {siteConfig.chatEnabled && chatOpen && (
-        <ChatPanel demoHref={demoHref} onClose={() => setChatOpen(false)} />
+        <>
+          <div className="hidden md:contents">
+            <ChatPanel demoHref={demoHref} onClose={closeChat} />
+          </div>
+          <ChatSheet demoHref={demoHref} onClose={closeChat} />
+        </>
       )}
-      <div className="fixed right-4 bottom-4 z-41 flex flex-col items-end gap-[10px]">
+      <div
+        className={`fixed right-4 bottom-[30px] z-41 flex flex-col items-end gap-2.5 md:bottom-4 md:gap-[10px] ${hideStack ? "max-md:hidden" : ""}`}
+      >
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -41,14 +53,14 @@ export function FloatingActions({ demoHref = "#demo" }: { demoHref?: string }) {
           title={c.backToTop}
           tabIndex={showTop ? 0 : -1}
           aria-hidden={!showTop}
-          className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-[14px] border border-night-line3 bg-[rgba(18,22,27,0.9)] text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] backdrop-blur-[10px] transition-[opacity,transform,border-color] duration-250 hover:border-accent-on-night hover:bg-night-hover"
+          className="flex h-[46px] w-[46px] cursor-pointer items-center justify-center rounded-[14px] border border-night-line3 bg-[rgba(18,22,27,0.9)] text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] backdrop-blur-[10px] transition-[opacity,transform,border-color] duration-250 hover:border-accent-on-night hover:bg-night-hover md:h-12 md:w-12"
           style={{
             opacity: showTop ? 1 : 0,
             transform: showTop ? "none" : "translateY(8px)",
             pointerEvents: showTop ? "auto" : "none",
           }}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="md:h-6 md:w-6">
             <path d="M3.5 20H8V15.5H12.5V11H17" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M17 3.5V11M13.5 7L17 3.5L20.5 7" stroke="#47c496" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -57,13 +69,14 @@ export function FloatingActions({ demoHref = "#demo" }: { demoHref?: string }) {
         {siteConfig.chatEnabled && (
           <button
             type="button"
-            onClick={() => setChatOpen((open) => !open)}
+            onClick={() => setOverlay(chatOpen ? null : "chat")}
             aria-label={c.chat.openLabel}
             aria-expanded={chatOpen}
-            className="flex h-14 cursor-pointer items-center gap-3 rounded-2xl border border-accent-on-night bg-accent pr-5 pl-[10px] text-[16px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_0_3px_rgba(71,196,150,0.16),0_16px_36px_-12px_rgba(15,143,106,0.9)] transition-[transform,background-color] duration-200 hover:-translate-y-px hover:bg-accent-hover"
+            className="flex h-[54px] cursor-pointer items-center gap-2.5 rounded-2xl border border-accent-on-night bg-accent pr-[18px] pl-2 text-[15px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_0_3px_rgba(71,196,150,0.16),0_16px_36px_-12px_rgba(15,143,106,0.9)] transition-[transform,background-color] duration-200 hover:-translate-y-px hover:bg-accent-hover md:h-14 md:gap-3 md:pr-5 md:pl-[10px] md:text-[16px]"
           >
-            <LogoMark size={38} filled />
-            {chatOpen ? c.chat.close : c.chat.open}
+            <LogoMark size={36} filled />
+            <span className="md:hidden">{c.chat.open}</span>
+            <span className="hidden md:inline">{chatOpen ? c.chat.close : c.chat.open}</span>
           </button>
         )}
       </div>
@@ -127,6 +140,86 @@ function ChatPanel({ demoHref, onClose }: { demoHref: string; onClose: () => voi
           {ch.send}
         </button>
       </form>
+    </div>
+  );
+}
+
+/** Half-height bottom sheet used below 768px. UI only. */
+function ChatSheet({ demoHref, onClose }: { demoHref: string; onClose: () => void }) {
+  const { c } = useSite();
+  const ch = c.chat;
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const onChange = () => setActive(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useFocusTrap(active, sheetRef, onClose);
+
+  const chip =
+    "rounded-[10px] border border-accent-deep-line bg-accent-deeper px-3.5 py-2.5 text-left text-[14px] font-medium text-accent-pale";
+
+  return (
+    <div className="md:hidden">
+      <div className="fixed inset-0 z-50 bg-[rgba(5,6,7,0.6)]" onClick={onClose} />
+      <div
+        ref={sheetRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={ch.title}
+        tabIndex={-1}
+        className="fixed inset-x-0 bottom-0 z-[51] flex h-[56%] flex-col rounded-t-[28px] border-t border-night-line2 bg-night-panel text-white shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.7)]"
+      >
+        <span aria-hidden="true" className="mt-2 h-[5px] w-10 self-center rounded-[3px] bg-night-line3" />
+        <div className="flex items-center gap-3 border-b border-night-line px-4 pt-2.5 pb-3">
+          <LogoMark size={38} filled />
+          <div className="flex flex-1 flex-col gap-0.5">
+            <strong className="text-[16px] font-semibold">{ch.title}</strong>
+            <span className="text-[12px] text-on-night-muted">{ch.sub}</span>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={ch.closeLabel}
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-night-line2 bg-transparent text-[20px] text-on-night2"
+          >
+            ×
+          </button>
+        </div>
+        <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-4 [scrollbar-width:none]">
+          <div className="max-w-[88%] self-start rounded-[14px_14px_14px_4px] bg-night-hover px-3.5 py-3 text-[15px] leading-[1.55]">
+            {ch.greeting}
+          </div>
+          <div className="flex flex-col items-start gap-2">
+            {ch.suggestions.map((s) => (
+              <button key={s} type="button" className={`${chip} min-h-11 cursor-pointer`}>
+                {s}
+              </button>
+            ))}
+            <a href={demoHref} onClick={onClose} className={`${chip} min-h-11`}>
+              {ch.bookDemo}
+            </a>
+          </div>
+        </div>
+        <form className="flex gap-2 border-t border-night-line px-3 pt-2.5 pb-[30px]" onSubmit={(e) => e.preventDefault()}>
+          <input
+            aria-label={ch.placeholder}
+            placeholder={ch.placeholder}
+            className="h-12 min-w-0 flex-1 rounded-xl border border-night-line2 bg-night px-3.5 text-[16px] text-white outline-none focus:border-accent-on-night"
+          />
+          <button
+            type="submit"
+            className="h-12 cursor-pointer rounded-xl border border-accent-on-night bg-accent px-4 text-[15px] font-semibold text-white"
+          >
+            {ch.send}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

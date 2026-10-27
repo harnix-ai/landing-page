@@ -1,12 +1,17 @@
 "use client";
 
-import { createContext, useContext, useMemo, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { getCopy, type Copy, type Lang } from "@/lib/copy";
+
+export type Overlay = "menu" | "chat" | null;
 
 type SiteContextValue = {
   lang: Lang;
   /** The whole dictionary for `lang`: `const { c } = useSite(); c.hero.title`. */
   c: Copy;
+  /** Full-screen menu or chat sheet currently open; used to lock scroll and hide the FAB. */
+  overlay: Overlay;
+  setOverlay: (overlay: Overlay) => void;
 };
 
 const SiteContext = createContext<SiteContextValue | null>(null);
@@ -24,7 +29,23 @@ export function SiteProviders({
   lang: Lang;
   children: ReactNode;
 }) {
-  const value = useMemo<SiteContextValue>(() => ({ lang, c: getCopy(lang) }), [lang]);
+  const [overlay, setOverlayState] = useState<Overlay>(null);
+  const setOverlay = useCallback((next: Overlay) => setOverlayState(next), []);
+
+  useEffect(() => {
+    // Only the phone menu and chat sheet cover the page; the desktop chat panel leaves it scrollable.
+    if (!overlay || !window.matchMedia("(max-width: 767px)").matches) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [overlay]);
+
+  const value = useMemo<SiteContextValue>(
+    () => ({ lang, c: getCopy(lang), overlay, setOverlay }),
+    [lang, overlay, setOverlay],
+  );
   return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;
 }
 

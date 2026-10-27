@@ -1,7 +1,7 @@
 "use client";
 
 import { useSite } from "@/components/providers";
-import { Container, sectionPad } from "@/components/ui";
+import { Container } from "@/components/ui";
 import { siteConfig } from "@/lib/config";
 
 /**
@@ -34,12 +34,12 @@ export function Faq() {
 
   return (
     <section id="hoi-dap" className="bg-paper text-ink">
-      <Container className={`grid grid-cols-[repeat(auto-fit,minmax(min(100%,380px),1fr))] items-start gap-10 ${sectionPad}`}>
-        <h2 className="m-0 text-[clamp(30px,4.5vw,52px)] leading-[1.05] font-extrabold tracking-[-0.035em]">{f.title}</h2>
-        <div className="flex flex-col gap-[10px]">
+      <Container className="grid grid-cols-1 items-start gap-6 py-16 md:grid-cols-[repeat(auto-fit,minmax(min(100%,380px),1fr))] md:gap-10 md:py-[clamp(72px,10vw,140px)]">
+        <h2 className="m-0 text-[30px] leading-[1.05] font-extrabold tracking-[-0.035em] md:text-[clamp(30px,4.5vw,52px)]">{f.title}</h2>
+        <div className="flex flex-col gap-2 md:gap-[10px]">
           {items.map((item, i) => (
-            <details key={item.q} open={i === 0} className="group rounded-[18px] border border-line bg-card px-6">
-              <summary className="flex cursor-pointer list-none justify-between gap-4 py-[22px] text-[18px] font-semibold">
+            <details key={item.q} open={i === 0} className="group rounded-2xl border border-line bg-card px-[18px] md:rounded-[18px] md:px-6">
+              <summary className="flex min-h-11 cursor-pointer list-none justify-between gap-3.5 py-[18px] text-[16px] font-semibold md:gap-4 md:py-[22px] md:text-[18px]">
                 {item.q}
                 <span
                   aria-hidden="true"
@@ -48,7 +48,7 @@ export function Faq() {
                   +
                 </span>
               </summary>
-              <p className="m-0 mb-[22px] text-[16px] leading-[1.65] text-ink-700">{item.a}</p>
+              <p className="m-0 mb-[18px] text-[15px] leading-[1.65] text-ink-700 md:mb-[22px] md:text-[16px]">{item.a}</p>
             </details>
           ))}
         </div>

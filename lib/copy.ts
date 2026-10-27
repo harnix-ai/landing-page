@@ -402,6 +402,21 @@ const vi = {
     placeholder: "Nhập câu hỏi của bạn…",
     send: "Gửi",
   },
+
+  mobile: {
+    swipeMore: "Vuốt để xem thêm →",
+    swipeSteps: "Vuốt để xem từng bước →",
+    carouselBiz: "Tính năng cho ban điều hành và vận hành",
+    carouselDev: "Tính năng cho đội kỹ thuật",
+    carouselRun: "Các bước của một Run",
+    slideOf: "{N} / {T}",
+    formStep: "Bước {N} · {label}",
+    formCount: "{N}/3",
+    formStepLabels: ["Liên hệ", "Công ty", "Nhu cầu"],
+    formNext: "Tiếp tục",
+    formBack: "Quay lại",
+    dataBadge: "NĐ 13/2023",
+  },
 };
 
 export type Copy = typeof vi;
@@ -787,6 +802,21 @@ const en: Copy = {
     bookDemo: "Book a demo",
     placeholder: "Type your question…",
     send: "Send",
+  },
+
+  mobile: {
+    swipeMore: "Swipe for more →",
+    swipeSteps: "Swipe through each step →",
+    carouselBiz: "Features for leadership and operations",
+    carouselDev: "Features for the technical team",
+    carouselRun: "Steps in a Run",
+    slideOf: "{N} / {T}",
+    formStep: "Step {N} · {label}",
+    formCount: "{N}/3",
+    formStepLabels: ["Contact", "Company", "Needs"],
+    formNext: "Continue",
+    formBack: "Back",
+    dataBadge: "Decree 13/2023",
   },
 };
 

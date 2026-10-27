@@ -52,6 +52,7 @@
   --color-accent-deeper: #0f241c;
   --color-accent-deep-line: #2a5a47;
   --color-accent-pale: #d6f5e8;
+  --color-accent-focus: #3fb98f;
 
   /* Status. */
   --color-ok: #3ccf8e;
@@ -99,6 +100,13 @@
     scroll-behavior: smooth;
     /* The floating header is 66px tall plus its 12px inset. */
     scroll-padding-top: 96px;
+  }
+
+  @media (max-width: 767px) {
+    html {
+      /* Mobile header is a flush 60px bar. */
+      scroll-padding-top: 72px;
+    }
   }
 
   body {
@@ -149,6 +157,21 @@
     color: var(--color-ink);
     font-weight: 600;
     padding: 0 2px;
+  }
+
+  /* Horizontal snap rows on the mobile landing (audiences + Run steps). */
+  .hx-snap {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
+    padding: 0 20px 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hx-snap::-webkit-scrollbar {
+    display: none;
   }
 }
 
