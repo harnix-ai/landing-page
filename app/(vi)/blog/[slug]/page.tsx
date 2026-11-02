@@ -1,27 +1,30 @@
 import type { Metadata } from "next";
 import { BlogPostPage } from "@/components/pages/blog-post";
-import { getAllSlugs, getPost } from "@/lib/posts";
-import { buildPageMetadata } from "@/lib/seo";
+import { getPost } from "@/lib/posts";
+import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
-}
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const result = getPost(slug, "vi");
+  const result = await getPost("vi", slug);
   if (!result) return {};
 
-  return buildPageMetadata({
+  const metadata = buildPageMetadata({
     lang: "vi",
     path: `/blog/${slug}`,
     title: result.title,
     description: result.excerpt,
     type: "article",
-    publishedTime: result.post.date,
+    publishedTime: result.post.publishedAt,
   });
+  metadata.alternates = {
+    canonical: absoluteUrl(result.post.locale, `/blog/${result.post.slug}`),
+    languages: Object.fromEntries(result.post.translations.map(t => [t.locale, absoluteUrl(t.locale, `/blog/${t.slug}`)])),
+  };
+  return metadata;
 }
 
 export default async function Page({ params }: Props) {

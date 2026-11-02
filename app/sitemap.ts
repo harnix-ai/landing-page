@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { absoluteUrl } from "@/lib/seo";
@@ -9,9 +11,9 @@ const STATIC_PATHS: { path: string; changeFrequency: "weekly" | "daily"; priorit
 ];
 
 /** Every page, in both locales — landing, blog index, and every post — with matching hreflang alternates. */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const posts = getAllPosts();
+  const posts = (await Promise.all([getAllPosts("vi"), getAllPosts("en")])).flat();
 
   const entries: MetadataRoute.Sitemap = STATIC_PATHS.flatMap(({ path, changeFrequency, priority }) => {
     const languages = { vi: absoluteUrl("vi", path), en: absoluteUrl("en", path) };
@@ -21,26 +23,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ];
   });
 
+  const seen = new Set<string>();
   for (const post of posts) {
-    const lastModified = new Date(post.date);
-    const languages = { vi: absoluteUrl("vi", post.url), en: absoluteUrl("en", post.url) };
-    entries.push(
-      {
-        url: languages.vi,
-        lastModified,
-        changeFrequency: "yearly",
-        priority: 0.6,
-        alternates: { languages },
-      },
-      {
-        url: languages.en,
-        lastModified,
-        changeFrequency: "yearly",
-        priority: 0.6,
-        alternates: { languages },
-      },
-    );
+    const languages = Object.fromEntries(post.translations.map(t => [t.locale, absoluteUrl(t.locale, `/blog/${t.slug}`)]));
+    for (const translation of post.translations) {
+      const url = absoluteUrl(translation.locale, `/blog/${translation.slug}`);
+      if (seen.has(url)) continue;
+      seen.add(url);
+      entries.push({ url, lastModified: new Date(post.publishedAt), changeFrequency: "yearly", priority: 0.6, alternates: { languages } });
+    }
   }
-
   return entries;
 }

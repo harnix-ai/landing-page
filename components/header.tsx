@@ -80,7 +80,9 @@ function useNavItems(page: "home" | "blog") {
  * `page="blog"` links the items back to the home page's sections and marks
  * Blog as current.
  */
-export function Header({ page = "home" }: { page?: "home" | "blog" }) {
+type Translation = { locale: "vi" | "en"; slug: string };
+
+export function Header({ page = "home", translations }: { page?: "home" | "blog"; translations?: Translation[] }) {
   const { c, lang } = useSite();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -94,7 +96,8 @@ export function Header({ page = "home" }: { page?: "home" | "blog" }) {
 
   const docsHref = siteConfig.docsUrl[lang];
   const otherLang = lang === "vi" ? "en" : "vi";
-  const otherHref = localizeHref(otherLang, toViPath(pathname));
+  const translation = translations?.find(t => t.locale === otherLang);
+  const otherHref = translations ? (translation ? localizeHref(otherLang, `/blog/${translation.slug}`) : localizeHref(otherLang, "/blog")) : localizeHref(otherLang, toViPath(pathname));
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -232,7 +235,7 @@ export function Header({ page = "home" }: { page?: "home" | "blog" }) {
         </div>
       </div>
 
-      <MobileHeader page={page} current={current} />
+      <MobileHeader page={page} current={current} translations={translations} />
     </header>
   );
 }
@@ -272,7 +275,7 @@ function MenuLink({
   );
 }
 
-function MobileHeader({ page, current }: { page: "home" | "blog"; current: string | null }) {
+function MobileHeader({ page, current, translations }: { page: "home" | "blog"; current: string | null; translations?: Translation[] }) {
   const { c, lang, overlay, setOverlay } = useSite();
   const pathname = usePathname();
   const { items, onHome, home } = useNavItems(page);
@@ -287,7 +290,8 @@ function MobileHeader({ page, current }: { page: "home" | "blog"; current: strin
 
   const docsHref = siteConfig.docsUrl[lang];
   const otherLang = lang === "vi" ? "en" : "vi";
-  const otherHref = localizeHref(otherLang, toViPath(pathname));
+  const translation = translations?.find(t => t.locale === otherLang);
+  const otherHref = translations ? (translation ? localizeHref(otherLang, `/blog/${translation.slug}`) : localizeHref(otherLang, "/blog")) : localizeHref(otherLang, toViPath(pathname));
 
   const menuItems: NavItem[] = [
     ...items,

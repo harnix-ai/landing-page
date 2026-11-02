@@ -23,8 +23,7 @@ and lead destination.
 | `app/globals.css` | Design tokens (night/paper/accent), keyframes, reveal utilities |
 | `lib/copy.ts` | All copy, VI and EN, same shape (`Copy` type) |
 | `lib/config.ts` | Env-driven knobs: pricing/chat flags, demo video, docs, socials |
-| `content/posts/*.mdx` | Blog posts (VI body, then `{/* en */}`, then EN body) |
-| `components/mdx-components.tsx` | Post typography plus `<Summary>`, `<Points>`, `<Compare>` |
+| `lib/cms.ts`, `lib/posts.ts` | Server-side CMS posts and display mapping |
 | `design/` | Earlier handoff bundle |
 
 ## Redesign (Oct 2026)
@@ -48,22 +47,10 @@ Implements `Harnix Landing.dc.html` and `Harnix Blog Post.dc.html` from the
   the Apps Script/Sheet needs a `phone` column. The client now also sends
   `locale`, `page` and the honeypot. The waitlist form is removed from the
   page; `/api/waitlist` still works.
-- **Blog.** Posts gain `tag`, `cover` (`run` | `data` | `console`) and `tags`
-  frontmatter (EN overrides under `en:`). The post page builds its table of
-  contents from `##` headings. MDX runs with JS expressions blocked, so the
-  custom blocks take string props:
-
-  ```mdx
-  <Summary>
-
-  1. Point with **bold**.
-
-  </Summary>
-
-  <Compare labels="Tình huống|Không có Run|Có Run" caption="Hình 1.">
-    <Row cells="Sự cố|Mất hết|Chạy tiếp" />
-  </Compare>
-  ```
+- **Blog.** Posts come from the CMS at `BLOG_API_URL` (server-only, default
+  `https://cms.harnix.vn/api/v1`), refreshed every 60 seconds. Published translations
+  supply language links and metadata. English lists include Vietnamese-only posts
+  linking to their Vietnamese URL. API outages show the existing empty state.
 
 ## Decisions worth knowing
 
@@ -90,7 +77,7 @@ cards. What deliberately stays untranslated: proper nouns, code and identifiers
 mock (`Run trace`, `Step detail`, `Tokens in/out`), the sample document's file
 name, and terms of art Vietnamese uses untranslated anyway (agent, knowledge
 base, token, Run, trace, API key, widget, backend, frontend, waitlist, design
-partner, milestone codes). A blog post without an `en` block keeps its
+partner, milestone codes). A blog post without an English translation keeps its
 Vietnamese title — the article itself is Vietnamese, so that is the honest
 fallback.
 
@@ -116,8 +103,7 @@ disables the pulse, shimmer and spinner. Checked for horizontal overflow at 390,
 
 **SEO lives in the route conventions.** `app/robots.ts`, `app/sitemap.ts` and
 `app/manifest.ts` generate `/robots.txt`, `/sitemap.xml` and the web manifest;
-`/api` is disallowed, and the sitemap lists only `/` because that is the only
-route that exists. `components/structured-data.tsx` emits one JSON-LD graph —
+`/api` is disallowed, and the sitemap lists both homepages, blog indexes and published post translations. `components/structured-data.tsx` emits one JSON-LD graph —
 Organization, WebSite, FAQPage — built from `lib/copy.ts` and `lib/config.ts`,
 so editing a FAQ entry updates the markup with it. The blog rows are passed to
 the section from the server (`<Blog initialPosts={posts} />`) so the titles and
@@ -127,12 +113,6 @@ excerpts are in the first HTML response rather than behind a client fetch.
 
 - **Screenshots.** The hero console frame and the demo poster are DOM
   recreations, as they were in the prototype. Swap in real captures.
-- **`/blog` routes.** `content/posts.ts` points at `/blog/<slug>`, and the blog
-  section and footer both link to `/blog`; those pages are not part of the
-  landing page and do not exist yet, so every one of those links is a 404 that
-  crawlers will follow. Until they ship this is the largest remaining SEO
-  liability on the page — either build the routes (then add them to
-  `app/sitemap.ts`, which has the snippet commented in) or drop the links.
 - **Demo chapter timings.** `chapters[].at` in `lib/copy.ts` is placeholder
   spacing; replace with real marks when the video is cut. They only surface once
   `NEXT_PUBLIC_DEMO_STATUS=ready`.

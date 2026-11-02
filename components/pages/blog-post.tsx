@@ -1,9 +1,7 @@
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import { FloatingActions } from "@/components/floating-actions";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { getMdxComponents } from "@/components/mdx-components";
 import { PostCard, PostCover } from "@/components/post-card";
 import { CopyLinkButton, MobilePostChrome, ReadingProgress, TableOfContents } from "@/components/post-chrome";
 import { SkipLink } from "@/components/skip-link";
@@ -15,135 +13,26 @@ import { localizeHref } from "@/lib/i18n";
 import { getAllPosts, getPost } from "@/lib/posts";
 import { absoluteUrl } from "@/lib/seo";
 
-/**
- * The Run post's cover: the six steps of a Run that crashes mid-way and
- * resumes until the customer gets an answer.
- */
-function RunTimeline({ lang }: { lang: Lang }) {
-  const steps =
-    lang === "vi"
-      ? ["Khách hỏi", "Tra tài liệu", "Có căn cứ", "Sự cố giữa chừng", "Chạy tiếp", "Khách nhận câu trả lời"]
-      : ["Customer asks", "Checks documents", "Evidence found", "Fault mid-way", "Resumes", "Customer gets the answer"];
-  const events = ["user_message", "tool_call", "tool_result", "worker crash", "resume", "completed"];
-
-  return (
-    <ol className="m-0 grid list-none max-md:grid-cols-3 max-md:gap-1.5 max-md:pt-1.5 md:grid-cols-[repeat(auto-fit,minmax(min(100%,150px),1fr))] md:gap-[10px] p-0">
-      {events.map((event, i) => {
-        const crash = i === 3;
-        const resume = i === 4;
-        const done = i === 5;
-        return (
-          <li
-            key={event}
-            className={`flex flex-col max-md:gap-[5px] max-md:p-2.5 max-md:rounded-[12px] md:gap-2 md:p-[14px] md:rounded-[14px] ${
-              crash
-                ? "border border-[#5a2a28] bg-[#2a1414]"
-                : done
-                  ? "bg-accent"
-                  : `border bg-night-card ${resume ? "border-accent-deep-line" : "border-night-line"}`
-            }`}
-          >
-            <span
-              aria-hidden="true"
-              className={`rounded-full max-md:h-2 max-md:w-2 md:h-[10px] md:w-[10px] ${
-                crash ? "bg-err" : resume ? "bg-warn" : done ? "bg-white" : "bg-accent-on-night"
-              }`}
-            />
-            <span
-              className={`font-semibold max-md:text-[11px] md:text-[13px] ${
-                crash ? "text-err-soft" : done ? "text-accent-pale" : "text-accent-label"
-              }`}
-            >
-              {event}
-            </span>
-            <span
-              className={`max-md:text-[12px] md:text-[14px] ${
-                crash ? "text-[#f3d4d2]" : done ? "font-semibold text-white" : "text-on-night2"
-              }`}
-            >
-              {steps[i]}
-            </span>
-          </li>
-        );
-      })}
-    </ol>
-  );
+async function relatedPosts(current: Post, lang: Lang): Promise<Post[]> {
+  return (await getAllPosts(lang)).filter(post => post.id !== current.id).slice(0, 2);
+}
+function MobileRelatedCard({ post }: { post: Post; lang: Lang }) {
+  return <PostCard post={post} />;
 }
 
-/** Up to two other posts, newest first. */
-function relatedPosts(current: Post): Post[] {
-  return getAllPosts()
-    .filter((post) => post.slug !== current.slug)
-    .slice(0, 2);
-}
-
-/** Mobile-specific related post card from 2b spec (lines 248-249). */
-function MobileRelatedCard({ post, lang }: { post: Post; lang: Lang }) {
-  const { title, excerpt, tag } = postCopy(post, lang);
-  return (
-    <a
-      href={localizeHref(lang, post.url)}
-      className="flex-[0_0_74%] [scroll-snap-align:start] flex flex-col rounded-[18px] overflow-hidden border border-line bg-card text-ink transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-accent-on-night"
-    >
-      {post.cover === "data" ? (
-        <div className="h-[120px] bg-accent p-3.5 flex flex-col justify-between">
-          <span className="self-start px-2.5 py-1 rounded-[7px] bg-[rgba(13,16,20,0.22)] text-white text-[12px] font-semibold">
-            {tag}
-          </span>
-          <div aria-hidden="true" className="flex gap-1.5">
-            <span className="w-9 h-9 rounded-[9px] bg-white" />
-            <span className="w-9 h-9 rounded-[9px] border-2 border-white/60" />
-            <span className="w-9 h-9 rounded-[9px] border-2 border-white/35" />
-          </div>
-        </div>
-      ) : post.cover === "console" ? (
-        <div className="h-[120px] bg-accent-soft p-3.5 flex flex-col justify-between">
-          <span className="self-start px-2.5 py-1 rounded-[7px] bg-white text-accent-strong text-[12px] font-semibold">
-            {tag}
-          </span>
-          <div
-            aria-hidden="true"
-            className="grid grid-cols-[30px_1fr] gap-1.5 h-12 p-1.5 rounded-[10px] bg-white border border-accent-soft-line"
-          >
-            <span className="rounded-[6px] bg-night" />
-            <span className="rounded-[6px] bg-subtle" />
-          </div>
-        </div>
-      ) : (
-        <div className="h-[120px] bg-night p-3.5 flex flex-col justify-between">
-          <span className="self-start px-2.5 py-1 rounded-[7px] bg-accent-deep text-accent-label text-[12px] font-semibold">
-            {tag}
-          </span>
-          <span aria-hidden="true" className="text-[32px] font-extrabold text-accent-on-night leading-none tracking-[-0.04em]">
-            Run
-          </span>
-        </div>
-      )}
-      <div className="p-[14px_16px_16px] flex flex-col gap-1.5">
-        <span className="text-[12px] text-ink-500">
-          <time dateTime={post.date}>{formatDate(post.date, lang)}</time> · {readingTime(getCopy(lang), post.readingMinutes)}
-        </span>
-        <strong className="text-[17px] leading-[1.25] font-bold text-ink">{title}</strong>
-        <span className="text-[14px] leading-[1.5] text-ink-700">{excerpt}</span>
-      </div>
-    </a>
-  );
-}
-
-/** Shared shell for `/blog/[slug]` and `/en/blog/[slug]` — `getPost` resolves the right-language title/body, with a vi fallback baked in. */
-export function BlogPostPage({ lang, slug }: { lang: Lang; slug: string }) {
-  const result = getPost(slug, lang);
+/** Shared shell for `/blog/[slug]` and `/en/blog/[slug]` — `getPost` resolves the right-language title/body, using published translations. */
+export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string }) {
+  const result = await getPost(lang, slug);
   if (!result) notFound();
 
   const c = getCopy(lang);
-  const { post, title, excerpt, body, hasTranslation, headings, hasSummary } = result;
+  const { post, title, excerpt, html, headings } = result;
   const { tag, tags } = postCopy(post, lang);
-  const shareUrl = absoluteUrl(lang, post.url);
-  const related = relatedPosts(post);
+  const shareUrl = absoluteUrl(post.locale, `/blog/${post.slug}`);
+  const related = await relatedPosts(post, lang);
   const docsHref = siteConfig.docsUrl[lang];
   const demoHref = localizeHref(lang, "/#demo");
-  const toc = [...(hasSummary ? [{ id: "tom-tat", text: c.post.summaryToc }] : []), ...headings];
-  const isRun = post.cover === "run";
+  const toc = headings;
 
   return (
     <div id="top">
@@ -159,7 +48,7 @@ export function BlogPostPage({ lang, slug }: { lang: Lang; slug: string }) {
 
       {/* Desktop floating nav */}
       <div className="max-md:hidden">
-        <Header page="blog" />
+        <Header page="blog" translations={post.translations} />
       </div>
 
       <div className="bg-night text-white">
@@ -184,18 +73,13 @@ export function BlogPostPage({ lang, slug }: { lang: Lang; slug: string }) {
               {title}
             </h1>
             <p className="m-0 text-[16px] leading-[1.55] text-on-night3">{excerpt}</p>
-            {!hasTranslation && <p className="m-0 text-[14px] text-on-night-muted italic">{c.post.viOnly}</p>}
             <span className="text-[13px] text-on-night-muted">
-              {c.post.author} · <time dateTime={post.date}>{formatDate(post.date, lang)}</time> · {readingTime(c, post.readingMinutes)}
+              {c.post.author} · <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, lang)}</time> · {readingTime(c, post.readingMinutes)}
             </span>
             <div>
-              {isRun ? (
-                <RunTimeline lang={lang} />
-              ) : (
-                <div className="overflow-hidden rounded-xl border border-night-line">
-                  <PostCover cover={post.cover} tag={tag} size="sm" />
+              <div className="overflow-hidden rounded-xl border border-night-line">
+                  <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="sm" />
                 </div>
-              )}
             </div>
           </div>
 
@@ -215,7 +99,6 @@ export function BlogPostPage({ lang, slug }: { lang: Lang; slug: string }) {
                 {title}
               </h1>
               <p className="m-0 max-w-[760px] text-[clamp(19px,2.2vw,24px)] leading-[1.5] text-pretty text-on-night3">{excerpt}</p>
-              {!hasTranslation && <p className="m-0 text-[15px] text-on-night-muted italic">{c.post.viOnly}</p>}
               <div className="flex flex-wrap items-center justify-between gap-4 border-t border-night-line pt-5">
                 <div className="flex items-center gap-3">
                   <span
@@ -227,7 +110,7 @@ export function BlogPostPage({ lang, slug }: { lang: Lang; slug: string }) {
                   <div className="flex flex-col gap-[2px]">
                     <span className="text-[16px] font-semibold">{c.post.author}</span>
                     <span className="text-[14px] text-on-night-muted">
-                      <time dateTime={post.date}>{formatDate(post.date, lang)}</time> · {readingTime(c, post.readingMinutes)}
+                      <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, lang)}</time> · {readingTime(c, post.readingMinutes)}
                     </span>
                   </div>
                 </div>
@@ -247,15 +130,9 @@ export function BlogPostPage({ lang, slug }: { lang: Lang; slug: string }) {
 
             <div className="relative mx-auto max-w-[1080px] px-5">
               <div className="overflow-hidden rounded-t-[28px] border border-b-0 border-night-line bg-night-panel">
-                {isRun ? (
-                  <div className="p-[clamp(20px,3vw,32px)]">
-                    <RunTimeline lang={lang} />
+                <div className="flex">
+                    <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="lg" />
                   </div>
-                ) : (
-                  <div className="flex">
-                    <PostCover cover={post.cover} tag={tag} size="lg" />
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -267,10 +144,10 @@ export function BlogPostPage({ lang, slug }: { lang: Lang; slug: string }) {
           id="main"
           className="max-md:block max-md:p-0 md:mx-auto md:grid md:max-w-[1080px] md:items-start md:gap-[clamp(32px,5vw,64px)] md:px-5 md:pt-[clamp(40px,6vw,72px)] md:pb-[clamp(56px,8vw,96px)] md:toc:grid-cols-[220px_minmax(0,1fr)]"
         >
-          <TableOfContents items={toc} runLink={isRun} />
+          <TableOfContents items={toc} runLink={false} />
 
           <article className="flex min-w-0 flex-col max-md:p-5 max-md:pb-10 max-md:gap-5 max-md:text-[17px] max-md:leading-[1.7] md:max-w-[720px] md:gap-7 md:text-[clamp(18px,1.6vw,20px)] md:leading-[1.75] text-ink-body [&>p:first-of-type]:max-md:text-[19px] [&>p:first-of-type]:max-md:leading-[1.6] [&>p:first-of-type]:max-md:text-ink">
-            <MDXRemote source={body} components={getMdxComponents(c.post.summaryLabel)} />
+            <div className="post-body contents" dangerouslySetInnerHTML={{ __html: html }} />
 
             <div className="flex flex-wrap items-center justify-between border-t border-line max-md:mt-0 max-md:pt-4 max-md:gap-1.5 md:mt-4 md:pt-6 md:gap-4">
               <ul className="m-0 flex list-none flex-wrap p-0 max-md:gap-1.5 md:gap-2">

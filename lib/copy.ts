@@ -861,8 +861,18 @@ const EN_MONTHS = [
  * Formatted here rather than through `Intl` so the server and the client always
  * produce the same string regardless of the runtime's locale data.
  */
+// The CMS sends full timestamps; show the calendar day as seen in Vietnam.
+const VN_DAY = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Ho_Chi_Minh",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
 export function formatDate(iso: string, lang: Lang): string {
-  const [y, m, d] = iso.split("-");
+  const t = Date.parse(iso);
+  const ymd = Number.isNaN(t) ? iso.slice(0, 10) : VN_DAY.format(t);
+  const [y, m, d] = ymd.split("-");
   if (lang === "vi") return `${d}/${m}/${y}`;
   return `${EN_MONTHS[Number(m) - 1]} ${Number(d)}, ${y}`;
 }

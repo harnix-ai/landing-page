@@ -1,147 +1,45 @@
 import "server-only";
-import fs from "node:fs";
-import path from "node:path";
-import matter from "gray-matter";
-import { POST_COVERS, type Post, type PostCover } from "@/content/posts";
+import { fetchPosts, fetchPost, type ApiPost } from "@/lib/cms";
+import type { Post } from "@/content/posts";
 import type { Lang } from "@/lib/copy";
-import { slugify } from "@/lib/slug";
 
-const POSTS_DIR = path.join(process.cwd(), "content/posts");
-
-/**
- * Splits a post body on its own line, separating the Vietnamese body (the
- * language posts are written in) from an optional English translation below
- * it. It is real MDX comment syntax, so a post that forgets to translate
- * simply renders as Vietnamese-only rather than leaking the marker.
- */
-const EN_BODY_SPLIT = /\n{1,}\{\/\*\s*en\s*\*\/\}\n{1,}/;
-
-type PostFrontmatter = {
-  date: string;
-  readingMinutes: number;
-  title: string;
-  excerpt: string;
-  /** Optional; falls back to "Blog" and the `data` cover. */
-  tag?: string;
-  cover?: string;
-  tags?: string[];
-  en?: { title: string; excerpt: string; tag?: string; tags?: string[] };
-};
-
-export type PostBodyContent = { vi: string; en: string | null };
-
-function splitBody(content: string): PostBodyContent {
-  const [vi, en] = content.split(EN_BODY_SPLIT);
-  return { vi: vi.trim(), en: en ? en.trim() : null };
-}
-
-function filenames(): string[] {
-  return fs.readdirSync(POSTS_DIR).filter((name) => name.endsWith(".mdx"));
-}
-
-function readFile(filename: string) {
-  const raw = fs.readFileSync(path.join(POSTS_DIR, filename), "utf8");
-  return matter(raw);
-}
-
-function toPost(slug: string, data: PostFrontmatter): Post {
+function toPost(post: ApiPost): Post {
   return {
-    slug,
-    date: data.date,
-    readingMinutes: data.readingMinutes,
-    title: data.title,
-    excerpt: data.excerpt,
-    url: `/blog/${slug}`,
-    tag: data.tag ?? "Blog",
-    cover: POST_COVERS.includes(data.cover as PostCover) ? (data.cover as PostCover) : "data",
-    tags: data.tags ?? [],
-    en: data.en,
+    id: post.id, locale: post.locale, slug: post.slug,
+    title: post.title, excerpt: post.excerpt,
+    publishedAt: post.published_at, readingMinutes: post.reading_minutes,
+    url: `${post.locale === "en" ? "/en" : ""}/blog/${post.slug}`,
+    tag: post.tags[0]?.name ?? "Blog", tags: post.tags.map(tag => tag.name),
+    image: post.featured_image_url || null, imageAlt: post.featured_image_alt,
+    translations: post.translations,
   };
 }
 
-/** Every post, newest first. Used by the landing page's card grid, `/api/posts` and `/blog`. */
-export function getAllPosts(): Post[] {
-  return filenames()
-    .map((filename) => {
-      const slug = filename.replace(/\.mdx$/, "");
-      const { data } = readFile(filename);
-      return toPost(slug, data as PostFrontmatter);
-    })
-    .sort((a, b) => b.date.localeCompare(a.date));
+export async function getAllPosts(lang: Lang, opts?: { limit?: number; tag?: string }): Promise<Post[]> {
+  return (await fetchPosts(lang, opts)).map(toPost).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
-
-export function getAllSlugs(): string[] {
-  return filenames().map((filename) => filename.replace(/\.mdx$/, ""));
-}
-
-/**
- * A single post's front matter plus its raw MDX body, or `null` if the slug
- * does not match a file on disk. The membership check against the real
- * directory listing (rather than reading straight from the request's `slug`)
- * is what keeps this safe against a path-traversal-shaped param.
- */
-export function getPostSource(slug: string): { post: Post; content: PostBodyContent } | null {
-  const filename = `${slug}.mdx`;
-  if (!filenames().includes(filename)) return null;
-
-  const { data, content } = readFile(filename);
-  return { post: toPost(slug, data as PostFrontmatter), content: splitBody(content) };
-}
-
-export type LocalizedPost = {
-  post: Post;
-  title: string;
-  excerpt: string;
-  /** Raw MDX for `lang`, falling back to the Vietnamese body when untranslated. */
-  body: string;
-  /** False when `lang` is "en" but the post has no English title/excerpt/body yet. */
-  hasTranslation: boolean;
-  /** The body's `##` headings, in order — the post's table of contents. */
-  headings: PostHeading[];
-  /** Whether the body opens with a `<Summary>` block (it gets its own TOC entry). */
-  hasSummary: boolean;
-};
 
 export type PostHeading = { id: string; text: string };
-
-/** Top-level `##` lines outside fenced code blocks. */
-function extractHeadings(body: string): PostHeading[] {
-  const headings: PostHeading[] = [];
-  let inFence = false;
-  for (const line of body.split("\n")) {
-    if (line.trimStart().startsWith("```")) inFence = !inFence;
-    if (inFence) continue;
-    const match = /^##\s+(.+?)\s*$/.exec(line);
-    if (match) {
-      const text = match[1].replace(/[*_`]/g, "");
-      headings.push({ id: slugify(text), text });
+function decodeEntities(text: string) {
+  return text.replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos|nbsp);/gi, (entity, value: string) => {
+    if (value.startsWith("#")) {
+      const code = value[1].toLowerCase() === "x" ? parseInt(value.slice(2), 16) : Number(value.slice(1));
+      return code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : entity;
     }
+    return ({ amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " } as Record<string, string>)[value.toLowerCase()] ?? entity;
+  });
+}
+function extractHeadings(html: string): PostHeading[] {
+  const headings: PostHeading[] = [];
+  for (const match of html.matchAll(/<h2\b([^>]*)>([\s\S]*?)<\/h2\s*>/gi)) {
+    const id = /(?:^|\s)id\s*=\s*(?:"([^"]+)"|'([^']+)'|([^\s"'=<>`]+))/i.exec(match[1]);
+    if (id) headings.push({ id: decodeEntities(id[1] ?? id[2] ?? id[3]), text: decodeEntities(match[2].replace(/<[^>]*>/g, "")).trim() });
   }
   return headings;
 }
 
-/**
- * A single post localized for `lang`, with vi-fallback baked in — the one
- * function every `/en/blog/*` and `/blog/*` page needs to render its content.
- */
-export function getPost(slug: string, lang: Lang): LocalizedPost | null {
-  const source = getPostSource(slug);
-  if (!source) return null;
-
-  const { post, content } = source;
-  const hasEnBody = content.en !== null;
-  const hasTranslation = lang === "vi" || (!!post.en && hasEnBody);
-  const { title, excerpt } =
-    lang === "en" && post.en ? post.en : { title: post.title, excerpt: post.excerpt };
-  const body = lang === "en" && hasEnBody ? (content.en as string) : content.vi;
-
-  return {
-    post,
-    title,
-    excerpt,
-    body,
-    hasTranslation,
-    headings: extractHeadings(body),
-    hasSummary: /<Summary[\s>]/.test(body),
-  };
+export async function getPost(lang: Lang, slug: string) {
+  const data = await fetchPost(lang, slug);
+  if (!data) return null;
+  return { post: toPost(data), title: data.title, excerpt: data.excerpt, html: data.html, headings: extractHeadings(data.html) };
 }

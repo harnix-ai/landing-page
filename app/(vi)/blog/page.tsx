@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import type { Metadata } from "next";
 import { BlogIndexPage } from "@/components/pages/blog-index";
 import { getCopy } from "@/lib/copy";

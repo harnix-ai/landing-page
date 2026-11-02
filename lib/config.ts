@@ -84,19 +84,19 @@ export const siteConfig = {
     videoUrl: {
       vi:
         env(process.env.NEXT_PUBLIC_DEMO_VIDEO_URL_VI) ??
-        "https://s3.lequoctrung.id.vn/harnix/harnix-film-vi-web.mp4",
+        "https://cms.harnix.vn/media/01a0ff69-c516-4771-a738-72161158d4e6/harnix-film-vi-web.mp4",
       en:
         env(process.env.NEXT_PUBLIC_DEMO_VIDEO_URL_EN) ??
-        "https://s3.lequoctrung.id.vn/harnix/harnix-film-web.mp4",
+        "https://cms.harnix.vn/media/570cbb38-8bdd-4105-81ce-d0b2d72189c2/harnix-film-web.mp4",
     },
     /** The video's end-card frame, shown before playback starts. */
     posterUrl: {
       vi:
         env(process.env.NEXT_PUBLIC_DEMO_POSTER_URL_VI) ??
-        "https://s3.lequoctrung.id.vn/harnix/harnix-film-vi-poster.png",
+        "https://cms.harnix.vn/media/e4fa70c0-a4d0-4bed-8262-22fe1e8c9677/harnix-film-vi-poster.png",
       en:
         env(process.env.NEXT_PUBLIC_DEMO_POSTER_URL_EN) ??
-        "https://s3.lequoctrung.id.vn/harnix/harnix-film-poster.png",
+        "https://cms.harnix.vn/media/4cdd5930-354c-42fd-a472-f279b9e21ce7/harnix-film-poster.png",
     },
     transcriptUrl: env(process.env.NEXT_PUBLIC_DEMO_TRANSCRIPT_URL) ?? "",
   },
