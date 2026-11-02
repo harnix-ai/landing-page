@@ -3,15 +3,34 @@
 import { useSite } from "@/components/providers";
 import { postCopy, type Post } from "@/content/posts";
 import { formatDate, readingTime } from "@/lib/copy";
+import { coverLabel, coverVariant } from "@/lib/cover";
 
 type Size = "lg" | "sm";
 
-export function PostCover({ image, imageAlt = "", tag, size, compactMobile = false }: {
-  image: string | null; imageAlt?: string; tag: string; size: Size; compactMobile?: boolean;
+const coverStyles = {
+  night: { background: "bg-[#0d1014]", text: "text-[#47c496]", chip: "bg-[#12392a] text-[#6fd4b0]" },
+  accent: { background: "bg-[#0f8f6a]", text: "text-white", chip: "bg-[rgba(13,16,20,0.22)] text-white" },
+  soft: { background: "bg-[#e5f4ee]", text: "text-[#0b7254]", chip: "bg-white text-[#0b7254]" },
+};
+
+export function PostCover({ image, imageAlt = "", tag, seed, size, compactMobile = false }: {
+  image: string | null; imageAlt?: string; tag: string; seed: string; size: Size; compactMobile?: boolean;
 }) {
-  return <div className={`relative overflow-hidden bg-accent ${size === "lg" ? "min-h-[clamp(260px,32vw,420px)] flex-1" : "h-[200px] w-full"} ${compactMobile ? "max-md:min-h-[220px]" : ""}`}>
-    {image ? <img src={image} alt={imageAlt} className="absolute inset-0 h-full w-full object-cover" /> : <div aria-hidden="true" className="absolute bottom-8 left-8 flex gap-3"><span className="size-14 rounded-xl bg-white" /><span className="size-14 rounded-xl border-2 border-white/60" /><span className="size-14 rounded-xl border-2 border-white/35" /></div>}
-    <span className="relative m-5 inline-block rounded-lg bg-night/70 px-3 py-1.5 text-[13px] font-semibold text-white">{tag}</span>
+  const variant = coverVariant(seed);
+  const styles = coverStyles[variant];
+  const label = coverLabel(tag);
+
+  return <div className={`relative overflow-hidden ${image ? "bg-accent" : styles.background} ${size === "lg" ? "min-h-[clamp(260px,32vw,420px)] flex-1" : "h-[200px] w-full"} ${compactMobile ? "max-md:min-h-[220px]" : ""}`}>
+    {image ? <>
+      <img src={image} alt={imageAlt} className="absolute inset-0 h-full w-full object-cover" />
+      <span className="relative m-5 inline-block rounded-lg bg-[rgba(13,16,20,0.62)] px-3 py-1.5 text-[13px] font-semibold text-white">{label}</span>
+    </> : <>
+      {variant === "night" && <div aria-hidden="true" className="pointer-events-none absolute top-[-120px] right-[-120px] size-[320px] rounded-full bg-[#0f8f6a] opacity-[0.35] blur-[80px]" />}
+      <div className={`absolute inset-0 flex flex-col justify-between ${size === "lg" ? "p-8" : "p-[22px]"}`}>
+        <span className={`self-start rounded-lg px-3 py-1.5 text-[13px] font-semibold ${styles.chip}`}>{label}</span>
+        <span aria-hidden="true" className={`font-extrabold leading-[0.78] tracking-[-0.06em] whitespace-nowrap ${size === "lg" ? "text-[clamp(96px,12vw,150px)]" : "text-[84px]"} ${styles.text}`}>{label}</span>
+      </div>
+    </>}
   </div>;
 }
 
@@ -35,7 +54,7 @@ export function FeaturedPostCard({
 
   return (
     <a href={post.url} className={`${cardBase} ${m ? "max-md:rounded-3xl" : ""} ${className}`}>
-      <PostCover image={post.image} imageAlt={post.imageAlt} tag={tag} size="lg" compactMobile={m} />
+      <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="lg" compactMobile={m} />
       <div className={`flex flex-col gap-3 p-[clamp(22px,3vw,32px)] ${m ? "max-md:gap-[10px] max-md:p-5" : ""}`}>
         <span className={`text-[15px] text-ink-500 ${m ? "max-md:text-[14px]" : ""}`}>
           {c.blog.latest} · {formatDate(post.publishedAt, lang)} · {readingTime(c, post.readingMinutes)}
@@ -52,8 +71,16 @@ export function FeaturedPostCard({
 }
 
 function PostThumb({ post }: { post: Post }) {
-  return <span className="relative flex-none size-[88px] overflow-hidden rounded-[14px] bg-accent md:size-[120px] md:rounded-[18px]">
-    {post.image ? <img src={post.image} alt={post.imageAlt} className="h-full w-full object-cover" /> : <span aria-hidden="true" className="absolute inset-5 rounded-lg border-2 border-white/60" />}
+  const { lang } = useSite();
+  const label = coverLabel(postCopy(post, lang).tag);
+  const variant = coverVariant(post.id);
+  const styles = coverStyles[variant];
+
+  return <span className={`relative flex-none size-[88px] overflow-hidden rounded-[14px] md:size-[120px] md:rounded-[18px] ${post.image ? "bg-accent" : styles.background}`}>
+    {post.image ? <img src={post.image} alt={post.imageAlt} className="h-full w-full object-cover" /> : <>
+      {variant === "night" && <span aria-hidden="true" className="pointer-events-none absolute top-[-60px] right-[-60px] size-[160px] rounded-full bg-[#0f8f6a] opacity-[0.35] blur-[40px]" />}
+      <span aria-hidden="true" className={`absolute bottom-3 left-3 text-[34px] font-extrabold leading-[0.8] tracking-[-0.06em] md:text-[44px] ${styles.text}`}>{Array.from(label).slice(0, 2).join("")}</span>
+    </>}
   </span>;
 }
 
@@ -86,7 +113,7 @@ export function PostCard({ post, radius = "rounded-[28px]" }: { post: Post; radi
 
   return (
     <a href={post.url} className={`${cardBase} ${radius}`}>
-      <PostCover image={post.image} imageAlt={post.imageAlt} tag={tag} size="sm" />
+      <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="sm" />
       <div className="flex flex-col gap-[10px] px-6 pt-[22px] pb-[26px]">
         <span className="text-[14px] text-ink-500">
           {formatDate(post.publishedAt, lang)} · {readingTime(c, post.readingMinutes)}

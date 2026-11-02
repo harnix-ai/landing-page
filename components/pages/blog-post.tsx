@@ -78,7 +78,7 @@ export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string })
             </span>
             <div>
               <div className="overflow-hidden rounded-xl border border-night-line">
-                  <PostCover image={post.image} imageAlt={post.imageAlt} tag={tag} size="sm" />
+                  <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="sm" />
                 </div>
             </div>
           </div>
@@ -131,7 +131,7 @@ export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string })
             <div className="relative mx-auto max-w-[1080px] px-5">
               <div className="overflow-hidden rounded-t-[28px] border border-b-0 border-night-line bg-night-panel">
                 <div className="flex">
-                    <PostCover image={post.image} imageAlt={post.imageAlt} tag={tag} size="lg" />
+                    <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="lg" />
                   </div>
               </div>
             </div>
