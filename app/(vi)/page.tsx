@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import type { Metadata } from "next";
 import { HomePage } from "@/components/pages/home";
 import { getCopy } from "@/lib/copy";

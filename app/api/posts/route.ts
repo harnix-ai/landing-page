@@ -1,14 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getAllPosts } from "@/lib/posts";
 
-/** The landing page shows the three most recent posts. */
-const LIMIT = 3;
-
-export async function GET() {
-  const latest = getAllPosts().slice(0, LIMIT);
-
-  return NextResponse.json(
-    { posts: latest },
-    { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" } },
-  );
+export async function GET(request: NextRequest) {
+  const locale = request.nextUrl.searchParams.get("locale") === "en" ? "en" : "vi";
+  const latest = await getAllPosts(locale, { limit: 3 });
+  return NextResponse.json({ posts: latest }, { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=60" } });
 }

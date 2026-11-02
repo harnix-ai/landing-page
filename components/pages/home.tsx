@@ -18,8 +18,8 @@ import type { Lang } from "@/lib/copy";
 import { getAllPosts } from "@/lib/posts";
 
 /** Shared shell for `/` and `/en` — only `lang` (for structured data) differs; the rest reads locale from route-scoped context. */
-export function HomePage({ lang }: { lang: Lang }) {
-  const posts = getAllPosts();
+export async function HomePage({ lang }: { lang: Lang }) {
+  const posts = await getAllPosts(lang);
 
   return (
     <div id="top">

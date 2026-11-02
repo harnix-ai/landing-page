@@ -11,9 +11,9 @@ import { getAllPosts } from "@/lib/posts";
  * `/blog` and `/en/blog`: a night header in the post page's style, then the
  * newest post featured full width and every other post as a card.
  */
-export function BlogIndexPage({ lang }: { lang: Lang }) {
+export async function BlogIndexPage({ lang }: { lang: Lang }) {
   const c = getCopy(lang);
-  const posts = getAllPosts();
+  const posts = await getAllPosts(lang);
   const [featured, ...rest] = posts;
 
   return (
