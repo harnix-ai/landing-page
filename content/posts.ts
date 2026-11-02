@@ -16,6 +16,23 @@ export type Post = {
   translations: { locale: Lang; slug: string }[];
 };
 
-export function postCopy(post: Post, _lang: Lang) {
-  return { title: post.title, excerpt: post.excerpt, tag: post.tag, tags: post.tags };
+// Tags are shared across a post's translations in the CMS and written in
+// Vietnamese, so English pages swap the known ones.
+const EN_TAGS: Record<string, string> = {
+  "Kỹ thuật": "Engineering",
+  "Sản phẩm": "Product",
+  "Hướng dẫn": "Guide",
+};
+
+export function tagLabel(tag: string, lang: Lang): string {
+  return lang === "en" ? (EN_TAGS[tag] ?? tag) : tag;
+}
+
+export function postCopy(post: Post, lang: Lang) {
+  return {
+    title: post.title,
+    excerpt: post.excerpt,
+    tag: tagLabel(post.tag, lang),
+    tags: post.tags.map((t) => tagLabel(t, lang)),
+  };
 }
