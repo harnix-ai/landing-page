@@ -5,7 +5,7 @@ export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
 /**
- * The same mark as `icon.tsx`, at the size iOS home screens want. It doubles as
+ * The same three-step mark as `icon.tsx`, at the size iOS home screens want. It doubles as
  * the Organization logo in the structured data, which needs at least 112px.
  */
 export default function AppleIcon() {
