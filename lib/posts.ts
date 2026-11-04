@@ -7,7 +7,7 @@ function toPost(post: ApiPost): Post {
   return {
     id: post.id, locale: post.locale, slug: post.slug,
     title: post.title, excerpt: post.excerpt,
-    publishedAt: post.published_at, readingMinutes: post.reading_minutes,
+    publishedAt: post.published_at, updatedAt: post.updated_at || post.published_at, readingMinutes: post.reading_minutes,
     url: `${post.locale === "en" ? "/en" : ""}/blog/${post.slug}`,
     tag: post.tags[0]?.name ?? "Blog", tags: post.tags.map(tag => tag.name),
     image: post.featured_image_url || null, imageAlt: post.featured_image_alt,

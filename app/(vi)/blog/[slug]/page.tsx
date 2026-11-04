@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: result.excerpt,
     type: "article",
     publishedTime: result.post.publishedAt,
+    image: result.post.image ? { url: result.post.image, alt: result.post.imageAlt || result.title } : undefined,
   });
   metadata.alternates = {
     canonical: absoluteUrl(result.post.locale, `/blog/${result.post.slug}`),

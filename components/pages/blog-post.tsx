@@ -3,6 +3,7 @@ import { FloatingActions } from "@/components/floating-actions";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { PostCard, PostCover } from "@/components/post-card";
+import { ArticleStructuredData } from "@/components/article-structured-data";
 import { CopyLinkButton, MobilePostChrome, ReadingProgress, TableOfContents } from "@/components/post-chrome";
 import { SkipLink } from "@/components/skip-link";
 import { btn } from "@/components/ui";
@@ -36,6 +37,7 @@ export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string })
 
   return (
     <div id="top">
+      <ArticleStructuredData lang={lang} post={post} title={title} />
       {/* Mobile-only chrome (Option 2b: sticky header, chips, progress, bottom bar, menu) */}
       <MobilePostChrome items={toc} shareUrl={shareUrl} demoHref={demoHref} />
 

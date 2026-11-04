@@ -5,6 +5,8 @@ export type Post = {
   slug: string;
   locale: Lang;
   publishedAt: string;
+  /** The CMS's last edit; falls back to `publishedAt` when the API sends none. */
+  updatedAt: string;
   readingMinutes: number;
   title: string;
   excerpt: string;

@@ -2,6 +2,12 @@ import type { Metadata, Viewport } from "next";
 import type { Lang } from "@/lib/copy";
 import { siteConfig } from "@/lib/config";
 import { localizeHref } from "@/lib/i18n";
+import { ogAlt, OG_SIZE } from "@/lib/og-card";
+
+/** The social card of a locale: `app/opengraph-image.tsx` (vi) and `app/en/opengraph-image.tsx` (en). */
+export function ogImageUrl(lang: Lang): string {
+  return `${siteConfig.url}${lang === "vi" ? "" : "/en"}/opengraph-image`;
+}
 
 /** `viPath` is the canonical path, as in `localizeHref` — e.g. "/", "/blog", "/blog/slug". */
 export function absoluteUrl(lang: Lang, viPath: string): string {
@@ -47,6 +53,8 @@ type PageMetadataInput = {
   type?: "website" | "article";
   /** ISO date, only meaningful when `type` is "article". */
   publishedTime?: string;
+  /** The page's own social image (a post's featured image); the locale's card when omitted. */
+  image?: { url: string; alt: string };
 };
 
 /**
@@ -62,11 +70,14 @@ export function buildPageMetadata({
   description,
   type = "website",
   publishedTime,
+  image: pageImage,
 }: PageMetadataInput): Metadata {
   const url = absoluteUrl(lang, path);
   const viUrl = absoluteUrl("vi", path);
   const enUrl = absoluteUrl("en", path);
-  const fullTitle = `${title} — ${siteConfig.name}`;
+  // The home title already carries the brand ("Harnix — Giao việc cho AI…"); only add it to the others.
+  const fullTitle = title.includes(siteConfig.name) ? title : `${title} — ${siteConfig.name}`;
+  const image = pageImage ?? { url: ogImageUrl(lang), width: OG_SIZE.width, height: OG_SIZE.height, alt: ogAlt(lang) };
 
   return {
     title,
@@ -82,12 +93,14 @@ export function buildPageMetadata({
       siteName: siteConfig.name,
       title: fullTitle,
       description,
+      images: [image],
       ...(type === "article" && publishedTime ? { publishedTime } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
+      images: [{ url: image.url, alt: image.alt }],
     },
   };
 }
