@@ -209,3 +209,14 @@
   .post-body h3 { scroll-margin-top: 105px; }
   .post-body blockquote { padding: 18px; border: 0; border-radius: 16px; background: var(--color-night); color: white; font-size: 21px; }
 }
+
+/*
+ * The Harnix assistant (<harnix-chat>, components/harnix-chat.tsx) draws all its text from the
+ * custom property --harnix-font, which the widget sets on its host as a system-font stack. A
+ * rule written here beats the widget's own :host rule, so the assistant speaks in the site's
+ * font without the widget having to ship (or download) any font.
+ */
+harnix-chat {
+  --harnix-font: var(--font-be-vietnam-pro), system-ui, sans-serif;
+  font-family: var(--harnix-font);
+}
