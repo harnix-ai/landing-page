@@ -17,13 +17,37 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
 };
 
-if (docsOrigin) {
-  // Catches anyone guessing the old locale-prefixed shape.
-  nextConfig.redirects = async () => [
-    { source: "/en/docs", destination: "/docs/en/", permanent: false },
-    { source: "/en/docs/:path*", destination: "/docs/en/:path*", permanent: false },
-  ];
+/**
+ * The docs once answered at the domain root (/build/agents, /quickstart …). Google crawled
+ * those on 30 Sep - 1 Oct and still lists about twenty of them as 404 in Search Console; a
+ * permanent redirect hands the old URLs (and any link to them) to the pages under /docs.
+ * The landing has no route of its own at these first segments, which are the docs' section
+ * names. Deliberately not behind `docsOrigin`: the first version, inside that `if`, did not
+ * take effect in production (the old URLs kept answering 404 after the deploy), and the
+ * destination under /docs is served whatever the variable says.
+ */
+const legacyDocsRedirects = [
+  ...["build", "integrate", "console", "api-reference"].map((section) => ({
+    source: `/${section}/:path+`,
+    destination: `/docs/${section}/:path+/`,
+    permanent: true,
+  })),
+  { source: "/concepts", destination: "/docs/concepts/", permanent: true },
+  { source: "/quickstart", destination: "/docs/quickstart/", permanent: true },
+];
 
+nextConfig.redirects = async () => [
+  ...legacyDocsRedirects,
+  // Catches anyone guessing the old locale-prefixed shape of the docs URLs.
+  ...(docsOrigin
+    ? [
+        { source: "/en/docs", destination: "/docs/en/", permanent: false },
+        { source: "/en/docs/:path*", destination: "/docs/en/:path*", permanent: false },
+      ]
+    : []),
+];
+
+if (docsOrigin) {
   nextConfig.rewrites = async () => [
     // Files first. On Vercel the slash rule below also catches /docs/x and
     // forwards it as /docs/x/ — fine for pages, a 404 for files (CSS, JS,
