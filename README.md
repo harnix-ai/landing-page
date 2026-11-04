@@ -120,3 +120,18 @@ excerpts are in the first HTML response rather than behind a client fetch.
   live text.
 - **Integration snippets** in the developer section are illustrative, and the
   section says so. The API contract is not settled.
+
+## SEO and GEO
+
+Everything a search or answer engine reads, and where it lives:
+
+| What | Where |
+|---|---|
+| Title, description, canonical, hreflang (`vi`, `en`, `x-default`), Open Graph and Twitter cards | `lib/seo.ts` (`buildPageMetadata`), spread by every page's `metadata` |
+| Social image: one card per language; a post uses its CMS featured image | `lib/og-card.tsx`, `app/opengraph-image.tsx` (vi), `app/en/opengraph-image.tsx` (en) |
+| Structured data: Organization, WebSite, SoftwareApplication, FAQPage on the homepage; BlogPosting and BreadcrumbList on posts | `components/structured-data.tsx`, `components/article-structured-data.tsx` |
+| `/sitemap.xml`: both languages, hreflang alternates, `lastmod` only where true (post dates) | `app/sitemap.ts` |
+| `/robots.txt`: `*` plus the named AI crawlers (OpenAI, Anthropic, Perplexity, Google-Extended, Apple, Common Crawl, Meta); lists this sitemap and the docs' | `app/robots.ts` |
+| `/llms.txt`: a Markdown map for language models (product, docs, latest posts in both languages) | `app/llms.txt/route.ts`; the docs publish their own at `/docs/llms.txt` |
+
+Policy: the named AI crawlers are allowed on purpose (the site wants to be quoted). To keep a training crawler out, move its name to `disallow` in `app/robots.ts`.

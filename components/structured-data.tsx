@@ -1,6 +1,6 @@
 import { getCopy, getFaqs, type Lang } from "@/lib/copy";
 import { siteConfig } from "@/lib/config";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, ogImageUrl } from "@/lib/seo";
 
 /**
  * JSON-LD for the homepage, in the locale it was rendered at. Three graph
@@ -11,6 +11,8 @@ import { absoluteUrl } from "@/lib/seo";
  *   not locale-scoped: there is one company regardless of which language
  *   page a crawler lands on.
  * - WebSite — the site itself, scoped to this locale's homepage URL.
+ * - SoftwareApplication — what the product is, for answer engines: category, platform,
+ *   publisher and where the documentation lives.
  * - FAQPage — the accordion further down. The answers are already on the page
  *   in full, which is what makes them eligible; the markup only labels them.
  *
@@ -54,6 +56,21 @@ export function StructuredData({ lang }: { lang: Lang }) {
       name: siteConfig.name,
       inLanguage,
       publisher: { "@id": organizationId },
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${pageUrl}/#product`,
+      name: siteConfig.name,
+      url: pageUrl,
+      description: getCopy(lang).meta.description,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      inLanguage,
+      image: ogImageUrl(lang),
+      publisher: { "@id": organizationId },
+      isPartOf: { "@id": websiteId },
+      // Where a crawler (or a model) reads how it works.
+      softwareHelp: { "@type": "CreativeWork", url: `${siteConfig.url}/docs/`, name: `${siteConfig.name} docs` },
     },
     {
       "@type": "FAQPage",
