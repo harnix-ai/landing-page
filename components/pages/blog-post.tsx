@@ -78,11 +78,11 @@ export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string })
             <span className="text-[13px] text-on-night-muted">
               {c.post.author} · <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, lang)}</time> · {readingTime(c, post.readingMinutes)}
             </span>
-            <div>
+            {post.image && (
               <div className="overflow-hidden rounded-xl border border-night-line">
-                  <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="sm" />
-                </div>
-            </div>
+                <PostCover image={post.image} imageAlt={post.imageAlt} size="sm" />
+              </div>
+            )}
           </div>
 
           {/* Desktop Hero (≥ 768px, identical to original) */}
@@ -130,13 +130,15 @@ export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string })
               </div>
             </header>
 
-            <div className="relative mx-auto max-w-[1080px] px-5">
-              <div className="overflow-hidden rounded-t-[28px] border border-b-0 border-night-line bg-night-panel">
-                <div className="flex">
-                    <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="lg" />
+            {post.image && (
+              <div className="relative mx-auto max-w-[1080px] px-5">
+                <div className="overflow-hidden rounded-t-[28px] border border-b-0 border-night-line bg-night-panel">
+                  <div className="flex">
+                    <PostCover image={post.image} imageAlt={post.imageAlt} size="lg" />
                   </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
