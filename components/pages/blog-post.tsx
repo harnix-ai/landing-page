@@ -133,9 +133,7 @@ export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string })
             {post.image && (
               <div className="relative mx-auto max-w-[1080px] px-5">
                 <div className="overflow-hidden rounded-t-[28px] border border-b-0 border-night-line bg-night-panel">
-                  <div className="flex">
-                    <PostCover image={post.image} imageAlt={post.imageAlt} size="lg" />
-                  </div>
+                  <img src={post.image} alt={post.imageAlt} className="block h-auto w-full" />
                 </div>
               </div>
             )}
