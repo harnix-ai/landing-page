@@ -411,6 +411,13 @@ const vi = {
     /** The live assistant (siteConfig.liveChat): its opening line. */
     liveGreeting:
       "Chào bạn! Mình là trợ lý của Harnix. Bạn có thể hỏi mình Harnix làm được gì, cách tạo agent, nhúng widget, kết nối công cụ (MCP) hay cách đặt lịch demo.",
+    /** The live assistant's starter chips (`<harnix-chat suggestions>`), one list per language. */
+    liveSuggestions: [
+      "Harnix giúp gì cho doanh nghiệp của tôi?",
+      "Chi phí dùng Harnix gồm những gì?",
+      "Tích hợp vào website của tôi như thế nào?",
+      "Dữ liệu của tôi có an toàn không?",
+    ],
   },
 
   mobile: {
@@ -821,6 +828,12 @@ const en: Copy = {
     send: "Send",
     liveGreeting:
       "Hi! I’m the Harnix assistant. Ask me what Harnix can do, how to create an agent, embed the widget, connect tools (MCP) or book a demo.",
+    liveSuggestions: [
+      "What can Harnix do for my business?",
+      "What does Harnix cost?",
+      "How do I add it to my website?",
+      "Is my data safe?",
+    ],
   },
 
   mobile: {
