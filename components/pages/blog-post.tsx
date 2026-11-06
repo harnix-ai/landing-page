@@ -3,6 +3,7 @@ import { FloatingActions } from "@/components/floating-actions";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { PostCard, PostCover } from "@/components/post-card";
+import { ArticleStructuredData } from "@/components/article-structured-data";
 import { CopyLinkButton, MobilePostChrome, ReadingProgress, TableOfContents } from "@/components/post-chrome";
 import { SkipLink } from "@/components/skip-link";
 import { btn } from "@/components/ui";
@@ -36,6 +37,7 @@ export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string })
 
   return (
     <div id="top">
+      <ArticleStructuredData lang={lang} post={post} title={title} />
       {/* Mobile-only chrome (Option 2b: sticky header, chips, progress, bottom bar, menu) */}
       <MobilePostChrome items={toc} shareUrl={shareUrl} demoHref={demoHref} />
 
@@ -76,11 +78,11 @@ export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string })
             <span className="text-[13px] text-on-night-muted">
               {c.post.author} · <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, lang)}</time> · {readingTime(c, post.readingMinutes)}
             </span>
-            <div>
+            {post.image && (
               <div className="overflow-hidden rounded-xl border border-night-line">
-                  <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="sm" />
-                </div>
-            </div>
+                <PostCover image={post.image} imageAlt={post.imageAlt} size="sm" />
+              </div>
+            )}
           </div>
 
           {/* Desktop Hero (≥ 768px, identical to original) */}
@@ -128,13 +130,13 @@ export async function BlogPostPage({ lang, slug }: { lang: Lang; slug: string })
               </div>
             </header>
 
-            <div className="relative mx-auto max-w-[1080px] px-5">
-              <div className="overflow-hidden rounded-t-[28px] border border-b-0 border-night-line bg-night-panel">
-                <div className="flex">
-                    <PostCover seed={post.id} image={post.image} imageAlt={post.imageAlt} tag={tag} size="lg" />
-                  </div>
+            {post.image && (
+              <div className="relative mx-auto max-w-[1080px] px-5">
+                <div className="overflow-hidden rounded-t-[28px] border border-b-0 border-night-line bg-night-panel">
+                  <img src={post.image} alt={post.imageAlt} className="block h-auto w-full" />
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
