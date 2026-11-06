@@ -51,8 +51,23 @@ function resolveSiteUrl(): string {
 const demoStatus: DemoStatus =
   env(process.env.NEXT_PUBLIC_DEMO_STATUS) === "coming-soon" ? "coming-soon" : "ready";
 
-/** The publishable key of the Harnix assistant on harnix.vn. Set → the real widget; unset → the preview panel (if `chatEnabled`). */
-const harnixChatPk = env(process.env.NEXT_PUBLIC_HARNIX_CHAT_PK);
+/**
+ * Publishable key of the "Harnix Labs" organization on app.harnix.vn, which runs the
+ * assistant. Public by design (every visitor's browser receives it); the API accepts it
+ * only from that organization's allowed origins (https://harnix.vn), so it is the
+ * default on production builds only: a preview or local build would only get refusals.
+ */
+const HARNIX_LABS_PK = "pk_tyvgzcApwx9fKWuKlmJCsP0hspAKPk8O";
+
+/**
+ * The publishable key of the Harnix assistant on harnix.vn. Set → the real widget; unset →
+ * Harnix Labs' key on production, nothing elsewhere; `off` → no widget (the kill switch).
+ */
+const chatPkEnv = env(process.env.NEXT_PUBLIC_HARNIX_CHAT_PK);
+const harnixChatPk =
+  chatPkEnv === "off"
+    ? undefined
+    : (chatPkEnv ?? (process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? HARNIX_LABS_PK : undefined));
 
 export const siteConfig = {
   name: "Harnix",
