@@ -408,6 +408,9 @@ const vi = {
     bookDemo: "Đặt lịch demo",
     placeholder: "Nhập câu hỏi của bạn…",
     send: "Gửi",
+    /** The live assistant (siteConfig.liveChat): its opening line. */
+    liveGreeting:
+      "Chào bạn! Mình là trợ lý của Harnix. Bạn có thể hỏi mình Harnix làm được gì, cách tạo agent, nhúng widget, kết nối công cụ (MCP) hay cách đặt lịch demo.",
   },
 
   mobile: {
@@ -816,6 +819,8 @@ const en: Copy = {
     bookDemo: "Book a demo",
     placeholder: "Type your question…",
     send: "Send",
+    liveGreeting:
+      "Hi! I’m the Harnix assistant. Ask me what Harnix can do, how to create an agent, embed the widget, connect tools (MCP) or book a demo.",
   },
 
   mobile: {

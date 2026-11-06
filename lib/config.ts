@@ -51,6 +51,24 @@ function resolveSiteUrl(): string {
 const demoStatus: DemoStatus =
   env(process.env.NEXT_PUBLIC_DEMO_STATUS) === "coming-soon" ? "coming-soon" : "ready";
 
+/**
+ * Publishable key of the "Harnix Labs" organization on app.harnix.vn, which runs the
+ * assistant. Public by design (every visitor's browser receives it); the API accepts it
+ * only from that organization's allowed origins (https://harnix.vn), so it is the
+ * default on production builds only: a preview or local build would only get refusals.
+ */
+const HARNIX_LABS_PK = "pk_tyvgzcApwx9fKWuKlmJCsP0hspAKPk8O";
+
+/**
+ * The publishable key of the Harnix assistant on harnix.vn. Set → the real widget; unset →
+ * Harnix Labs' key on production, nothing elsewhere; `off` → no widget (the kill switch).
+ */
+const chatPkEnv = env(process.env.NEXT_PUBLIC_HARNIX_CHAT_PK);
+const harnixChatPk =
+  chatPkEnv === "off"
+    ? undefined
+    : (chatPkEnv ?? (process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? HARNIX_LABS_PK : undefined));
+
 export const siteConfig = {
   name: "Harnix",
   domain: "harnix.vn",
@@ -76,7 +94,20 @@ export const siteConfig = {
    * The "Hỏi Harnix" launcher and chat panel. The panel is UI only — it does
    * not answer yet — so it stays off until a real chatbot is wired in.
    */
-  chatEnabled: flag(process.env.NEXT_PUBLIC_CHAT_ENABLED),
+  chatEnabled: Boolean(harnixChatPk) || flag(process.env.NEXT_PUBLIC_CHAT_ENABLED),
+
+  /**
+   * The live assistant: `<harnix-chat>` from the Harnix API, in inline mode inside
+   * the launcher's panel. `pk` is a publishable (public) key whose organization lists
+   * this site's origin in its allowed origins; `agent` picks one when the org has several.
+   * The widget script loads only when the panel is first opened.
+   */
+  liveChat: Boolean(harnixChatPk),
+  harnixChat: {
+    pk: harnixChatPk ?? "",
+    agent: env(process.env.NEXT_PUBLIC_HARNIX_CHAT_AGENT) ?? "",
+    apiUrl: (env(process.env.NEXT_PUBLIC_HARNIX_API_URL) ?? "https://api.harnix.vn").replace(/\/$/, ""),
+  },
 
   demo: {
     status: demoStatus,

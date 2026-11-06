@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { HarnixChat } from "@/components/harnix-chat";
 import { LogoMark } from "@/components/logo";
 import { useSite } from "@/components/providers";
 import { siteConfig } from "@/lib/config";
@@ -19,6 +20,8 @@ const SHOW_AFTER = 700;
 export function FloatingActions({ demoHref = "#demo" }: { demoHref?: string }) {
   const { c, overlay, setOverlay } = useSite();
   const [scrolled, setScrolled] = useState(false);
+  // The preview panel is the stand-in for the live widget: never both.
+  const previewChat = siteConfig.chatEnabled && !siteConfig.liveChat;
   const chatOpen = overlay === "chat";
   const menuOpen = overlay === "menu";
   const closeChat = useCallback(() => setOverlay(null), [setOverlay]);
@@ -35,7 +38,8 @@ export function FloatingActions({ demoHref = "#demo" }: { demoHref?: string }) {
 
   return (
     <>
-      {siteConfig.chatEnabled && chatOpen && (
+      {siteConfig.liveChat && <HarnixChat />}
+      {previewChat && chatOpen && (
         <>
           <div className="hidden md:contents">
             <ChatPanel demoHref={demoHref} onClose={closeChat} />
@@ -44,7 +48,7 @@ export function FloatingActions({ demoHref = "#demo" }: { demoHref?: string }) {
         </>
       )}
       <div
-        className={`fixed right-4 bottom-[30px] z-41 flex flex-col items-end gap-2.5 md:bottom-4 md:gap-[10px] ${hideStack ? "max-md:hidden" : ""}`}
+        className={`fixed right-4 z-41 flex flex-col items-end gap-2.5 md:gap-[10px] ${siteConfig.liveChat ? "bottom-[92px] md:bottom-[92px]" : "bottom-[30px] md:bottom-4"} ${hideStack ? "max-md:hidden" : ""}`}
       >
         <button
           type="button"
@@ -66,7 +70,7 @@ export function FloatingActions({ demoHref = "#demo" }: { demoHref?: string }) {
           </svg>
         </button>
 
-        {siteConfig.chatEnabled && (
+        {previewChat && (
           <button
             type="button"
             onClick={() => setOverlay(chatOpen ? null : "chat")}
