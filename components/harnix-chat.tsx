@@ -55,8 +55,6 @@ export function HarnixChat() {
     greeting: c.chat.liveGreeting,
     logo: `${siteConfig.url}/apple-icon`,
     strings: JSON.stringify(WIDGET_STRINGS[lang]),
-    // Per-language starter chips: the agent's own list is Vietnamese only.
-    suggestions: JSON.stringify(c.chat.liveSuggestions),
     // Shown when the visitor sends too fast, the assistant is busy or today's limit is reached.
     "contact-url": `${siteConfig.url}${lang === "en" ? "/en" : "/"}#demo`,
   });
