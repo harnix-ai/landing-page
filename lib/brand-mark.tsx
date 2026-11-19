@@ -5,17 +5,17 @@
  */
 export function BrandMarkSvg({ size, stroke = "#ffffff" }: { size: number; stroke?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 34 34" fill="none">
-      <rect x="1" y="1" width="32" height="32" rx="9" stroke={stroke} strokeWidth="2" />
+    <svg width={size} height={size} viewBox="0 0 28 28" fill="none">
+      <rect x="1.25" y="1.25" width="25.5" height="25.5" rx="7.5" stroke={stroke} strokeWidth="1.5" />
       <path
-        d="M8 25H11.5V21H15V16.5H18.5V12.5H21"
+        d="M7 19.5 L11.5 19.5 L11.5 13 L16.5 13 L16.5 8.5 L20 8.5"
         stroke={stroke}
-        strokeWidth="1.8"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="8" cy="25" r="2.2" fill={stroke} />
-      <rect x="21" y="7.5" width="6" height="6" rx="1.6" fill="#47c496" />
+      <circle cx="7" cy="19.5" r="1.9" fill={stroke} />
+      <rect x="17.6" y="6.1" width="4.8" height="4.8" rx="1.4" fill="#47c496" />
     </svg>
   );
 }
