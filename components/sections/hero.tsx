@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { useState } from "react";
 import { useSite } from "@/components/providers";
 import { btn } from "@/components/ui";
@@ -88,9 +90,14 @@ function HeroVideo({ videoUrl, posterUrl }: { videoUrl: string; posterUrl: strin
         />
       ) : (
         <>
-          {/* eslint-disable-next-line @next/next/no-img-element -- remote poster, no loader configured */}
-          <img
+          <Image
             src={posterUrl}
+            width={1920}
+            height={1080}
+            sizes="(max-width: 1180px) calc(100vw - 40px), 1140px"
+            preload
+            fetchPriority="high"
+            unoptimized={!posterUrl.startsWith("https://cms.harnix.vn/media/")}
             alt={h.videoAlt}
             className="block aspect-video w-full object-cover md:h-full md:aspect-auto"
             style={{ opacity: isReady ? 1 : 0.45 }}

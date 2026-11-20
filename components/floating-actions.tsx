@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HarnixChat } from "@/components/harnix-chat";
 import { LogoMark } from "@/components/logo";
-import { useSite } from "@/components/providers";
+import { useOverlay, useSite } from "@/components/providers";
 import { siteConfig } from "@/lib/config";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 
@@ -18,7 +18,8 @@ const SHOW_AFTER = 700;
  * On mobile the whole stack hides while the menu or the chat sheet is open.
  */
 export function FloatingActions({ demoHref = "#demo" }: { demoHref?: string }) {
-  const { c, overlay, setOverlay } = useSite();
+  const { c } = useSite();
+  const { overlay, setOverlay } = useOverlay();
   const [scrolled, setScrolled] = useState(false);
   // The preview panel is the stand-in for the live widget: never both.
   const previewChat = siteConfig.chatEnabled && !siteConfig.liveChat;
