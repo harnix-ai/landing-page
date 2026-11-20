@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { DeferredAnalytics } from "@/components/deferred-analytics";
 import { Be_Vietnam_Pro } from "next/font/google";
 import { SiteProviders } from "@/components/providers";
 import { siteConfig } from "@/lib/config";
@@ -36,7 +36,7 @@ export function RootShell({
     <html lang={lang} className={beVietnamPro.variable}>
       <body>
         <SiteProviders lang={lang}>{children}</SiteProviders>
-        {siteConfig.gaMeasurementId && <GoogleAnalytics gaId={siteConfig.gaMeasurementId} />}
+        {siteConfig.gaMeasurementId && <DeferredAnalytics gaId={siteConfig.gaMeasurementId} />}
       </body>
     </html>
   );

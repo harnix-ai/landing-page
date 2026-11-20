@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { useSite } from "@/components/providers";
 import { postCopy, type Post } from "@/content/posts";
 import { formatDate, readingTime } from "@/lib/copy";
@@ -12,7 +14,14 @@ export function PostCover({ image, imageAlt = "", size, compactMobile = false }:
   if (!image) return null;
 
   return <div className={`relative overflow-hidden bg-accent ${size === "lg" ? "min-h-[clamp(260px,32vw,420px)] flex-1" : "h-[200px] w-full"} ${compactMobile ? "max-md:min-h-[220px]" : ""}`}>
-    <img src={image} alt={imageAlt} className="absolute inset-0 h-full w-full object-cover" />
+    <Image
+      src={image}
+      alt={imageAlt}
+      fill
+      sizes={size === "lg" ? "(max-width: 899px) 100vw, 780px" : "(max-width: 899px) 100vw, 420px"}
+      unoptimized={!image.startsWith("https://cms.harnix.vn/media/")}
+      className="absolute inset-0 h-full w-full object-cover"
+    />
   </div>;
 }
 
@@ -56,7 +65,14 @@ function PostThumb({ post }: { post: Post }) {
   if (!post.image) return null;
 
   return <span className="relative flex-none size-[88px] overflow-hidden rounded-[14px] md:size-[120px] md:rounded-[18px]">
-    <img src={post.image} alt={post.imageAlt} className="h-full w-full object-cover" />
+    <Image
+      src={post.image}
+      alt={post.imageAlt}
+      fill
+      sizes="(max-width: 767px) 88px, 120px"
+      unoptimized={!post.image.startsWith("https://cms.harnix.vn/media/")}
+      className="h-full w-full object-cover"
+    />
   </span>;
 }
 

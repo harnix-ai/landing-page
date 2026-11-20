@@ -9,10 +9,9 @@ type SiteContextValue = {
   lang: Lang;
   /** The whole dictionary for `lang`: `const { c } = useSite(); c.hero.title`. */
   c: Copy;
-  /** Full-screen menu or chat sheet currently open; used to lock scroll and hide the FAB. */
-  overlay: Overlay;
-  setOverlay: (overlay: Overlay) => void;
 };
+
+const OverlayContext = createContext<{ overlay: Overlay; setOverlay: (overlay: Overlay) => void } | null>(null);
 
 const SiteContext = createContext<SiteContextValue | null>(null);
 
@@ -43,14 +42,26 @@ export function SiteProviders({
   }, [overlay]);
 
   const value = useMemo<SiteContextValue>(
-    () => ({ lang, c: getCopy(lang), overlay, setOverlay }),
-    [lang, overlay, setOverlay],
+    () => ({ lang, c: getCopy(lang) }),
+    [lang],
   );
-  return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;
+  const overlayValue = useMemo(() => ({ overlay, setOverlay }), [overlay, setOverlay]);
+  return (
+    <SiteContext.Provider value={value}>
+      <OverlayContext.Provider value={overlayValue}>{children}</OverlayContext.Provider>
+    </SiteContext.Provider>
+  );
 }
 
 export function useSite(): SiteContextValue {
   const ctx = useContext(SiteContext);
   if (!ctx) throw new Error("useSite must be used inside <SiteProviders>");
+  return ctx;
+}
+
+/** Overlay updates only notify the menu and floating controls, not the page copy. */
+export function useOverlay() {
+  const ctx = useContext(OverlayContext);
+  if (!ctx) throw new Error("useOverlay must be used inside <SiteProviders>");
   return ctx;
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
-import { sendGAEvent } from "@next/third-parties/google";
+import { sendGAEvent } from "@/components/deferred-analytics";
 import { useSite } from "@/components/providers";
 import {
   emptyPartnerSubmission,

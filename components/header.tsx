@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LogoMark, Wordmark } from "@/components/logo";
-import { useSite } from "@/components/providers";
+import { useOverlay, useSite } from "@/components/providers";
 import { btn } from "@/components/ui";
 import { siteConfig } from "@/lib/config";
 import { localizeHref, toViPath } from "@/lib/i18n";
@@ -276,7 +276,8 @@ function MenuLink({
 }
 
 function MobileHeader({ page, current, translations }: { page: "home" | "blog"; current: string | null; translations?: Translation[] }) {
-  const { c, lang, overlay, setOverlay } = useSite();
+  const { c, lang } = useSite();
+  const { overlay, setOverlay } = useOverlay();
   const pathname = usePathname();
   const { items, onHome, home } = useNavItems(page);
   const open = overlay === "menu";

@@ -10,6 +10,9 @@ const docsOrigin = process.env.DOCS_ORIGIN?.replace(/\/$/, "");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "cms.harnix.vn", pathname: "/media/**" }],
+  },
   // The docs are a static export with trailing-slash URLs (/docs/x/), and
   // their host redirects /docs/x → /docs/x/. Next's own trailing-slash
   // redirect goes the other way, so together they loop forever. Turn Next's
